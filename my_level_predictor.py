@@ -13,7 +13,7 @@ import re
 
 # === Шаг 1. Загрузка данных ===
 texts_df = pd.read_csv("cefr_leveled_texts.csv").rename(columns={"label": "level"}).dropna()
-grammar_df = pd.read_csv("Grammar_features.csv")
+grammar_df = pd.read_csv("Grammar_Features.csv")
 
 
 # === Шаг 2. SBERT embeddings ===
