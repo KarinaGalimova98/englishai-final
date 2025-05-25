@@ -23,5 +23,7 @@ git+https://github.com/openai/whisper.git
 faiss-cpu
 PyMuPDF==1.22.3
 gunicorn
+python-dotenv
+
 
 
