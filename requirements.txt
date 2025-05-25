@@ -22,4 +22,6 @@ git+https://github.com/chrisjbryant/errant
 git+https://github.com/openai/whisper.git
 faiss-cpu
 PyMuPDF==1.22.3
+gunicorn
+
 
