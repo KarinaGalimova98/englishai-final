@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Пользователи</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-10 font-sans">
+  <h1 class="text-3xl font-bold mb-6">Зарегистрированные пользователи</h1>
+
+  <table class="min-w-full bg-white rounded-xl shadow">
+    <thead class="bg-purple-100 text-purple-800">
+      <tr>
+        <th class="px-6 py-3 text-left">ID</th>
+        <th class="px-6 py-3 text-left">Email</th>
+        <th class="px-6 py-3 text-left">Дата регистрации</th>
+        <th class="px-6 py-3 text-left">Заданий</th>
+        <th class="px-6 py-3 text-left">GPT</th>
+        <th class="px-6 py-3 text-left">Чат-бот</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      {% for user in users %}
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-4">{{ user.id }}</td>
+        <td class="px-6 py-4">{{ user.email }}</td>
+        <td class="px-6 py-4">{{ user.registration_date.strftime('%d.%m.%Y') }}</td>
+        <td class="px-6 py-4">{{ user.tasks_today }}</td>
+        <td class="px-6 py-4">{{ user.gpt_today }}</td>
+        <td class="px-6 py-4">{{ user.chatbot_today }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="/dashboard" class="mt-6 inline-block text-purple-600 hover:underline">⬅ Вернуться в кабинет</a>
+</body>
+</html>

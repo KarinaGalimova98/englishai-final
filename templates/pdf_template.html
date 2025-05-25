@@ -1,0 +1,54 @@
+<!-- templates/pdf_template.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Задание для экзамена</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: white;
+      color: #222;
+      margin: 0;
+      padding: 32px 28px;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+    .task-result {
+      white-space: pre-wrap;
+      margin-bottom: 32px;
+      font-size: 17px;
+    }
+    .images-block {
+      margin-top: 18px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .images-block img {
+      max-width: 320px;
+      max-height: 320px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 8px #eee;
+      object-fit: contain;
+      background: #fafafa;
+      padding: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Сгенерированное задание</h2>
+  <div class="task-result">
+    {{ result|safe }}
+  </div>
+  {% if images %}
+    <div class="images-block">
+      {% for img in images %}
+        <img src="{{ img }}" alt="Картинка к заданию">
+      {% endfor %}
+    </div>
+  {% endif %}
+</body>
+</html>

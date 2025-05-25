@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Use of English Practice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <script>
+    function loadInteractiveTask(exam, section, task_type) {
+        fetch('/interactive_task', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ exam, section, task_type })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("interactiveArea").innerHTML = data.html;
+        });
+    }
+
+    function checkInteractiveAnswers() {
+        const inputs = document.querySelectorAll('#interactiveArea input, #interactiveArea select');
+        const correct = JSON.parse(document.getElementById("answers").textContent);
+        let results = '';
+        let score = 0;
+
+        inputs.forEach(input => {
+            const name = input.name;
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = correct[name]?.trim().toLowerCase();
+
+            if (!correctAnswer) {
+                results += `<p>${name}: ❓ Нет ответа</p>`;
+            } else if (userAnswer === correctAnswer) {
+                results += `<p>${name}: ✅ Correct</p>`;
+                score++;
+            } else {
+                results += `<p>${name}: ❌ Incorrect. Правильно: ${correctAnswer}</p>`;
+            }
+        });
+
+        document.getElementById("results").innerHTML = `<h3>Результат: ${score}/${inputs.length}</h3>` + results;
+    }
+  </script> -->
+  <style>
+    body { font-family: 'Fredoka', sans-serif; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-tr from-indigo-900 via-purple-900 to-black min-h-screen flex items-center justify-center">
+  {% include 'sidebar.html' %}
+  
+  
+  <div class="container mx-auto px-4 py-10">
+    <button onclick="history.back()" class="fixed top-6 left-72 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium shadow-lg hover:scale-105 transition z-50">
+      <img src="{{ url_for('static', filename='back_icon.png') }}" alt="Назад" class="w-4 h-4 filter brightness-200">
+      Назад
+    </button>
+    
+    
+    <h1 class="text-4xl text-white font-bold text-center mb-12">Выбери тип задания</h1>
+    
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Use of English Card -->
+      <div class="glass-card rounded-2xl p-6 shadow-2xl text-white text-center hover:scale-[1.02] transition">
+        <img src="/static/use_of_english.png" alt="Use of English" class="w-20 h-20 mx-auto mb-4" />
+        <h2 class="text-2xl font-bold mb-2">Use of English</h2>
+        <p class="mb-4 text-sm text-gray-200">Задания на лексику и грамматику (B2, C1, C2)</p>
+        <a href="/select_task_types/use_of_english" class="bg-pink-500 hover:bg-pink-600 py-2 px-6 rounded-full font-semibold transition">Перейти</a>
+      </div>
+    
+      <!-- Reading Card -->
+      <div class="glass-card rounded-2xl p-6 shadow-2xl text-white text-center hover:scale-[1.02] transition">
+        <img src="/static/reading.png" alt="Reading" class="w-20 h-20 mx-auto mb-4" />
+        <h2 class="text-2xl font-bold mb-2">Reading</h2>
+        <p class="mb-4 text-sm text-gray-200">Задания на понимание текста (B2, C1, C2)</p>
+        <a href="/select_task_types/reading" class="bg-pink-500 hover:bg-pink-600 py-2 px-6 rounded-full font-semibold transition">Перейти</a>
+      </div>
+    
+      <!-- Grammar Tests Card -->
+      <div class="glass-card rounded-2xl p-6 shadow-2xl text-white text-center hover:scale-[1.02] transition">
+        <img src="/static/tests.png" alt="Grammar Tests" class="w-20 h-20 mx-auto mb-4" />
+        <h2 class="text-2xl font-bold mb-2">Grammar Tests</h2>
+        <p class="mb-4 text-sm text-gray-200">Грамматические тесты и упражнения (B2, C1, C2)</p>
+        <button onclick="loadInteractiveTask('FCE', 'Use of English', 'Open Cloze')" class="bg-pink-500 hover:bg-pink-600 py-2 px-6 rounded-full font-semibold transition">Перейти</button>
+      </div>
+    </div>
+    
+
+    <div class="text-center text-white mt-10">
+      <h3 class="text-3xl font-bold">Как это работает?</h3>
+      <ol class="mt-4 space-y-2">
+        <li>🔹 <b>Выбери уровень:</b> B2 (FCE), C1 (CAE), C2 (CPE)</li>
+        <li>🔹 <b>Выбери тип задания:</b> Use of English, Reading или Grammar</li>
+        <li>🔹 <b>Получай готовые задания</b> и тренируйся с проверкой ответов</li>
+      </ol>
+    </div>
+
+  </div>
+  
+  
+
+</body>
+</html>

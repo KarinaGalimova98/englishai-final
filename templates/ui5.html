@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Cambridge Exam Task Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #26096c, #240439, #2a3d93);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    select, textarea {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+    select:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #a78bfa;
+      border-color: #a78bfa;
+    }
+    .neon-button {
+      background: linear-gradient(90deg, #8b5cf6, #ec4899);
+      color: white;
+      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      box-shadow: 0 0 15px #c084fc;
+      transition: transform 0.2s ease;
+    }
+    .neon-button:hover {
+      transform: scale(1.05);
+    }
+    .model-opt {
+      background: rgba(255,255,255,0.12);
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid transparent;
+      color: white;
+    }
+    .model-opt.active, .model-opt:hover {
+      border-color: #a78bfa;
+      background: rgba(168, 139, 250, 0.3);
+      box-shadow: 0 0 10px #a78bfa88;
+    }
+    .model-opt span {
+      font-weight: 600;
+    }
+     select, textarea {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  select option {
+    background-color: rgba(26, 22, 50, 0.95); /* темный фон */
+    color: white;
+  }
+
+  select:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #a78bfa;
+    border-color: #a78bfa;
+  }
+  select, textarea {
+  color: white !important;
+}
+.task-card {
+  flex: 0 0 calc((100% - 3rem) / 4);  /* 4 карточки + 3 промежутка по 1rem */
+  margin-right: 1rem;                 /* промежуток между ними */
+  border-radius: 1rem;
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(255,255,255,0.08);
+  transition: transform .3s ease;
+}
+.task-card:last-child {
+  margin-right: 0;
+}
+.slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%; /* растягиваем на всю доступную ширину */
+    margin: 0 auto;
+  }
+.slider-container {
+  overflow: hidden;
+  position: relative;
+}
+  .slider {
+    display: flex;
+    transition: transform .5s ease;
+  }
+  .slider-container {
+    
+    position: relative;
+  }
+  #task-slider {
+  padding-bottom: 2rem;
+}
+
+.task-card {
+  margin-bottom: 1rem;
+}
+.task-card .icon {
+  width: 32px;              /* ширина */
+  height: 32px;             /* высота */
+  object-fit: contain;      /* сохраняем пропорции */
+  margin-bottom: 0.75rem;   /* отступ снизу перед <h2> */
+  filter: brightness(0) invert(1); /* делаем черную картинку белой */
+}
+
+
+  </style>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+
+</head>
+<body class="min-h-screen flex flex-row">
+  {% include 'sidebar.html' %}
+  <main class="flex-1 max-w-6xl mx-auto px-6 py-10 space-y-10">
+
+  
+
+    <div class="text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-extrabold">Cambridge Exam<br><span class="text-purple-400">Task Generator</span></h1>
+      <p class="text-base text-white/70 mt-2">Создавай задания FCE / CAE / CPE </p>
+    </div>
+
+    
+
+
+    <!-- Форма генерации -->
+    <form method="POST" class="glass p-8 space-y-8" onsubmit="showLoading()">
+    <!--<input type="hidden" name="model" id="modelInput" value="gpt">-->
+      <!-- Выбор модели генерации -->
+<div class="bg-white/5 rounded-3xl p-6">
+  <h2 class="text-white font-bold text-lg mb-4">Выбери модель генерации</h2>
+  <div class="flex flex-wrap gap-4">
+    <label class="cursor-pointer">
+      <input type="radio" name="model" value="gpt" class="hidden peer" checked>
+      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
+        <img src="{{ url_for('static', filename='openai.png') }}" alt="GPT-4" class="w-6 h-6">
+        <span>GPT-4</span>
+      </div>
+    </label>
+    <label class="cursor-pointer">
+      <input type="radio" name="model" value="claude" class="hidden peer">
+      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
+        <img src="{{ url_for('static', filename='claude-color.png') }}" alt="Claude 3 Sonnet" class="w-6 h-6">
+        <span>Claude 3 Sonnet</span>
+      </div>
+    </label>
+    <label class="cursor-pointer">
+      <input type="radio" name="model" value="deepseek" class="hidden peer">
+      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
+        <img src="{{ url_for('static', filename='deepseek.png') }}" alt="DeepSeek" class="w-6 h-6">
+        <span>DeepSeek</span>
+      </div>
+    </label>
+    <label class="cursor-pointer">
+      <input type="radio" name="model" value="gemma" class="hidden peer">
+      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
+        <img src="{{ url_for('static', filename='gemma-color.png') }}" alt="Gemma" class="w-6 h-6">
+        <span>Gemma</span>
+      </div>
+    </label>
+    <label class="cursor-pointer">
+      <input type="radio" name="model" value="gpt-4o" class="hidden peer">
+      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
+        <img src="{{ url_for('static', filename='gpt4o.png') }}" alt="GPT-4o" class="w-6 h-6">
+        <span>ChatGPT-4o</span>
+      </div>
+    </label>
+
+
+  </div>
+</div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <label for="level" class="block mb-2 text-white font-semibold">Уровень</label>
+          <select id="level" name="level" class="w-full p-3 rounded-xl">
+            <option value="FCE">FCE</option>
+            <option value="CAE">CAE</option>
+            <option value="CPE">CPE</option>
+          </select>
+        </div>
+        <div>
+          <label for="section" class="block mb-2 text-white font-semibold">Раздел экзамена</label>
+          <select id="section" name="section" onchange="updateSubtypes()" class="w-full p-3 rounded-xl">
+            <option value="Writing">Writing</option>
+            <option value="Reading">Reading</option>
+            <option value="Use of English">Use of English</option>
+            <option value="Speaking">Speaking</option>
+          </select>
+        </div>
+        <div>
+          <label for="subtype" class="block mb-2 text-white font-semibold">Тип задания</label>
+          <select id="subtype" name="task_type" class="w-full p-3 rounded-xl"></select>
+        </div>
+        <div>
+          <label for="topic" class="block mb-2 text-white font-semibold">Тематика</label>
+          <textarea id="topic" name="topic" rows="2" placeholder="например: Technology and communication" class="w-full p-3 rounded-xl"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="neon-button w-full text-xl">Сгенерировать задание</button>
+      
+    </form>
+    <!-- Типы заданий -->
+<div class="mt-10 relative">
+  <h2 class="text-white text-2xl font-bold mb-6">Типы заданий</h2>
+
+  <div class="slider-container relative overflow-hidden mx-auto" style="max-width:1088px;">
+
+    <!-- Slider wrapper -->
+    <div id="task-slider" class="slider flex transition-transform duration-500 pb-8">
+      <div class="task-card bg-purple-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\grammar_3838474.png" alt="book" class="icon">
+    <h2 class="text-lg font-bold mb-1">Open Cloze</h2>
+    <p class="text-sm opacity-80">Пропущенные слова без подсказок. Проверяет грамматику и устойчивые выражения.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">Уровни: FCE, CAE, CPE<br/>Сложность: больше пропусков, абстрактнее лексика</div>
+</div>
+<div class="task-card bg-purple-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\grammar_3838474.png" alt="book" class="icon">
+    <h2 class="text-lg font-bold mb-1">Word Formation</h2>
+    <p class="text-sm opacity-80">Преобразование слов. Проверяет знание частей речи, суффиксов, приставок.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">Уровни: FCE, CAE, CPE<br/>Формы становятся более сложными</div>
+</div>
+<div class="task-card bg-purple-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\grammar_3838474.png" alt="book" class="icon">
+    <h2 class="text-lg font-bold mb-1">Key Word Transformations</h2>
+    <p class="text-sm opacity-80">Переформулировать предложение. Проверяет синтаксис и перефразирование.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">Уровни: FCE, CAE, CPE<br/>Повышение сложности конструкций</div>
+</div>
+<div class="task-card bg-purple-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\grammar_3838474.png" alt="book" class="icon">
+    <h2 class="text-lg font-bold mb-1">Multiple-choice Cloze</h2>
+    <p class="text-sm opacity-80">Выбор правильного слова. Проверяет словарный запас, фразовые глаголы.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">Уровни: FCE, CAE<br/>Словари становятся сложнее</div>
+</div>
+<div class="task-card bg-blue-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\reading_15564277.png" alt="reader" class="icon">
+    <h2 class="text-lg font-bold mb-1">Multiple Choice</h2>
+    <p class="text-sm opacity-80">Вопросы по смыслу текста. Проверяет понимание деталей и аргументов.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE, CAE, CPE<br/>Темы становятся абстрактнее</div>
+</div>
+<div class="task-card bg-blue-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\reading_15564277.png" alt="reader" class="icon">
+    <h2 class="text-lg font-bold mb-1">Gapped Text</h2>
+    <p class="text-sm opacity-80">Заполнение пропусков предложениями. Проверяет связность текста.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE, CAE, CPE<br/>Сложность возрастает с уровнем</div>
+</div>
+<div class="task-card bg-blue-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\reading_15564277.png" alt="reader" class="icon">
+    <h2 class="text-lg font-bold mb-1">Multiple Matching</h2>
+    <p class="text-sm opacity-80">Сопоставление утверждений с абзацами. Проверяет точность восприятия текста.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">CAE, CPE<br/>Формулировки сложнее</div>
+</div>
+<div class="task-card bg-pink-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\letter_9301462.png" alt="writing" class="icon">
+    <h2 class="text-lg font-bold mb-1">Essay</h2>
+    <p class="text-sm opacity-80">Аргументированное эссе. Проверяет структуру, аргументацию, стиль.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE, CAE, CPE<br/>Повышается глубина анализа</div>
+</div>
+<div class="task-card bg-pink-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\letter_9301462.png" alt="writing" class="icon">
+    <h2 class="text-lg font-bold mb-1">Email / Letter</h2>
+    <p class="text-sm opacity-80">Формальное/неформальное письмо. Проверяет стиль, структуру, регистр.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE, CAE<br/>CAE требует строгий стиль</div>
+</div>
+<div class="task-card bg-pink-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\letter_9301462.png" alt="writing" class="icon">
+    <h2 class="text-lg font-bold mb-1">Report</h2>
+    <p class="text-sm opacity-80">Официальный отчёт с рекомендациями. Проверяет организацию и формальность.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">CAE, CPE<br/>Чёткая логика и структура</div>
+</div>
+<div class="task-card bg-pink-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\letter_9301462.png" alt="writing" class="icon">
+    <h2 class="text-lg font-bold mb-1">Review</h2>
+    <p class="text-sm opacity-80">Обзор фильма/книги. Проверяет выражение мнения и неформальный стиль.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE, CAE, CPE<br/>Разнообразие лексики</div>
+</div>
+<div class="task-card bg-pink-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\letter_9301462.png" alt="writing" class="icon">
+    <h2 class="text-lg font-bold mb-1">Article</h2>
+    <p class="text-sm opacity-80">Статья для журнала. Проверяет креативность, интерес для читателя.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE, CAE<br/>Больше оригинальности на CAE</div>
+</div>
+<div class="task-card bg-pink-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\letter_9301462.png" alt="writing" class="icon">
+    <h2 class="text-lg font-bold mb-1">Story</h2>
+    <p class="text-sm opacity-80">Короткий рассказ. Проверяет грамматику, логику, завершенность.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE<br/>Доступно только на уровне B2</div>
+</div>
+<div class="task-card bg-indigo-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\discussion_12069069.png" alt="speaking" class="icon">
+    <h2 class="text-lg font-bold mb-1">Interview</h2>
+    <p class="text-sm opacity-80">Личные вопросы. Проверяет беглость, лексический запас, уверенность.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE, CAE, CPE<br/>Темы усложняются</div>
+</div>
+<div class="task-card bg-indigo-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\discussion_12069069.png" alt="speaking" class="icon">
+    <h2 class="text-lg font-bold mb-1">Long Turn</h2>
+    <p class="text-sm opacity-80">Монолог по картинкам. Проверяет описание, сравнение, умение обобщать.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE: 2 фото, CAE: 3, CPE: до 5</div>
+</div>
+<div class="task-card bg-indigo-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\discussion_12069069.png" alt="speaking" class="icon">
+    <h2 class="text-lg font-bold mb-1">Collaborative Task</h2>
+    <p class="text-sm opacity-80">Диалог с партнёром. Проверяет инициативу, сотрудничество, вежливость.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">Уровень: от FCE до CPE<br/>Увеличивается количество тем</div>
+</div>
+<div class="task-card bg-indigo-900/30 text-white">
+  <div>
+    <img src="static\generated_images\icons\discussion_12069069.png" alt="speaking" class="icon">
+    <h2 class="text-lg font-bold mb-1">Discussion</h2>
+    <p class="text-sm opacity-80">Обсуждение суждений. Проверяет аргументацию, реакцию, структуру.</p>
+  </div>
+  <div class="text-xs opacity-60 mt-2">FCE, CAE, CPE<br/>Увеличивается уровень абстракции</div>
+</div>
+</div> <!-- конец slider -->
+</div> 
+
+     <!-- Стрелки -->
+    <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full w-12 h-12 flex items-center justify-center z-20">
+      ◀
+    </button>
+    <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full w-12 h-12 flex items-center justify-center z-20">
+      ▶
+    </button>
+  </div>
+</div>
+
+    {% if result %}
+    <div id="result-block" class="glass p-6 text-white whitespace-pre-wrap leading-relaxed">
+      {{ result }}
+      {% if images %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+        {% for img in images %}
+        <img src="{{ img }}" alt="AI image" class="rounded-xl shadow-md w-full object-cover">
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="flex flex-wrap gap-4 mt-6">
+        <a href="{{ url_for('taskgen.download_pdf') }}" class="bg-pink-600 text-white px-5 py-3 rounded-xl font-semibold shadow hover:scale-105 transition">📄 Скачать PDF</a>
+      </div>
+    </div>
+    {% else %}
+    <p class="text-center text-white/60">Здесь появится результат генерации...</p>
+    {% endif %}
+  </main>
+
+  <script>
+    document.querySelectorAll('.model-opt').forEach(opt => {
+      opt.addEventListener('click', function () {
+        document.querySelectorAll('.model-opt').forEach(el => el.classList.remove('active'));
+        opt.classList.add('active');
+        const value = opt.querySelector('input').value;
+        document.getElementById('modelInput').value = value;
+      });
+  
+    });
+    
+  </script>
+
+  
+
+
+  <script>
+    
+    const subtypes = {
+      Writing: [["Essay","Аргументированный текст"],["Email","Формальные и неформальные письма"],["Report","Описание/анализ ситуации + рекомендации"],["Review","Отзыв на фильм/книгу/место"],["Article","Неформальный текст в блог/журнал"],["Story","Краткий рассказ"],["Letter","Письмо на нужную тему"]],
+      Reading: [["Multiple Choice","8 вопросов по тексту"],["Gapped Text","Вставить пропущенные предложения"],["Multiple Matching","Сопоставить абзацы с утверждениями"]],
+      Speaking: [["Interview","Ответы на личные вопросы"],["Long Turn","Монолог по картинке или теме"],["Collaborative Task","Диалог с другим кандидатом"],["Discussion","Мнение и аргументация по теме"]],
+      Use_of_English: [["Open Cloze","Пропущенные слова без подсказок"],["Word Formation","Преобразовать слово"],["Key Word Transformations","Переформулировать предложение"],["Multiple-choice Cloze","12 пропусков с выбором ответа"]]
+    };
+    function updateSubtypes() {
+      const section = document.getElementById("section").value.replace(/\s+/g, "_");
+      const subtypeSelect = document.getElementById("subtype");
+      subtypeSelect.innerHTML = "";
+      subtypes[section].forEach(([value, label]) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = `${value} — ${label}`;
+        subtypeSelect.appendChild(option);
+      });
+    }
+    updateSubtypes();
+
+    function getTaskText() {
+      const el = document.getElementById('result-block');
+      return el ? el.innerText.trim() : '';
+    }
+    document.getElementById('share-tg')?.addEventListener('click', function() {
+      const text = encodeURIComponent(getTaskText());
+      const url = `https://t.me/share/url?url=&text=${text}`;
+      this.setAttribute('href', url);
+    });
+    document.getElementById('share-wa')?.addEventListener('click', function() {
+      const text = encodeURIComponent(getTaskText());
+      const url = `https://wa.me/?text=${text}`;
+      this.setAttribute('href', url);
+    });
+    document.getElementById("download-pdf-btn")?.addEventListener("click", function () {
+      const element = document.getElementById('result-block');
+      html2pdf().from(element).set({
+        margin: 0.5,
+        filename: 'exam_task.pdf',
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { orientation: 'portrait', unit: 'in', format: 'a4', compressPDF: true }
+      }).save();
+    });
+  </script>
+<script>
+  const slider = document.getElementById("task-slider");
+  const originals = Array.from(slider.children);
+  const N = originals.length;    // реальное число карточек
+  const V = 4;                   // видимых карточки
+
+  // 1) клонируем: сначала «конец» → в начало, потом «начало» → в конец
+  originals.slice(-N).forEach(card => {
+    const c = card.cloneNode(true);
+    c.classList.add("clone");
+    slider.insertBefore(c, slider.firstChild);
+  });
+  originals.forEach(card => {
+    const c = card.cloneNode(true);
+    c.classList.add("clone");
+    slider.appendChild(c);
+  });
+
+  // пересобираем итоговый массив карточек
+  const cards = slider.querySelectorAll(".task-card");
+  const style = getComputedStyle(cards[0]);
+  let cardWidth = cards[0].offsetWidth + parseFloat(style.marginRight);
+
+  // стартовый индекс = N (первые N клонированы в начало)
+  let idx = N;
+  slider.style.transform = `translateX(-${idx * cardWidth}px)`;
+
+  // сброс позиции при входе в «клонированную» зону
+  slider.addEventListener("transitionend", () => {
+    slider.style.transition = "none";
+
+    // если уехали в начало (клоны с конца)
+    if (idx < N) {
+      idx += N;
+    }
+    // если уехали в конец (клоны с начала)
+    else if (idx >= N * 2) {
+      idx -= N;
+    }
+
+    slider.style.transform = `translateX(-${idx * cardWidth}px)`;
+    // форс-reflow и возвращаем анимацию
+    slider.offsetHeight;
+    slider.style.transition = "transform .5s ease";
+  });
+
+  // кнопки ← → 
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    idx++;
+    slider.style.transition = "transform .5s ease";
+    slider.style.transform = `translateX(-${idx * cardWidth}px)`;
+  });
+  document.getElementById("prevBtn").addEventListener("click", () => {
+    idx--;
+    slider.style.transition = "transform .5s ease";
+    slider.style.transform = `translateX(-${idx * cardWidth}px)`;
+  });
+
+  // при ресайзе пересчитаем ширину карточки
+  window.addEventListener("resize", () => {
+    const st = getComputedStyle(cards[0]);
+    cardWidth = cards[0].offsetWidth + parseFloat(st.marginRight);
+    slider.style.transition = "none";
+    slider.style.transform = `translateX(-${idx * cardWidth}px)`;
+    slider.offsetHeight;
+    slider.style.transition = "transform .5s ease";
+  });
+</script>
+
+
+
+</body>
+</html>
+
+
+

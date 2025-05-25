@@ -1,0 +1,77 @@
+;; CATEGORY "0" "" ""
+;; LABEL "O" "Overall" "Overall"
+;;
+;; CATEGORY "1" "Audio Analytics" ""
+;; LABEL "Q2" "Audio Quality 2" "Audio Analytics"
+;; LABEL "Q3" "Audio Quality 3" "Audio Analytics"
+;; LABEL "Q4" "Audio Quality 4" "Audio Analytics"
+;; LABEL "Q5" "Audio Quality 5" "Audio Analytics"
+;; LABEL "QX" "Audio Quality X" "Audio Analytics"
+;;
+;; CATEGORY "2" "Grade" ""
+;; LABEL "A1" "A1" "Grade"
+;; LABEL "A2" "A2" "Grade"
+;; LABEL "B1" "B1" "Grade"
+;; LABEL "B2" "B2" "Grade"
+;; LABEL "C" "C" "Grade"
+;;
+;; CATEGORY "3" "Part" ""
+;; LABEL "P1" "P1" "Part"
+;; LABEL "P3" "P3" "Part"
+;; LABEL "P4" "P4" "Part"
+;; LABEL "P5" "P5" "Part"
+SI114J-00045-P10006 1 SI114J-00045  0.00  5.81 <o,Q5,B2,P1> what we enjoy the most is playing video games
+SI114J-00045-P10006 1 SI114J-00045  5.81 19.86 <o,Q5,B2,P1> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00045-P10007 1 SI114J-00045  0.00  4.34 <o,Q5,B2,P1> i am most similar to my father
+SI114J-00045-P10007 1 SI114J-00045  4.34 16.81 <o,Q5,B2,P1> i have not only in a physical way but in a intellectual way we have similar ways of thought and of think
+SI114J-00045-P10007 1 SI114J-00045 16.81 19.86 <o,Q5,B2,P1> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00045-P10008 1 SI114J-00045  0.00  3.43 <o,Q5,B2,P1> i would like to live in a city
+SI114J-00045-P10008 1 SI114J-00045  3.43 16.27 <o,Q5,B2,P1> the cities i like the most are london paris and here in spain i would like to live in madrid or in barcelona
+SI114J-00045-P10008 1 SI114J-00045 16.27 17.46 <o,Q5,B2,P1> i don't care
+SI114J-00045-P10008 1 SI114J-00045 17.46 19.86 <o,Q5,B2,P1> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00045-P30017 1 SI114J-00045  0.00 14.10 <o,Q5,B2,P3> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00045-P30017 1 SI114J-00045 14.10 37.78 <o,Q5,B2,P3> and i think that school and college should make time in the school to practice some exercises and to promote a more fitness lifestyle because it can help to fight both physical and mental health
+SI114J-00045-P30017 1 SI114J-00045 37.78 54.21 <o,Q5,B2,P3> and at the same time the disadvantage of these classes could be that you are using time that could be used as a study time or learning some other things
+SI114J-00045-P30017 1 SI114J-00045 54.21 59.88 <o,Q5,B2,P3> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00045-P40018 1 SI114J-00045  0.00  5.10 <o,Q5,B1,P4> honey is collected from bees
+SI114J-00045-P50019 1 SI114J-00045  0.00 16.10 <o,Q5,B2,P5> i think that when a student is chosen a country to go to study there the first thing that they are thinking about is about the university quality
+SI114J-00045-P50019 1 SI114J-00045 16.10 19.95 <o,Q5,B2,P5> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00045-P50020 1 SI114J-00045  0.00 11.76 <o,Q5,B2,P5> i think that the best thing of studying in a second language is that you can put in in your resume
+SI114J-00045-P50020 1 SI114J-00045 11.76 19.95 <o,Q5,B2,P5> and at the same time it is a very valuable thing that enterprises value
+SI114J-00045-P50021 1 SI114J-00045  0.00  6.79 <o,Q5,B2,P5> i think that there are a lot of constraints when you're studying in another country
+SI114J-00045-P50021 1 SI114J-00045  6.79 16.79 <o,Q5,B2,P5> first of all you have to learn a new language and talk in a new language or in your second language
+SI114J-00045-P50021 1 SI114J-00045 16.79 19.95 <o,Q5,B2,P5> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00045-P50022 1 SI114J-00045  0.00 14.01 <o,Q5,B2,P5> i think that students can learn from local culture going with their classmates and learning from them asking them
+SI114J-00045-P50022 1 SI114J-00045 14.01 19.95 <o,Q5,B2,P5> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00045-P50023 1 SI114J-00045  0.00 11.12 <o,Q5,B2,P5> in my opinion studying abroad definitely helps you to be more independent because you have to do everything at your own
+SI114J-00045-P50023 1 SI114J-00045 11.12 19.95 <o,Q5,B2,P5> for example you have to go to the bank you have to do the laundry and all those things you don't do when you live alone
+SI114J-00206-P10005 1 SI114J-00206  0.00  8.13 <o,Q4,B1,P1> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00206-P10005 1 SI114J-00206  8.13  9.90 <o,Q4,B1,P1> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00206-P10005 1 SI114J-00206  9.90 14.98 <o,Q4,B1,P1> is to one hour to barcelona to half an hour to the beach
+SI114J-00206-P10005 1 SI114J-00206 14.98 16.70 <o,Q4,B1,P1> it's a nice place
+SI114J-00206-P10006 1 SI114J-00206  0.00  9.52 <o,Q4,B1,P1> in holiday i enjoy staying with friends and going to the mountains sometimes to the beach
+SI114J-00206-P10006 1 SI114J-00206  9.52 19.94 <o,Q4,B1,P1> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00206-P10007 1 SI114J-00206  0.00  5.68 <o,Q5,B1,P1> in my close family maybe with my mother
+SI114J-00206-P10007 1 SI114J-00206  5.68 15.85 <o,Q5,B1,P1> in my second close family maybe with my brother in law
+SI114J-00206-P10008 1 SI114J-00206  0.00  7.42 <o,Q4,B1,P1> i am not sure but one possibility of job is as a teacher
+SI114J-00206-P10008 1 SI114J-00206  7.42 12.95 <o,Q4,B1,P1> is one of my favorite jobs now
+SI114J-00206-P30017 1 SI114J-00206  0.00 15.50 <o,Q4,B1,P3> i think that one advantage is that while you are working you are learning what is the life and the same time you are studying of course
+SI114J-00206-P30017 1 SI114J-00206 15.50 28.71 <o,Q4,B1,P3> and the disadvantage is that maybe you are too much busy working and studying at the same time than you can turn a little stressed
+SI114J-00206-P30017 1 SI114J-00206 28.71 35.86 <o,Q4,B1,P3> and this isn't a good thing for the healthy
+SI114J-00206-P30017 1 SI114J-00206 35.86 43.56 <o,Q4,B1,P3> and in my opinion i think that is a good idea do the both things at the same time working and studying
+SI114J-00206-P30017 1 SI114J-00206 43.56 57.14 <o,Q4,B1,P3> because working you can learn a lot of things that you can't learn studying and studying you can learn things that you can't learn while working
+SI114J-00206-P40018 1 SI114J-00206  0.00 13.49 <o,Q4,A2,P4> for to travelling by airplane first you must arrive to the airport by car by train or by coach
+SI114J-00206-P40018 1 SI114J-00206 13.49 18.05 <o,Q4,A2,P4> then when you are here you must check in
+SI114J-00206-P40018 1 SI114J-00206 18.05 24.84 <o,Q4,A2,P4> after check in you must pass the document control where you need your passport
+SI114J-00206-P40018 1 SI114J-00206 24.84 40.85 <o,Q4,A2,P4> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00206-P40018 1 SI114J-00206 40.85 48.33 <o,Q4,A2,P4> after the security control you must wait for the boarding moment
+SI114J-00206-P40018 1 SI114J-00206 48.33 54.05 <o,Q4,A2,P4> then while you can take some lunch or coffee when you are boarding
+SI114J-00206-P40018 1 SI114J-00206 54.05 58.16 <o,Q4,A2,P4> after you board you can fly to your destination
+SI114J-00206-P50019 1 SI114J-00206  0.00 19.94 <o,Q4,A2,P5> i think that the technology can improve the study because you can find faster in the information and at the same time you can stay in connecting with other bit of people
+SI114J-00206-P50020 1 SI114J-00206  0.00  3.53 <o,Q5,A2,P5> me too i think the same
+SI114J-00206-P50020 1 SI114J-00206  3.53 15.16 <o,Q5,A2,P5> i think that the face to face you are more interested with the person with them
+SI114J-00206-P50020 1 SI114J-00206 15.16 19.94 <o,Q5,A2,P5> IGNORE_TIME_SEGMENT_IN_SCORING
+SI114J-00206-P50021 1 SI114J-00206  0.00 19.94 <o,Q4,A2,P5> with group projects the people can improve develop the patience the quiet listening and thinking more deep and the communication more efficient
+SI114J-00206-P50022 1 SI114J-00206  0.00 16.19 <o,Q4,A2,P5> in my case i think that it's better reading alone because i prefer the silent and the quietness and the calm
+SI114J-00206-P50023 1 SI114J-00206  0.00 10.77 <o,Q4,A2,P5> it's important because not all the people have the possibility to have the all facilities
+SI114J-00206-P50023 1 SI114J-00206 10.77 19.94 <o,Q4,A2,P5> IGNORE_TIME_SEGMENT_IN_SCORING

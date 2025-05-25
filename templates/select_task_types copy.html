@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <style>
+        input.blank, select.blank {
+          border: none;
+          border-bottom: 2px dashed #f25a9d;
+          padding: 2px 4px;
+          margin: 0 2px;
+          background: transparent;
+          font-weight: bold;
+          color: #111;
+        }
+        .correct {
+        border-bottom: 2px solid limegreen;
+        font-weight: bold;
+        color: limegreen;
+        }
+
+        .incorrect {
+        border-bottom: 2px solid red;
+        font-weight: bold;
+        color: red;
+        }
+
+        .correct-answer {
+          margin-left: 4px;
+          font-size: 14px;
+          color: gray;
+          font-style: italic;
+        }
+        .feedback-icon {
+        font-size: 16px;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+        /* .answer-input.blank {
+        min-width: 120px;
+        padding: 4px 8px;
+        margin: 0 4px;
+        font-size: 16px;
+        font-weight: bold;
+        border: 2px dashed #f25a9d;
+        border-radius: 6px;
+        color: #333;
+      } */
+      .answer-input.blank {
+        min-width: 120px;
+        padding: 4px 8px;
+        margin: 0 4px;
+        font-size: 16px;
+        font-weight: bold;
+        border: 2px dashed #aaa;
+        border-radius: 8px;
+        color: #333;
+        outline: none;
+        transition: border-color 0.2s ease;
+        background-color: #fdfdfd;
+      }
+
+      /* Когда пользователь кликает (фокус) — розовая рамка */
+      .answer-input.blank:focus {
+        border-color: #645af2;
+      }
+
+      /* Если ответ правильный — зелёная рамка */
+      .answer-input.correct {
+        border-color: #40c057;
+        background-color: #e6ffe6;
+      }
+
+      /* Если ответ неправильный — красная рамка */
+      .answer-input.incorrect {
+        border-color: #f03e3e;
+        background-color: #ffe6e6;
+      }
+
+
+
+      </style>
+      
+<head>
+  <meta charset="UTF-8">
+  <title>Выбор задания</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-800 to-blue-400 min-h-screen text-white font-sans">
+  <div class="max-w-4xl mx-auto p-8">
+    <h1 class="text-4xl font-bold text-center mb-6">Выбери уровень и тип задания</h1>
+
+    <div class="bg-white bg-opacity-10 rounded-2xl p-6 shadow-lg">
+      <form id="task-form" class="flex flex-col space-y-4">
+        <div>
+          <label class="block text-lg font-semibold mb-2">Уровень экзамена</label>
+          <select name="level" class="w-full p-3 rounded bg-white text-black">
+            <option value="FCE">FCE</option>
+            <option value="CAE">CAE</option>
+            <option value="CPE">CPE</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-lg font-semibold mb-2">Тип задания</label>
+          <select name="task_type" class="w-full p-3 rounded bg-white text-black">
+            {% for task in task_types %}
+            <option value="{{ task }}">{{ task }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-bold transition">Сгенерировать задание</button>
+      </form>
+    </div>
+
+    <div id="generatedTask" class="mt-8 p-6 bg-white text-black rounded-xl shadow-xl text-lg leading-relaxed max-w-5xl mx-auto">
+        {{ task_html | safe }}
+      </div>
+      <button onclick="checkInteractiveAnswers()" class="bg-pink-600 text-white mt-4 px-4 py-2 rounded-xl">
+        Проверить ответы
+      </button>
+            
+  </div>
+
+  <script>
+    document.getElementById("task-form").onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const level = formData.get("level");
+      const task_type = formData.get("task_type");
+
+      const res = await fetch("/interactive_task", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          exam: level,
+          section: "{{ section }}",
+          task_type: task_type
+        })
+      });
+      const data = await res.json();
+      document.getElementById("generatedTask").innerHTML = data.html;
+    }
+  </script>
+  <script>
+    function checkInteractiveAnswers() {
+      const answers = JSON.parse(document.getElementById("answers").textContent);
+      let correctCount = 0;
+      let realIndex = 0;
+      document.querySelectorAll(".answer-input").forEach((input) => {
+        const tag = input.tagName.toLowerCase();
+        const userAnswer = (tag === 'select' ? input.value : input.value.trim()).toLowerCase();
+
+        const name = input.getAttribute("name");
+        const correctAnswer = answers[realIndex]?.toLowerCase();
+
+        // Удалить старые иконки и правильные ответы, если были
+        input.classList.remove("correct", "incorrect");
+        let oldIcon = input.parentElement.querySelector(".feedback-icon");
+        if (oldIcon) oldIcon.remove();
+        let oldAnswer = input.parentElement.querySelector(".correct-answer");
+        if (oldAnswer) oldAnswer.remove();
+    
+        // Создать иконку
+        const icon = document.createElement("span");
+        icon.className = "feedback-icon";
+    
+        if (userAnswer === correctAnswer) {
+          input.classList.add("correct");
+          icon.textContent = "✅";
+          icon.style.color = "limegreen";
+          correctCount++;
+        } else {
+          input.classList.add("incorrect");
+          icon.textContent = "❌";
+          icon.style.color = "crimson";
+    
+          const answerSpan = document.createElement("span");
+          answerSpan.className = "correct-answer";
+          answerSpan.textContent = ` (${correctAnswer})`;
+          const container = input.parentElement;
+          container.appendChild(icon);
+          container.appendChild(answerSpan);
+
+        }
+        realIndex++;
+        input.parentElement.appendChild(icon);
+
+      });
+    
+      alert(`Вы правильно выполнили ${correctCount} из ${answers.length}`);
+    }
+    </script>
+    
+    
+</body>
+</html>

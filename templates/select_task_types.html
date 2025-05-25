@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Выбор задания</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: linear-gradient(135deg, #c3aed6, #f5d0fe);
+        font-family: 'Inter', sans-serif;
+        color: #1e1e2f;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 32px;
+        transition: all 0.2s ease-in-out;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      input.blank, select.blank {
+        border: none;
+        border-bottom: 2px dashed #a78bfa;
+        background: transparent;
+        padding: 6px 10px;
+        font-weight: bold;
+        color: #111;
+      }
+
+      .correct {
+        border-bottom: 2px solid #22c55e;
+        color: #22c55e;
+      }
+      .incorrect {
+        border-bottom: 2px solid #ef4444;
+        color: #ef4444;
+      }
+      .correct-answer {
+        margin-left: 6px;
+        font-size: 14px;
+        color: #6b7280;
+        font-style: italic;
+      }
+      .feedback-icon {
+        font-size: 18px;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+      .answer-input.blank {
+        min-width: 120px;
+        padding: 4px 8px;
+        font-size: 16px;
+        font-weight: 600;
+        border: 2px dashed #a1a1aa;
+        border-radius: 10px;
+        color: #1e293b;
+        background-color: #f8fafc;
+        transition: border-color 0.3s;
+      }
+      .answer-input.blank:focus {
+        border-color: #8b5cf6;
+      }
+      .answer-input.correct {
+        border-color: #22c55e;
+        background-color: #ecfdf5;
+      }
+      .answer-input.incorrect {
+        border-color: #ef4444;
+        background-color: #fef2f2;
+      }
+      .exam-btn, .task-btn {
+        padding: 10px 20px;
+        background-color: white;
+        border: 2px solid #d1d5db;
+        border-radius: 9999px;
+        font-weight: 600;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      }
+      .exam-btn:hover, .task-btn:hover {
+        border-color: #a78bfa;
+      }
+      .exam-btn.active, .task-btn.active {
+        background: linear-gradient(to right, #ec4899, #a855f7);
+        color: white;
+        border-color: transparent;
+      }
+      #generatedTask {
+      font-size: 18px;
+      line-height: 1.75;
+      font-weight: 500;
+      color: #1e1e2f;
+    }
+    #generatedTask strong {
+      font-weight: 800;
+      color: #6b21a8;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      transition: opacity 0.6s ease, transform 0.4s ease;
+    }
+
+   
+
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-violet-400 to-indigo-500 min-h-screen p-6">
+    <button onclick="history.back()" class="fixed top-6 left-82 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium shadow-lg hover:scale-105 transition z-50">
+      <img src="{{ url_for('static', filename='back_icon.png') }}" alt="Назад" class="w-4 h-4 filter brightness-200">
+      Назад
+    </button>
+
+    <div class="max-w-4xl mx-auto space-y-6 px-3">
+      
+      
+      <h1 class="text-4xl font-extrabold text-center text-white">Выбери уровень и тип задания</h1>
+
+      <div class="card">
+        <form id="task-form" class="space-y-6">
+          <div>
+            <label class="block text-lg font-medium mb-2">Уровень экзамена</label>
+            <div class="flex gap-3 flex-wrap">
+              <button type="button" class="exam-btn" data-level="FCE">FCE</button>
+              <button type="button" class="exam-btn" data-level="CAE">CAE</button>
+              <button type="button" class="exam-btn" data-level="CPE">CPE</button>
+            </div>
+            <input type="hidden" name="level" id="levelInput">
+            
+          </div>
+          <div>
+            <label class="block text-lg font-medium mb-2">Тип задания</label>
+            <div class="flex gap-3 flex-wrap mt-2" id="taskTypeButtons">
+              {% for task in task_types %}
+                <button type="button" class="task-btn" data-task="{{ task }}">{{ task }}</button>
+              {% endfor %}
+            </div>
+            <input type="hidden" name="task_type" id="taskTypeInput">
+            
+          </div>
+          <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-xl font-bold hover:opacity-90">Сгенерировать задание</button>
+        </form>
+      </div>
+
+      <div id="generatedTask" class="grid gap-6 mt-6">
+        <!-- Сюда вставятся карточки заданий -->
+        {{ task_html | safe }}
+      </div>
+
+      <div class="text-center">
+        <button onclick="checkInteractiveAnswers()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-full font-semibold transition">Проверить ответы</button>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("task-form").onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const level = formData.get("level");
+        const task_type = formData.get("task_type");
+        const sectionMap = {
+          "use_of_english": "Use of English",
+          "reading": "Reading",
+          "test": "Test"
+        };
+        const section = sectionMap["{{ section }}"] || "{{ section }}";
+
+        const res = await fetch("/interactive_task", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            exam: level,
+            section: section,
+            task_type: task_type
+          })
+        });
+        const data = await res.json();
+
+        const taskContainer = document.getElementById("generatedTask");
+        taskContainer.innerHTML = "";
+
+        const htmlParts = data.html.split(/(?=<div class=\"question-block\")/g);
+        htmlParts.forEach(block => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = block;
+          taskContainer.appendChild(card);
+        });
+      };
+
+      function checkInteractiveAnswers() {
+        const answers = JSON.parse(document.getElementById("answers").textContent);
+        let correctCount = 0;
+        let realIndex = 0;
+        document.querySelectorAll(".answer-input").forEach((input) => {
+          const tag = input.tagName.toLowerCase();
+          const userAnswer = (tag === 'select' ? input.value : input.value.trim()).toLowerCase();
+
+          const name = input.getAttribute("name");
+          const correctAnswer = answers[realIndex]?.toLowerCase();
+
+          input.classList.remove("correct", "incorrect");
+          let oldIcon = input.parentElement.querySelector(".feedback-icon");
+          if (oldIcon) oldIcon.remove();
+          let oldAnswer = input.parentElement.querySelector(".correct-answer");
+          if (oldAnswer) oldAnswer.remove();
+
+          const icon = document.createElement("span");
+          icon.className = "feedback-icon";
+
+          if (userAnswer === correctAnswer) {
+            input.classList.add("correct");
+            icon.textContent = "✅";
+            icon.style.color = "limegreen";
+            correctCount++;
+          } else {
+            input.classList.add("incorrect");
+            icon.textContent = "❌";
+            icon.style.color = "crimson";
+            const answerSpan = document.createElement("span");
+            answerSpan.className = "correct-answer";
+            answerSpan.textContent = ` (${correctAnswer})`;
+            const container = input.parentElement;
+            container.appendChild(icon);
+            container.appendChild(answerSpan);
+          }
+          realIndex++;
+          input.parentElement.appendChild(icon);
+        });
+
+        alert(`Вы правильно выполнили ${correctCount} из ${answers.length}`);
+      }
+    </script>
+    <script>
+      document.querySelectorAll(".exam-btn").forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll(".exam-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById("levelInput").value = btn.dataset.level;
+        };
+      });
+
+      document.querySelectorAll(".task-btn").forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll(".task-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById("taskTypeInput").value = btn.dataset.task;
+        };
+      });
+    </script>
+
+  </body>
+</html>

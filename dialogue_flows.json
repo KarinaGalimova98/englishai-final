@@ -1,0 +1,149 @@
+[
+  {
+    "dialogue_flow": [
+      {
+        "bot": "Hi! How are you today?"
+      },
+      {
+        "bot": "What did you do last weekend?"
+      },
+      {
+        "bot": "What kind of movies do you like?"
+      },
+      {
+        "bot": "Have you traveled recently?"
+      },
+      {
+        "bot": "Can you tell me about your family?"
+      },
+      {
+        "bot": "What do you like to do in your free time?"
+      },
+      {
+        "bot": "Do you enjoy cooking? What's your favorite dish?"
+      },
+      {
+        "bot": "Do you prefer summer or winter, and why?"
+      },
+      {
+        "bot": "Tell me about a book or movie you really liked."
+      },
+      {
+        "bot": "What’s your dream job?"
+      },
+      {
+        "bot": "I usually _____ (go) to bed at 10 p.m."
+      },
+      {
+        "bot": "She _____ (study) English every day."
+      },
+      {
+        "bot": "They _____ (visit) their grandparents last weekend."
+      },
+      {
+        "bot": "If it _____ (rain) tomorrow, we will stay at home."
+      },
+      {
+        "bot": "I _____ (be) at home yesterday."
+      }
+    ]
+  },
+  {
+    "dialogue_flow": [
+      {
+        "bot": "Hey there! What’s up?"
+      },
+      {
+        "bot": "How do you usually spend your evenings?"
+      },
+      {
+        "bot": "Do you like going to the cinema?"
+      },
+      {
+        "bot": "Where would you like to travel?"
+      },
+      {
+        "bot": "Who do you live with?"
+      },
+      {
+        "bot": "Do you play any sports or instruments?"
+      },
+      {
+        "bot": "What’s your favorite meal of the day?"
+      },
+      {
+        "bot": "What season do you enjoy most?"
+      },
+      {
+        "bot": "What’s a fun memory you have from school?"
+      },
+      {
+        "bot": "What would you do if you had a free weekend?"
+      },
+      {
+        "bot": "I usually _____ (go) to bed at 10 p.m."
+      },
+      {
+        "bot": "She _____ (study) English every day."
+      },
+      {
+        "bot": "They _____ (visit) their grandparents last weekend."
+      },
+      {
+        "bot": "If it _____ (rain) tomorrow, we will stay at home."
+      },
+      {
+        "bot": "I _____ (be) at home yesterday."
+      }
+    ]
+  },
+  {
+    "dialogue_flow": [
+      {
+        "bot": "Good day! How are you feeling today?"
+      },
+      {
+        "bot": "What did you eat for breakfast?"
+      },
+      {
+        "bot": "What kind of music do you listen to?"
+      },
+      {
+        "bot": "Have you ever met someone famous?"
+      },
+      {
+        "bot": "What do your parents do?"
+      },
+      {
+        "bot": "How do you relax after a long day?"
+      },
+      {
+        "bot": "Do you enjoy learning languages?"
+      },
+      {
+        "bot": "What time do you usually wake up?"
+      },
+      {
+        "bot": "Tell me about your favorite holiday."
+      },
+      {
+        "bot": "What’s something new you learned recently?"
+      },
+      {
+        "bot": "I usually _____ (go) to bed at 10 p.m."
+      },
+      {
+        "bot": "She _____ (study) English every day."
+      },
+      {
+        "bot": "They _____ (visit) their grandparents last weekend."
+      },
+      {
+        "bot": "If it _____ (rain) tomorrow, we will stay at home."
+      },
+      {
+        "bot": "I _____ (be) at home yesterday."
+      }
+    ]
+  }
+]

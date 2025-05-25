@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>English Level ChatBot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background: linear-gradient(135deg, #2d0b5c, #43158a, #602fa3);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes scale-in {
+      from { transform: scale(0.92); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .animate-scale-in {
+      animation: scale-in 0.6s cubic-bezier(.35,1.5,.59,1) both;
+    }
+    @keyframes scale-out {
+      from { transform: scale(1); opacity: 1; }
+      to   { transform: scale(0.92); opacity: 0; }
+    }
+    .animate-scale-out {
+      animation: scale-out 0.4s cubic-bezier(.45,1.5,.59,1) both;
+    }
+</style>
+  </style>
+</head>
+<div class="flex h-screen overflow-hidden text-white text-[20px]">
+  {% include 'sidebar.html' %}
+ 
+
+<div class="flex-1 flex flex-col h-full relative">
+  {% if greeting %}
+        <!-- Blur фон -->
+    <div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"></div>
+
+    <!-- Модальное приветствие в центре -->
+    <div class="fixed inset-0 flex items-center justify-center z-50 animate-scale-in">
+      <div class="max-w-2xl w-full bg-gradient-to-b from-white via-purple-100 to-purple-200 p-12 rounded-[2.5rem] shadow-2xl text-center relative">
+        <!-- Кнопка закрытия -->
+        <button onclick="history.back()" class="absolute top-6 right-6 z-20 p-2 rounded-full bg-white/70 hover:bg-purple-200 transition duration-200 shadow-md">
+          <img src="{{ url_for('static', filename='close.png') }}" alt="Закрыть" class="w-8 h-8">
+          
+        </button>
+        <div class="w-44 h-44 mx-auto mb-7 rounded-full bg-purple-200 flex items-center justify-center ring-4 ring-purple-300 shadow-lg">
+          <img src="{{ url_for('static', filename='robot_11260797.gif') }}" alt="Chatbot"
+              class="w-40 h-40 object-contain rounded-full" />
+        </div>
+        <h1 class="text-4xl font-extrabold text-purple-900 mb-2">Привет! <span class="ml-1"></span></h1>
+        <p class="text-lg text-purple-800 mb-8 leading-relaxed">
+          Я бот, который поможет определить твой уровень английского.<br>
+          Задаю вопросы, проверяю грамматику и попрошу написать пару фраз. Готов(-а)?
+        </p>
+        <form method="post">
+          <input type="hidden" name="start" value="yes">
+          <button class="w-full bg-gradient-to-r from-pink-400 via-fuchsia-500 to-purple-600 text-white py-4 px-6 rounded-full font-bold text-xl shadow-md hover:scale-105 transition">
+            🚀 Начать
+          </button>
+        </form>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if not greeting %}
+
+  <!-- Fullscreen Chat -->
+  <div class="flex-1 flex flex-col px-8 py-10 overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-60">
+      <img src="{{ url_for('static', filename='sunset.jpg') }}"
+           alt="Background"
+           class="w-full h-full object-cover rounded-none">
+    </div>
+  
+    <!-- Контент поверх -->
+    <div class="flex-1 flex flex-col h-full relative z-10">
+      <h1 class="text-3xl font-bold mb-6 text-white">🗨️ Practice your English with AI</h1>
+  
+      <div id="chat-container" class="flex-1 overflow-y-auto space-y-4 px-4 py-6 bg-white bg-opacity-10 rounded-3xl shadow-inner">
+        {% for m in messages %}
+          <div class="flex {% if m.sender == 'user' %}justify-end{% else %}justify-start{% endif %}">
+            <div class="max-w-2xl px-6 py-4 text-lg leading-relaxed rounded-3xl shadow-md
+              {% if m.sender == 'user' %}bg-indigo-500 text-white{% else %}bg-white bg-opacity-80 text-black{% endif %}">
+              <strong class="font-bold">{{ m.sender.capitalize() }}:</strong> {{ m.text|safe }}
+
+            </div>
+
+          </div>
+        {% endfor %}
+      </div>
+  
+      {% if result %}
+      <div class="mt-6 bg-green-100 text-green-900 p-4 rounded-xl text-center shadow">
+        {{ result|safe }}
+      </div>
+      {% endif %}
+  
+      <form method="post" class="mt-6 flex gap-4">
+        <textarea name="message" rows="2" class="flex-1 p-3 rounded-xl resize-none text-black" placeholder="Type your reply..." required></textarea>
+        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl font-semibold">Send</button>
+      </form>
+  
+      <div class="mt-4 flex justify-between items-center">
+        <a href="/" class="text-indigo-200 underline hover:text-white">⬅ Back to Generator</a>
+        <form method="post" action="/chat/reset">
+          <button type="submit" class="bg-gradient-to-r from-yellow-300 via-yellow-400 to-purple-500 text-white px-4 py-2 rounded-xl shadow hover:opacity-90 font-semibold transition">
+            Начать заново
+          </button>
+          
+        </form>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  <script>
+    window.onload = function() {
+      const chat = document.getElementById("chat-container");
+      if (chat) {
+        chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
+      }
+    };
+  </script>
+  
+</body>
+</html>
+
+
+
+

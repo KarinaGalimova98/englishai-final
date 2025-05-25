@@ -1,0 +1,78 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Личный кабинет</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f6f7fb;
+    }
+    .sidebar {
+      background: linear-gradient(180deg, #3b3663 0%, #4b42a1 100%);
+      color: white;
+      height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body class="flex">
+  <!-- Sidebar -->
+  <div class="sidebar w-64 flex flex-col">
+
+    <h1 class="text-xl font-bold mb-6">DASHBOARD</h1>
+    <nav class="space-y-4">
+      <a href="/" class="fixed top-6 left-72 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium shadow-lg hover:scale-105 transition z-50">
+      <img src="{{ url_for('static', filename='back_icon.png') }}" alt="Назад" class="w-4 h-4 filter brightness-200">
+      На главную
+      </a>
+      <a href="#" class="block hover:text-gray-200">Мои задания</a>
+      <a href="#" class="block hover:text-gray-200">Настройки</a>
+      <a href="/logout" class="block hover:text-red-300 mt-4">Выйти</a>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-1 p-10">
+    <h2 class="text-3xl font-bold mb-6">Привет, {{ user.email }}</h2>
+    {% if user.is_admin %}
+    <a href="/admin-users"
+        class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded-xl mb-6 transition">
+        👥 Все пользователи
+    </a>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="card">
+        <h3 class="text-lg font-semibold">Дата регистрации</h3>
+        <p>{{ user.registration_date.strftime('%d.%m.%Y') }}</p>
+      </div>
+      <div class="card">
+        <h3 class="text-lg font-semibold">Заданий всего</h3>
+        <p>{{ user.tasks_today }}</p>
+      </div>
+      <div class="card">
+        <h3 class="text-lg font-semibold">Всего генераций заданий</h3>
+        <p>{{ user.gpt_today }}</p>
+      </div>
+      <div class="card">
+        <h3 class="text-lg font-semibold">Чат-бот</h3>
+        <p>{{ user.chatbot_today }}</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="text-xl font-bold mb-3">Последние действия</h3>
+      <p class="text-gray-500 italic">(здесь может быть история генераций, активности и т.п.)</p>
+    </div>
+  </div>
+</body>
+</html>

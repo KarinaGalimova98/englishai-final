@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Генератор заданий</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        neonPink: '#FF7F83',
+        neonBlue: '#00FFE9',
+        deepPurple: '#2700F6',
+        brightYellow: '#FFA249',
+        softIndigo: '#9E00F6'
+      },
+      borderRadius: {
+        '3xl': '1.5rem',
+        '4xl': '2rem'
+      },
+      boxShadow: {
+        'neon': '0 4px 30px rgba(0, 255, 233, 0.5)',
+        'inner-card': 'inset 0 1px 2px rgba(255, 255, 255, 0.1)',
+        'soft': '0 10px 20px rgba(0, 0, 0, 0.1)'
+      }
+    }
+  }
+}
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Fredoka', sans-serif; }
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .bg-decor-light {
+      background: url('/static/layer1.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .bg-decor-dark {
+      background: url('/static/layer1.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .sparkle {
+    position: relative;
+    animation: sparkle-glow 2s infinite ease-in-out;
+    box-shadow: 0 0 8px 4px rgba(255, 215, 0, 0.7); /* светлое свечение */
+    overflow: hidden;
+  }
+
+  .sparkle::before, .sparkle::after {
+    content: '✨';
+    position: absolute;
+    animation: sparkle 1s ease-out forwards;
+    opacity: 0;
+  }
+
+  .sparkle::before {
+    top: -10px;
+    left: 10px;
+  }
+
+  .sparkle::after {
+    bottom: -10px;
+    right: 10px;
+  }
+
+
+  @keyframes sparkle {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.5); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+  }
+
+  @keyframes sparkle-glow {
+    0% { box-shadow: 0 0 5px hsl(202, 87%, 57%); }
+    50% { box-shadow: 0 0 15px rgb(255, 38, 0); }
+    100% { box-shadow: 0 0 5px rgba(0, 26, 255, 0.906); }
+  }
+  </style>
+</head>
+<body id="mainBody" class="min-h-screen flex transition-colors duration-300 bg-gradient-to-tr from-deepPurple via-softIndigo to-neonBlue">
+  <!-- Sidebar -->
+  {% include 'sidebar.html' %}
+
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col items-center py-10 px-4">
+
+
+  <div id="loadingScreen" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-2xl shadow-lg text-center text-xl font-semibold">
+      ⏳ Генерация задания...
+    </div>
+  </div>
+
+  <div id="mainCard" class="bg-white/80 backdrop-blur-xl shadow-soft rounded-4xl p-10 w-full max-w-5xl fade-in relative text-gray-800">
+    <button onclick="toggleDark()" class="absolute top-4 right-4 bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-full text-sm">🌓 Тема</button>
+    <h1 class="text-4xl font-bold text-center mb-6">Cambridge Exam Task Generator</h1>
+    <p class="text-center text-lg mb-8">Сгенерируй задание на основе уровня, раздела и темы</p>
+
+    
+
+
+<!-- Task Types Block -->
+<div class="mb-12">
+  <h3 class="text-2xl font-semibold mb-6">🗃️ Типы заданий</h3>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="p-4 rounded-3xl shadow-soft bg-white text-center">
+      <div class="text-4xl">📝</div>
+      <h4 class="font-semibold">Essay</h4>
+      <p class="text-sm">Аргументированный текст</p>
+      <button class="mt-2 bg-neonPink text-white px-4 py-1 rounded-full shadow-neon">Выбрать</button>
+    </div>
+    <div class="p-4 rounded-3xl shadow-soft bg-white text-center">
+      <div class="text-4xl">📨</div>
+      <h4 class="font-semibold">Email</h4>
+      <p class="text-sm">Формальное письмо</p>
+      <button class="mt-2 bg-neonPink text-white px-4 py-1 rounded-full shadow-neon">Выбрать</button>
+    </div>
+    <div class="p-4 rounded-3xl shadow-soft bg-white text-center">
+      <div class="text-4xl">🎤</div>
+      <h4 class="font-semibold">Interview</h4>
+      <p class="text-sm">Личные вопросы</p>
+      <button class="mt-2 bg-neonPink text-white px-4 py-1 rounded-full shadow-neon">Выбрать</button>
+    </div>
+    <div class="p-4 rounded-3xl shadow-soft bg-white text-center">
+      <div class="text-4xl">🔍</div>
+      <h4 class="font-semibold">Multiple Choice</h4>
+      <p class="text-sm">Выбор ответов</p>
+      <button class="mt-2 bg-neonPink text-white px-4 py-1 rounded-full shadow-neon">Выбрать</button>
+    </div>
+  </div>
+</div>
+
+<!-- Random Task Generation Button -->
+<div class="text-center mb-12">
+  <button class="bg-gradient-to-r from-brightYellow to-neonPink text-white py-3 px-6 rounded-3xl shadow-neon font-semibold hover:scale-105 transition">
+    ⚡ Сгенерировать случайное задание
+  </button>
+</div>
+<form method="POST" class="space-y-6" onsubmit="showLoading()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="mb-6">
+          <p class="mb-2 text-white font-medium">Выбери модель генерации</p>
+          <div class="grid grid-cols-2 gap-4" id="model-cards">
+            <label class="cursor-pointer bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-xl shadow-md text-white text-center">
+              <input type="radio" name="model" value="gpt" class="hidden" checked>
+              <div class="text-lg font-semibold">GPT-4</div>
+            </label>
+            <label class="cursor-pointer bg-gradient-to-r from-blue-500 to-cyan-500 p-4 rounded-xl shadow-md text-white text-center">
+              <input type="radio" name="model" value="claude-sonnet" class="hidden">
+              <div class="text-lg font-semibold">Claude 3 Sonnet</div>
+            </label>
+            <label class="cursor-pointer bg-gradient-to-r from-amber-500 to-rose-500 p-4 rounded-xl shadow-md text-white text-center">
+              <input type="radio" name="model" value="deepseek" class="hidden">
+              <div class="text-lg font-semibold">DeepSeek</div>
+            </label>
+            <label class="cursor-pointer bg-gradient-to-r from-purple-500 to-indigo-600 p-4 rounded-xl shadow-md text-white text-center">
+              <input type="radio" name="model" value="gemma" class="hidden">
+              <div class="text-lg font-semibold">Gemma</div>
+            </label>
+            
+            
+          </div>
+        </div>
+        
+        <div>
+          <label for="level" class="block text-sm font-medium">Уровень</label>
+          <select id="level" name="level" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            <option>A2</option>
+            <option>B1</option>
+            <option value="FCE">FCE</option>
+            <option value="CAE">CAE</option>
+            <option value="CPE">CPE</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="section" class="block text-sm font-medium">Раздел экзамена</label>
+          <select id="section" name="section" onchange="updateSubtypes()" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            <option value="Writing">Writing</option>
+            <option value="Reading">Reading</option>
+            <option value="Use of English">Use of English</option>
+            <option value="Speaking">Speaking</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="subtype" class="block text-sm font-medium">Тип задания</label>
+          <select id="subtype" name="task_type" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            <!-- Заполняется через JS -->
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="topic" class="block text-sm font-medium">Тематика</label>
+          <textarea id="topic" name="topic" rows="2" placeholder="например: Technology and communication"
+            class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+        </div>
+      </div>
+      
+      
+      <button type="submit"
+        class="w-full bg-gradient-to-r from-neonPink to-deepPurple text-white py-3 px-6 rounded-3xl text-lg font-semibold transition shadow-neon hover:scale-105">
+        Сгенерировать задание
+      </button>
+    </form>
+  
+    {% if result %}
+      <div class="mt-10 bg-gray-100 p-6 rounded-xl shadow-inner whitespace-pre-wrap text-lg leading-relaxed fade-in">
+        {{ result }}
+      </div>
+
+        {% if images %}
+        <div class="mt-10">
+          <h2 class="text-xl font-semibold mb-4">Сгенерированные изображения</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for img in images %}
+              <div class="rounded-xl overflow-hidden shadow-lg bg-white p-2">
+                <img src="{{ img }}" alt="AI image" class="rounded-md w-full object-cover shadow">
+                <p class="text-sm text-center text-gray-600 mt-2">Generated from prompt</p>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% else %}
+    <p class="text-center mt-10 fade-in">Здесь появится результат генерации...</p>
+    {% endif %}
+  </div>
+
+  <script>
+    const subtypes = {
+      Writing: [
+        ["Essay", "Аргументированный текст"],
+        ["Email", "Формальные и неформальные письма"],
+        ["Report", "Описание/анализ ситуации + рекомендации"],
+        ["Review", "Отзыв на фильм/книгу/место"],
+        ["Article", "Неформальный текст в блог/журнал"],
+        ["Story", "Краткий рассказ"],
+        ["Letter", "Письмо на нужную тему"]
+      ],
+      Reading: [
+        ["Multiple Choice", "8 вопросов по тексту"],
+        ["Gapped Text", "Вставить пропущенные предложения"],
+        ["Multiple Matching", "Сопоставить абзацы с утверждениями"]
+      ],
+      Speaking: [
+        ["Interview", "Ответы на личные вопросы"],
+        ["Long Turn", "Монолог по картинке или теме"],
+        ["Collaborative Task", "Диалог с другим кандидатом"],
+        ["Discussion", "Мнение и аргументация по теме"]
+      ],
+      Use_of_English: [
+        ["Open Cloze", "Пропущенные слова без подсказок"],
+        ["Word Formation", "Преобразовать слово"],
+        ["Key Word Transformations", "Переформулировать предложение"],
+        ["Multiple-choice Cloze", "12 пропусков с выбором ответа"]
+      ],
+    };
+
+    function updateSubtypes() {
+      const section = document.getElementById("section").value.replace(/\s+/g, "_");
+      const subtypeSelect = document.getElementById("subtype");
+      subtypeSelect.innerHTML = "";
+      subtypes[section].forEach(([value, label]) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = `${value} — ${label}`;
+        subtypeSelect.appendChild(option);
+      });
+    }
+
+    function toggleDark() {
+      const body = document.getElementById("mainBody");
+      const card = document.getElementById("mainCard");
+      if (body.classList.contains("bg-decor-light")) {
+        body.classList.remove("bg-decor-light");
+        body.classList.add("bg-decor-dark");
+        card.classList.remove("bg-white", "text-gray-800");
+        card.classList.add("bg-gray-900", "text-white");
+      } else {
+        body.classList.remove("bg-decor-dark");
+        body.classList.add("bg-decor-light");
+        card.classList.remove("bg-gray-900", "text-white");
+        card.classList.add("bg-white", "text-gray-800");
+      }
+    }
+
+    function showLoading() {
+      document.getElementById("loadingScreen").classList.remove("hidden");
+    }
+
+    updateSubtypes();
+  </script>
+  <script>
+    const modelCards = document.querySelectorAll('#model-cards label');
+  
+    modelCards.forEach(card => {
+      card.addEventListener('click', () => {
+        modelCards.forEach(c => c.classList.remove('ring-4', 'ring-white', 'sparkle'));
+        card.classList.add('ring-4', 'ring-white', 'sparkle');
+  
+        // Удалим sparkle через секунду, чтобы можно было выбрать ту же модель ещё раз
+        //setTimeout(() => card.classList.remove('sparkle'), 1000);
+      });
+    });
+  </script>
+  </div> <!-- Закрывает flex-1 -->
+
+</body>
+</html>
+

@@ -1,0 +1,195 @@
+;; sandi 2025 GLM 
+
+* name "sandi-20241209.glm"
+* desc "The Global Mapping File (GLM) for S&I Challenge 2025 WER scoring"
+* format = 'NIST1'
+* max_nrules = '2500'
+* copy_no_hit = 'T'
+* case_sensitive = 'F'
+
+;;  Backchannel Mappings
+HUH-UH  =>  %HESITATION%    / [ ] __ [ ] ;; negative token
+HUHUH   =>  %HESITATION%    / [ ] __ [ ] ;; negative token
+UH-UH   =>  %HESITATION%    / [ ] __ [ ] ;; negative token
+UHUH    =>  %HESITATION%    / [ ] __ [ ] ;; negative token
+MHM     =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+MMM     =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+UM      =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+UMMM    =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+MM-HM   =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+MM-HMM  =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+MM-HUH  =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+MMHM    =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+MMHMM   =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+MMMMM   =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+MMMMMM  =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+UH-HMM  =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+UHHUH   =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token
+UH-HUH  =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token
+UM-HMM  =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+UM-HUM  =>  %HESITATION%     / [ ] __ [ ] ;; affirmative token 
+
+
+;; Hesitation sound mappings
+AAA     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+ACH     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+AH      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+AHH     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+AHM     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+AWW     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+EEE     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+EH      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+ER      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+EW      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+HA      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+HEE     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+HM      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+HMM     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+HUH     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+MM      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+OOF     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+UAAAA   =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+UH      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+UHHH    =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+UHHHH   =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+UHHHHH  =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+UM      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+EHH     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+EHM     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+ERM     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+ERR     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+HMMM    =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+MMMM    =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+NEH     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+UHH     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+UHM     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+UMM     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+UMMMMM  =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token
+
+;;
+%ACH     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%AH      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%EEE     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%EH      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%ER      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%EW      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%HA      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%HEE     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%HM      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%HUH     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%MM      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%OOF     =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%UH      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+%UM      =>  %HESITATION%     / [ ] __ [ ] ;; hesitation token 
+
+;; Unambiguously handle mr. mrs. and ms.
+MR               => MISTER / [ ] __ [ ] 
+MR.              => MISTER / [ ] __ [ ] 
+MRS.             => MRS / [ ] __ [ ] 
+MS.              => MS / [ ] __ [ ] 
+
+FACE-TO-FACE	 => [FACE TO FACE] / [ ] __ [ ]
+PARTTIME	 => [PART TIME]	/ [ ] __ [ ]
+PART-TIME	 => [PART TIME]	/ [ ] __ [ ]
+WELL-PAID	 => [WELL PAID]
+OKAY		 => OK
+[ O K]		 => [ OK]
+
+;; Alternate acceptable spellings
+BEHAVIOR	 => BEHAVIOUR
+CENTER		 => CENTRE
+CENTERS		 => CENTRES
+COLORS		 => COLOURS
+FAVORITE	 => FAVOURITE
+FULFILL		 => FULFIL
+GLOBALIZED	 => GLOBALISED
+LITERS		 => LITRES
+MESMERIZING	 => MESMERISING
+NEIGHBORS	 => NEIGHBOURS
+NEIGHBORHOODS	 => NEIGHBOURHOODS
+ORGANIZATION	 => ORGANISATION
+ORGANIZE	 => ORGANISE
+ORGANIZING	 => ORGANISING
+PRACTISE	 => PRACTICE
+PRACTICING	 => PRACTISING
+PRIOTIZE	 => PRIORITISE
+REALIZE		 => REALISE
+TRAVELING	 => TRAVELLING
+
+;; =======================================================================
+;; All mappings below will be applied to the system output only and not to 
+;; the reference.
+;; =======================================================================
+
+;; Contraction expansions without probable possessive alternatives
+[DOESN'T] => [DOES NOT] / [ ] __ [ ]
+[I'M] => [I AM] / [ ] __ [ ]
+[ UK] => [ U K] / [ ] __ [ ]
+[ TV] => [ T V] / [ ] __ [ ]
+[SOMETIME] => [SOME TIME] / [ ] __ [ ]
+[SOMETIMES] => [SOME TIMES] / [ ] __ [ ]
+[EVERYDAY] => [EVERY DAY]
+[ CEO] => [ C E O]
+[ PHD] => [ P H D]
+[ USA] => [ U S A]
+
+[BEEHIVE] => [BEE HIVE] / [ ] __ [ ]
+[BEEHIVES] => [BEE HIVES] / [ ] __ [ ]
+[CELLPHONES] => [CELL PHONES] / [ ] __ [ ]
+[TAKEOFF] => [TAKE OFF] / [ ] __ [ ]
+[TEAMWORK] => [TEAM WORK] / [ ] __ [ ]
+[TEAMWORKING] => [TEAM WORKING] / [ ] __ [ ]
+
+[CHECK-IN] => [{CHECK-IN / CHECKIN / CHECK IN / CHECKING}]
+[CO-WORKERS] => [{CO-WORKERS / COWORKERS / CO WORKERS}]
+[INEXPENSIVE] => [{INEXPENSIVE / IN-EXPENSIVE / IN EXPENSIVE}]
+[THERE'S] => [{THERE'S / THERE IS / THERE HAS}] / [ ] __ [ ]
+[YOU'LL] => [YOU WILL] / [ ] __ [ ]
+
+COUNTRIES'   => COUNTRIES
+VEHICLES'    => VEHICLES
+
+[3D] => [{3D / 3-D / THREE-D / THREE D}]
+[B1] => [{B1 / B-1 / B ONE / B-ONE}]
+[CO2] => [{CO2 / C O TWO}]
+[COVID-19] => [{COVID-19 / COVID 19 / COVID NINETEEN / COVID-NINETEEN}]
+[MP3] => [{MP3 / M P THREE}]
+[U2] => [{U2 / U TWO}]
+[X1000] => [{X1000 / X ONE THOUSAND}]
+
+
+[O'CLOCK] => [O CLOCK / O'CLOCK] / [ ] __ [ ]
+[Y'LL] => [YOU ALL] / [ ] __ [ ]
+[IT'S] => [{IT'S / IT IS / IT HAS}] / [ ] __ [ ]
+[WHERE'S] => [{WHERE'S / WHERE IS / WHERE HAS}] / [ ] __ [ ]
+[WHAT'S] => [{WHAT'S / WHAT IS / WHAT HAS}] / [ ] __ [ ]
+[THAT'S] => [{THAT'S / THAT IS / THAT HAS}] / [ ] __ [ ]
+[WE'RE] => [WE ARE] / [ ] __ [ ]
+[YOU'RE] => [YOU ARE] / [ ] __ [ ]
+[THEY'RE] => [THEY ARE] / [ ] __ [ ]
+[HE'S] => [{HE'S / HE IS / HE HAS}] / [ ] __ [ ]
+[SHE'S] => [{SHE'S / SHE IS / SHE HAS}] / [ ] __ [ ]
+[I'LL] => [I WILL] / [ ] __ [ ]
+[WE'LL] => [WE WILL] / [ ] __ [ ]
+[THEY'LL] => [THEY WILL] / [ ] __ [ ]
+[SHE'LL] => [SHE WILL] / [ ] __ [ ]
+[HE'LL] => [HE WILL] / [ ] __ [ ]
+[I'VE] => [I HAVE] / [ ] __ [ ]
+[YOU'VE] => [YOU HAVE] / [ ] __ [ ]
+[2-PODEL] => [{2-PODEL / 2 PODEL / TWO-PODEL / TWO PODEL}]
+[C1] => [{C1 / C-1 / C ONE / C-ONE}]
+[B2] => [{B2 / B-2 / B TWO / B-TWO}]
+[7R] => [{7R / SEVEN R}]
+[8R] => [{8R / EIGHT R}]
+[8R] => [{B1 / B-1 / B ONE / B-ONE}]
+[100-POINT] => [{100-POINT / 100 POINT / HUNDRED-POINT / ONE HUNDRED POINT}]
+[100KM] => [{100KM / ONE HUNDRED KILOMETRES}]
+[300KM] => [{300KM / THREE HUNDRED KILOMETRES}]
+[5L] => [{5L / FIVE L / FIVE LITRES}]
+[2NESS] => [TWO NESS] / [ ] __ [ ]
+
+
+DIFFERENTS => DIFFERENT
+DISVANTAGES => DISADVANTAGES
+SPECIALLY => ESPECIALLY
+

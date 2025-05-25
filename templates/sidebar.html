@@ -1,0 +1,38 @@
+<!-- sidebar.html -->
+<div class="w-20 min-h-screen bg-white/10 backdrop-blur-xl shadow-xl text-white flex flex-col items-center py-6 space-y-8 rounded-r-3xl z-50 relative">
+  {% set active = request.path %}
+
+  <a href="/" class="group transition hover:scale-110 relative">
+    <img src="{{ url_for('static', filename='ai_12882687.png') }}" alt="Генератор" class="h-10 w-10 filter invert transition duration-300 group-hover:invert-0 group-hover:brightness-200 group-hover:drop-shadow-lg {{ 'opacity-100' if active == '/' else 'opacity-50' }} group-hover:opacity-100">
+    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Генератор</span>
+  </a>
+
+  <a href="/chat" class="group transition hover:scale-110 relative">
+    <img src="{{ url_for('static', filename='chat_1766486.png') }}" alt="Чат" class="h-10 w-10 filter invert transition duration-300 group-hover:invert-0 group-hover:brightness-200 group-hover:drop-shadow-lg {{ 'opacity-100' if active == '/' else 'opacity-50' }} group-hover:opacity-100">
+    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Уровень</span>
+  </a>
+
+  <a href="/use_of_english" class="group transition hover:scale-110 relative">
+    <img src="{{ url_for('static', filename='alphabet_3422714.png') }}" alt="Use of English" class="h-10 w-10 filter invert transition duration-300 group-hover:invert-0 group-hover:brightness-200 group-hover:drop-shadow-lg {{ 'opacity-100' if active == '/' else 'opacity-50' }} group-hover:opacity-100">
+    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Use of English</span>
+  </a>
+
+  {% if current_user.is_authenticated %}
+  <a href="{{ url_for('dashboard.dashboard') }}" class="group transition hover:scale-110 relative">
+    <img src="{{ url_for('static', filename='account_6360168.png') }}" alt="Аккаунт" class="h-10 w-10 filter invert transition duration-300 group-hover:invert-0 group-hover:brightness-200 group-hover:drop-shadow-lg {{ 'opacity-100' if active == '/' else 'opacity-50' }} group-hover:opacity-100">
+    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Аккаунт</span>
+  </a>
+  {% else %}
+  <a href="{{ url_for('auth.auth') }}" class="group transition hover:scale-110 relative">
+    <img src="{{ url_for('static', filename='account_6360168.png') }}" alt="Вход" class="h-10 w-10 filter invert transition duration-300 group-hover:invert-0 group-hover:brightness-200 group-hover:drop-shadow-lg {{ 'opacity-100' if active == '/' else 'opacity-50' }} group-hover:opacity-100">
+    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Вход</span>
+  </a>
+  {% endif %}
+</div>
+
+
+
+
+
+
+  

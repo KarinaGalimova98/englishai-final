@@ -1,0 +1,435 @@
+{
+  "FCE": {
+    "Reading": {
+        "Multiple Matching": {
+            "min_words": 800,
+            "max_words": 850,
+            "instruction_example": "You are going to read an article in which five people talk about their experience. Match the questions (1–10) to the appropriate person (A–E).",
+            "structure_description": "Текст разделен на абзацы A–E, внизу список утверждений.",
+            "images": 0,
+            "layout_notes": "Абзацы с буквами выделены жирным, утверждения нумерованы.",
+            "visual_guidelines": "Абзацы текста и утверждения чётко разделены.",
+            "format": "Текст разделен на несколько частей (A–E). Ниже текста утверждения, нужно соотнести их с соответствующими частями."
+        },
+        "Gapped Text": {
+            "min_words": 500,
+            "max_words": 650,
+            "instruction_example": "You are going to read an article from which paragraphs have been removed. Choose from the paragraphs (A–H) the one which fits each gap (1–7).",
+            "structure_description": "Текст с пропущенными абзацами, варианты вставки под текстом.",
+            "images": 0,
+            "layout_notes": "Пронумерованные пропуски, ниже абзацы для вставки.",
+            "visual_guidelines": "Пропуски и абзацы чётко структурированы.",
+            "format": "Текст, из которого удалены несколько абзацев. Даны варианты абзацев для вставки в пропуски."
+        },
+        "Multiple Choice": {
+            "min_words": 550,
+            "max_words": 700,
+            "instruction_example": "Read the article below and answer the questions. For each question, choose the correct answer (A, B, C or D).",
+            "structure_description": "Длинный текст с восьмью вопросами, каждый вопрос сопровождается четырьмя вариантами.",
+            "images": 0,
+            "layout_notes": "Вопросы под текстом, варианты ответов чётко разделены.",
+            "visual_guidelines": "Аккуратный блок вопросов и вариантов.",
+            "format": "Текст с последующими вопросами, для каждого вопроса предложены четыре варианта ответа (A–D)."
+        }
+    },
+     "Use of English": {
+        "Multiple-choice Cloze": {
+            "min_words": 200,
+            "max_words": 350,
+            "instruction_example": "For questions 1–8, read the text below and decide which answer (A, B, C or D) best fits each gap.",
+            "structure_description": "Текст с восемью пронумерованными пропусками. Каждый пропуск сопровождается четырьмя вариантами ответов (A–D).",
+            "images": 0,
+            "layout_notes": "Текст структурирован в абзацы с выделенными пропусками. Варианты ответов размещены ниже текста отдельным списком.",
+            "visual_guidelines": "Аккуратное оформление текста, номера пропусков выделены. Чёткое разделение вариантов ответов, отдельный блок с номерами.",
+            "format": "Текст с пропусками, к каждому пропуску даются четыре варианта (A–D). Нужно выбрать наиболее подходящий."
+        },
+        "Open Cloze": {
+            "min_words": 200,
+            "max_words": 250,
+            "instruction_example": "For questions 1–8, read the text below and think of the word which best fits each gap. Use only one word in each gap.",
+            "structure_description": "Текст с пропусками, в которые кандидат должен вставить подходящее слово самостоятельно.",
+            "images": 0,
+            "layout_notes": "Пронумерованные пропуски равномерно распределены по тексту.",
+            "visual_guidelines": "Чёткая структура, аккуратные абзацы, номера пропусков выделены.",
+            "format": "Текст с пропусками. Кандидат должен самостоятельно подобрать одно подходящее слово в каждый пропуск."
+        },
+        "Word Formation": {
+            "min_words": 150,
+            "max_words": 200,
+            "instruction_example": "For questions 1–8, read the text below. Use the word given in capitals at the end of each line to form a word that fits in the gap in the same line.",
+            "structure_description": "Текст с пропусками и словами для изменения справа от строки.",
+            "images": 0,
+            "layout_notes": "Текст слева, исходные слова справа в скобках.",
+            "visual_guidelines": "Чёткие строки текста, исходные слова справа, аккуратная нумерация пропусков.",
+            "format": "Текст с пропусками. Справа указано исходное слово, от которого нужно образовать новое слово, подходящее для вставки в пропуск."
+        },
+        "Key Word Transformations": {
+            "min_words": 100,
+            "max_words": 250,
+            "instruction_example": "For questions 1–6, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. The answer must be between two and five words. Do not change the word given.",
+            "structure_description": "Пары предложений с ключевым словом.",
+            "images": 0,
+            "layout_notes": "Исходное предложение, затем ключевое слово, затем предложение с пропуском.",
+            "visual_guidelines": "Чёткие пары предложений, ключевое слово выделено жирным или курсивом.",
+            "format": "Два предложения, первое дано полностью, второе нужно дополнить с использованием данного ключевого слова."
+        }
+    },
+    "Speaking": {
+        "Long Turn": {
+            "min_words": 30,
+            "max_words": 100,
+            "instruction_example": "Compare the two photographs and say why you think the people have chosen these activities.",
+            "structure_description": "Два изображения и один вопрос.",
+            "images": 2,
+            "layout_notes": "Изображения горизонтально, вопрос ниже.",
+            "visual_guidelines": "Изображения и текст чётко разделены.",
+            "format": "Два изображения. Кандидат должен сравнить их и ответить на поставленный вопрос."
+        },
+        "Collaborative Task": {
+            "min_words": 50,
+            "max_words": 100,
+            "instruction_example": "Discuss with your partner which of these ideas would be the best to attract tourists.",
+            "structure_description": "Карточка с заголовком и пять вопросов.",
+            "images": 0,
+            "layout_notes": "Заголовок темы, вопросы списком.",
+            "visual_guidelines": "Чёткая карточка, вопросы отдельно.",
+            "format": "Карточка с заголовком и списком вопросов для совместного обсуждения с партнером."
+        },
+        "Interview": {
+            "min_words": 30,
+            "max_words": 160,
+            "instruction_example": "Answer general questions about yourself, your interests, and your opinions.",
+            "structure_description": "Экзаменатор задаёт общие вопросы о жизни, интересах и опыте кандидата.",
+            "images": 0,
+            "format": "Вопросы и ответы в форме интервью.",
+            "layout_notes": "Прямые вопросы экзаменатора, ответы кандидата.",
+            "visual_guidelines": "Чёткие и понятные вопросы, ответы без лишних деталей."
+        }
+    },
+    "Writing": {
+        "Essay": {
+            "min_words": 100,
+            "max_words": 190,
+            "instruction_example": "Write an essay discussing two methods of protecting the environment. Write your essay using 140–190 words.",
+            "structure_description": "Инструкция и указание слов.",
+            "images": 0,
+            "layout_notes": "Тема, количество слов.",
+            "visual_guidelines": "Чётко выделенная тема и инструкция.",
+            "format": "Эссе на заданную тему. Необходимо раскрыть указанную тему, используя заданный объем слов."
+        },
+        "Article": {
+            "min_words": 100,
+            "max_words": 190,
+            "instruction_example": "Write an essay discussing two methods of protecting the environment. Write your essay using 140–190 words.",
+            "structure_description": "Инструкция и указание слов.",
+            "images": 0,
+            "layout_notes": "Тема, количество слов.",
+            "visual_guidelines": "Чётко выделенная тема и инструкция.",
+            "format": "Эссе на заданную тему. Необходимо раскрыть указанную тему, используя заданный объем слов."
+        },"Story": {
+            "min_words": 100,
+            "max_words": 190,
+            "instruction_example": "Write an essay discussing two methods of protecting the environment. Write your essay using 140–190 words.",
+            "structure_description": "Инструкция и указание слов.",
+            "images": 0,
+            "layout_notes": "Тема, количество слов.",
+            "visual_guidelines": "Чётко выделенная тема и инструкция.",
+            "format": "Эссе на заданную тему. Необходимо раскрыть указанную тему, используя заданный объем слов."
+        },"Review": {
+            "min_words": 100,
+            "max_words": 190,
+            "instruction_example": "Write an essay discussing two methods of protecting the environment. Write your essay using 140–190 words.",
+            "structure_description": "Инструкция и указание слов.",
+            "images": 0,
+            "layout_notes": "Тема, количество слов.",
+            "visual_guidelines": "Чётко выделенная тема и инструкция.",
+            "format": "Эссе на заданную тему. Необходимо раскрыть указанную тему, используя заданный объем слов."
+        },"Email": {
+            "min_words": 100,
+            "max_words": 190,
+            "instruction_example": "Write an essay discussing two methods of protecting the environment. Write your essay using 140–190 words.",
+            "structure_description": "Инструкция и указание слов.",
+            "images": 0,
+            "layout_notes": "Тема, количество слов.",
+            "visual_guidelines": "Чётко выделенная тема и инструкция.",
+            "format": "Эссе на заданную тему. Необходимо раскрыть указанную тему, используя заданный объем слов."
+        },"Letter": {
+            "min_words": 100,
+            "max_words": 190,
+            "instruction_example": "Write an essay discussing two methods of protecting the environment. Write your essay using 140–190 words.",
+            "structure_description": "Инструкция и указание слов.",
+            "images": 0,
+            "layout_notes": "Тема, количество слов.",
+            "visual_guidelines": "Чётко выделенная тема и инструкция.",
+            "format": "Эссе на заданную тему. Необходимо раскрыть указанную тему, используя заданный объем слов."
+        }
+    }
+  },
+  "CAE": {
+    "Reading": {
+      
+      "Multiple Matching": {
+          "min_words": 600,
+          "max_words": 900,
+          "instruction_example": "You are going to read an article in which five people talk about their experience. Match the questions (1–10) to the appropriate person (A–E).",
+          "structure_description": "Текст разделен на абзацы A–E, внизу список утверждений.",
+          "images": 0,
+          "layout_notes": "Абзацы с буквами выделены жирным, утверждения нумерованы.",
+          "visual_guidelines": "Абзацы текста и утверждения чётко разделены.",
+          "format": "Текст разделен на несколько частей (A–E). Ниже текста утверждения, нужно соотнести их с соответствующими частями."
+      },
+      "Gapped Text": {
+          "min_words": 650,
+          "max_words": 800,
+          "instruction_example": "You are going to read an article from which paragraphs have been removed. Choose from the paragraphs (A–H) the one which fits each gap (1–7).",
+          "structure_description": "Текст с пропущенными абзацами, варианты вставки под текстом.",
+          "images": 0,
+          "layout_notes": "Пронумерованные пропуски, ниже абзацы для вставки.",
+          "visual_guidelines": "Пропуски и абзацы чётко структурированы.",
+          "format": "Текст, из которого удалены несколько абзацев. Даны варианты абзацев для вставки в пропуски."
+      },
+      "Multiple Choice": {
+          "min_words": 700,
+          "max_words": 800,
+          "instruction_example": "Read the article below and answer the questions. For each question, choose the correct answer (A, B, C or D).",
+          "structure_description": "Текст с вопросами, каждый вопрос сопровождается четырьмя вариантами.",
+          "images": 0,
+          "layout_notes": "Вопросы под текстом, варианты ответов чётко разделены.",
+          "visual_guidelines": "Аккуратный блок вопросов и вариантов.",
+          "format": "Текст с последующими вопросами, для каждого вопроса предложены четыре варианта ответа (A–D)."
+      }
+    },
+
+   "Use of English": {
+        "Multiple-choice Cloze": {
+          "min_words": 250,
+          "max_words": 350,
+          "instruction_example": "For questions 1–8, read the text below and decide which answer (A, B, C or D) best fits each gap.",
+          "structure_description": "Текст с восемью пронумерованными пропусками. Каждый пропуск сопровождается четырьмя вариантами ответов (A–D).",
+          "images": 0,
+          "layout_notes": "Текст структурирован в абзацы с выделенными пропусками. Варианты ответов размещены ниже текста отдельным списком.",
+          "visual_guidelines": "Аккуратное оформление текста, номера пропусков выделены. Пропуски в виде _______. Чёткое разделение вариантов ответов, отдельный блок с номерами.",
+          "format": "Текст с пропусками, к каждому пропуску даются четыре варианта (A–D). Нужно выбрать наиболее подходящий."
+      },
+        "Open Cloze": {
+          "min_words": 250,
+          "max_words": 350,
+          "instruction_example": "For questions 1–8, read the text below and think of the word which best fits each gap. Use only one word in each gap.",
+          "structure_description": "Текст с пропусками, в которые кандидат должен вставить подходящее слово самостоятельно.",
+          "images": 0,
+          "layout_notes": "Пронумерованные пропуски равномерно распределены по тексту.",
+          "visual_guidelines": "Чёткая структура, аккуратные абзацы, номера пропусков выделены.",
+          "format": "Текст с пропусками. Кандидат должен самостоятельно подобрать одно подходящее слово в каждый пропуск."
+      },
+      "Word Formation": {
+          "min_words": 200,
+          "max_words": 270,
+          "instruction_example": "For questions 1–8, read the text below. Use the word given in capitals at the end of each line to form a word that fits in the gap in the same line.",
+          "structure_description": "Текст с пропусками и словами для изменения справа от строки.",
+          "images": 0,
+          "layout_notes": "Текст слева, исходные слова справа в скобках.",
+          "visual_guidelines": "Чёткие строки текста, исходные слова справа, аккуратная нумерация пропусков.",
+          "format": "Текст с пропусками. Справа указано исходное слово, от которого нужно образовать новое слово, подходящее для вставки в пропуск."
+      },
+      "Key Word Transformations": {
+          "min_words": 100,
+          "max_words": 250,
+          "instruction_example": "For questions 1–6, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given.",
+          "structure_description": "Пары предложений с ключевым словом.",
+          "images": 0,
+          "layout_notes": "Исходное предложение, затем ключевое слово, затем предложение с пропуском.",
+          "visual_guidelines": "Чёткие пары предложений, ключевое слово выделено жирным или курсивом.",
+          "format": "Два предложения, первое дано полностью, второе нужно дополнить с использованием данного ключевого слова."
+      }
+    },
+  "Speaking": {
+      "Long Turn": {
+          "min_words": 30,
+          "max_words": 100,
+          "instruction_example": "Compare the two photographs and say why you think the people have chosen these activities.",
+          "structure_description": "Два изображения и один вопрос.",
+          "images": 2,
+          "layout_notes": "Изображения горизонтально, вопрос ниже.",
+          "visual_guidelines": "Изображения и текст чётко разделены.",
+          "format": "Два изображения. Кандидат должен сравнить их и ответить на поставленный вопрос."
+      },
+      "Collaborative Task": {
+          "min_words": 50,
+          "max_words": 150,
+          "instruction_example": "Discuss with your partner which of these ideas would be the best to attract tourists.",
+          "structure_description": "Карточка с заголовком и пять вопросов.",
+          "images": 0,
+          "layout_notes": "Заголовок темы, вопросы списком.",
+          "visual_guidelines": "Чёткая карточка, вопросы отдельно.",
+          "format": "Карточка с заголовком и списком вопросов для совместного обсуждения с партнером."
+      },
+      "Interview": {
+            "min_words": 40,
+            "max_words": 180,
+            "instruction_example": "Discuss your personal experiences, opinions and future plans.",
+            "structure_description": "Интервью включает вопросы о личном опыте, взглядах и планах.",
+            "images": 0,
+            "format": "Серия вопросов и ответов.",
+            "layout_notes": "Чёткие вопросы, ясные и краткие ответы.",
+            "visual_guidelines": "Вопросы и ответы структурированы отдельно."
+        }
+  },
+  "Writing": {
+      "Essay": {
+          "min_words": 140,
+          "max_words": 190,
+          "instruction_example": "Write an essay discussing two methods of protecting the environment. Write your essay using 220–260 words.",
+          "structure_description": "Инструкция и указание слов.",
+          "images": 0,
+          "layout_notes": "Тема, количество слов.",
+          "visual_guidelines": "Чётко выделенная тема и инструкция.",
+          "format": "Эссе на заданную тему. Необходимо раскрыть указанную тему, используя заданный объем слов."
+      },
+      "Letter": {"min_words": 220, "max_words": 260, "instruction_example": "Write a letter using 220–260 words.", "images": 0, "format": "Письмо с указанием количества слов."},
+      "Proposal": {"min_words": 220, "max_words": 260, "instruction_example": "Write a proposal using 220–260 words.", "images": 0, "format": "Предложение с указанием количества слов."},
+      "Report": {"min_words": 220, "max_words": 260, "instruction_example": "Write a report using 220–260 words.", "images": 0, "format": "Отчёт с указанием количества слов."},
+      "Review": {"min_words": 220, "max_words": 260, "instruction_example": "Write a review using 220–260 words.", "images": 0, "format": "Обзор с указанием количества слов."},
+      "Article": {"min_words": 220, "max_words": 260, "instruction_example": "Write a review using 220–260 words.", "images": 0, "format": "Обзор с указанием количества слов."}
+      }
+    },
+  "CPE": {
+    "Reading": {
+      "Gapped Text": {
+          "min_words": 600,
+          "max_words": 800,
+          "instruction_example": "You are going to read an article from which paragraphs have been removed. Choose from paragraphs A–G the one which fits each gap (1–6).",
+          "structure_description": "Текст с удалёнными абзацами, ниже представлены абзацы для вставки (A–G).",
+          "images": 0,
+          "format": "Выбор подходящих абзацев для вставки в пропуски.",
+          "layout_notes": "Чётко пронумерованные пропуски и варианты.",
+          "visual_guidelines": "Отдельный блок текста и блок вариантов."
+      },
+      "Multiple Choice": {
+          "min_words": 700,
+          "max_words": 800,
+          "instruction_example": "Read the text and choose the best answer (A, B, C or D) for each question.",
+          "structure_description": "Текст с вопросами и четырьмя вариантами ответа.",
+          "images": 0,
+          "format": "Четыре варианта ответа к каждому вопросу.",
+          "layout_notes": "Текст сверху, вопросы и ответы ниже.",
+          "visual_guidelines": "Чёткое разделение текста и вопросов."
+      },
+      "Multiple Matching": {
+          "min_words": 700,
+          "max_words": 800,
+          "instruction_example": "Match the questions (1–10) to the appropriate extracts (A–D).",
+          "structure_description": "Несколько вопросов соотносятся с несколькими отрывками.",
+          "images": 0,
+          "format": "Каждый вопрос может соответствовать одному или нескольким отрывкам.",
+          "layout_notes": "Отрывки и вопросы чётко разделены.",
+          "visual_guidelines": "Отдельные блоки для отрывков и вопросов."
+      }
+  },
+  "Use of English": {
+      "Key Word Transformations": {
+          "min_words": 200,
+          "max_words": 250,
+          "instruction_example": "Complete the second sentence using the given key word.",
+          "structure_description": "Пары предложений, второе дополнить ключевым словом.",
+          "images": 0,
+          "format": "Дополнение второго предложения ключевым словом.",
+          "layout_notes": "Два предложения и слово между ними.",
+          "visual_guidelines": "Чётко разделённые пары предложений."
+      },
+      "Multiple-choice Cloze": {
+          "min_words": 200,
+          "max_words": 250,
+          "instruction_example": "Choose the correct answer (A–D) to fill each gap.",
+          "structure_description": "Текст с пропусками и вариантами ответов.",
+          "images": 0,
+          "format": "Четыре варианта ответа к каждому пропуску.",
+          "layout_notes": "Варианты ответов ниже текста.",
+          "visual_guidelines": "Текст и варианты чётко разделены."
+      },
+      "Open Cloze": {
+          "min_words": 200,
+          "max_words": 220,
+          "instruction_example": "Fill each gap with one suitable word.",
+          "structure_description": "Текст с пропусками, которые нужно заполнить самостоятельно.",
+          "images": 0,
+          "format": "Самостоятельный подбор слова.",
+          "layout_notes": "Пропуски последовательно нумерованы.",
+          "visual_guidelines": "Чёткая нумерация пропусков."
+      },
+      "Word Formation": {
+          "min_words": 160,
+          "max_words": 220,
+          "instruction_example": "Form a suitable word from the one given at the end of each line.",
+          "structure_description": "Текст с исходными словами справа.",
+          "images": 0,
+          "format": "Изменение слова для вставки.",
+          "layout_notes": "Исходные слова указаны справа.",
+          "visual_guidelines": "Исходные слова справа в отдельном блоке."
+      }
+  },
+  "Speaking": {
+      "Collaborative Task": {
+          "min_words": 80,
+          "max_words": 100,
+          "instruction_example": "Discuss these issues with your partner.",
+          "structure_description": "Карточка с вопросами для обсуждения.",
+          "images": 0,
+          "format": "Карточка с заголовком и вопросами.",
+          "layout_notes": "Чёткий заголовок, вопросы списком.",
+          "visual_guidelines": "Отдельный блок с заголовком и вопросами."
+      },
+      "Long Turn": {
+          "min_words": 50,
+          "max_words": 70,
+          "instruction_example": "Choose two or three of the photographs and compare them.",
+          "structure_description": "Четыре или пять изображений, выбрать и сравнить два или три из них.",
+          "images": 4,
+          "format": "Выбор и сравнение двух-трёх изображений.",
+          "layout_notes": "Горизонтальное расположение изображений.",
+          "visual_guidelines": "Картинки чётко разделены, вопросы ниже."
+      },
+      "Interview": {
+            "min_words": 50,
+            "max_words": 200,
+            "instruction_example": "Engage in a conversation about your interests, achievements, and perspectives.",
+            "structure_description": "Задание представляет собой диалог, где экзаменатор задаёт глубокие вопросы.",
+            "images": 0,
+            "format": "Диалог с серией тематических вопросов.",
+            "layout_notes": "Вопросы на различные темы, развёрнутые ответы.",
+            "visual_guidelines": "Структура вопросов и ответов чётко разделена."
+        }
+  },
+  "Writing": {
+      "Article": {
+          "min_words": 100,
+          "max_words": 250,
+          "instruction_example": "Write your answers in 280–320 words in an appropriate style.",
+          "format": "Статья с указанием количества слов."
+      },
+      "Essay": {
+          "min_words": 100,
+          "max_words": 260,
+          "instruction_example": "Read the two texts below. Write an essay summarising and evaluating the key points from both texts. Use your own words throughout as far as possible, and include your own ideas in your answers. Write your answer in 240–280 words.",
+          "format": "Эссе с указанием количества слов."
+      },
+      "Letter": {
+          "min_words": 100,
+          "max_words": 260,
+          "instruction_example": "Write your answers in 280–320 words in an appropriate style.",
+          "format": "Письмо с указанием количества слов."
+      },
+      "Report": {
+          "min_words": 100,
+          "max_words": 260,
+          "instruction_example": "Write your answers in 280–320 words in an appropriate style.",
+          "format": "Отчёт с указанием количества слов."
+      },
+      "Review": {
+          "min_words": 100,
+          "max_words": 260,
+          "instruction_example": "Write your answers in 280–320 words in an appropriate style.",
+          "format": "Обзор с указанием количества слов."
+      }
+  }
+  }
+}

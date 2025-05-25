@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Генератор заданий</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #3a0ca3, #7209b7, #4361ee);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite; }
+      
+    /* Pastel creamy gradients */
+    .creamy-bg {
+ min-height: 100vh;
+    background: 
+        radial-gradient(ellipse 60% 80% at 60% 30%, #e7f3ff 0%, #e0e7ff 100%),
+        radial-gradient(ellipse 80% 50% at 25% 70%, #e6eeff 0%, #d4e3fa 100%),
+        linear-gradient(120deg, #e3e7fa 0%, #c7d2fe 100%);
+    background-blend-mode: lighten;
+    }
+    /* --- Стиль для прозрачных (frosted glass) блоков --- */
+.pastel-card, .card-shadow {
+  background: rgba(255, 255, 255, 0.33);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  box-shadow: 0 8px 40px 0 rgba(132, 61, 225, 0.05), 0 1.5px 9px 0 rgba(112, 80, 235, 0.08);
+  border: 1.5px solid rgba(210, 200, 255, 0.22);
+  /* Для плавных краёв */
+  border-radius: 2rem;
+  transition: box-shadow 0.25s;
+}
+.pastel-card {
+  /* если есть отдельно pastel-card — чуть больше прозрачности */
+  background: rgba(255, 255, 255, 0.38);
+}
+
+/* --- КНОПКА --- */
+button[type="submit"], .auth-button {
+  background: linear-gradient(90deg, #73f6ff 0%, #ffe0e8 50%, #b388fa 100%);
+  color: #22eaff;
+  text-shadow: 0 1px 10px #a7e5ff88;
+  border-radius: 1.8rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 2px 16px 0 rgba(110, 60, 220, 0.13), 0 1.5px 9px 0 rgba(99, 191, 255, 0.15);
+  transition: box-shadow 0.24s, transform 0.22s;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  outline: none;
+}
+
+button[type="submit"]:hover, .auth-button:hover {
+  box-shadow: 0 8px 30px 0 #7ff0ff55;
+  transform: scale(1.03);
+  background: linear-gradient(90deg, #b388fa 0%, #73f6ff 80%);
+  color: #fff;
+}
+
+/* Для карточек (типы заданий) — сделать тоже чуть прозрачными */
+.type-card {
+  background: rgba(255,255,255,0.45) !important;
+  border: 2px solid rgba(202, 202, 255, 0.17) !important;
+  box-shadow: 0 2px 9px 0 rgba(132, 61, 225, 0.06) !important;
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  transition: box-shadow 0.17s, border 0.19s;
+}
+.type-card:focus, .type-card.active, .type-card:hover {
+  border-color: #73f6ff !important;
+  box-shadow: 0 4px 20px 0 #a7e5ff65 !important;
+}
+
+/* (Не обязательно) Текст на карточках чуть темнее: */
+.pastel-card, .type-card {
+  color: #343455;
+}
+.model-opt {
+  cursor: pointer;
+  background: rgba(255,255,255,0.55);
+  transition: box-shadow 0.23s, border 0.19s, background 0.19s;
+  border: 2px solid transparent;
+  box-shadow: 0 1px 8px 0 rgba(110, 60, 220, 0.09);
+}
+
+.model-opt.active, .model-opt:hover {
+  border: 2px solid #73f6ff;
+  box-shadow: 0 0 20px 3px #72f3ff55, 0 1px 8px 0 rgba(110, 60, 220, 0.14);
+  background: rgba(115,246,255,0.22);
+  filter: brightness(1.12) saturate(1.18);
+  /* Можно добавить неоновую подсветку текста */
+}
+.model-opt.active span {
+  text-shadow: 0 0 10px #22eaff, 0 1px 6px #fff;
+  color: #08e5fc !important;
+}
+  </style>
+</head>
+<body class="min-h-screen creamy-bg flex flex-row">
+  
+
+  {% include 'sidebar.html' %}
+
+  <!-- Контейнер для всех блоков -->
+  <div class="flex-1 flex flex-col lg:flex-row items-stretch gap-10 px-8 py-10">
+    
+    <!-- Левая колонка: Модели и описание -->
+    <div class="flex flex-col gap-8 w-full max-w-xs min-w-[290px]">
+      
+      <!-- Название -->
+      <div>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-1 fade-in" style="letter-spacing:-2px;color:#8d65d2;">Cambridge Exam<br><span class="text-[#45b4e6]">Task Generator</span></h1>
+        <p class="text-base text-gray-600 mb-8 fade-in">Создавай задания FCE / CAE / CPE<br>Бесплатно, быстро, удобно.</p>
+      </div>
+      <!-- Модели генерации -->
+      <div class="pastel-card rounded-3xl p-6 card-shadow flex flex-col gap-3 fade-in">
+        <span class="mb-2 text-lg font-semibold text-gray-800">Модель генерации</span>
+        <div class="flex flex-col gap-3">
+          <label class="transition bg-gradient-to-r from-[#efe7fd] to-[#fbeaff] rounded-xl py-3 px-5 flex items-center gap-2 cursor-pointer model-opt hover:soft-ring">
+            <input type="radio" name="model" value="gpt" class="hidden" checked>
+            <span class="font-semibold text-[#7f4bdd]">GPT-4</span>
+          </label>
+          <label class="transition bg-gradient-to-r from-[#e7f6fd] to-[#ecfaff] rounded-xl py-3 px-5 flex items-center gap-2 cursor-pointer model-opt hover:soft-ring">
+            <input type="radio" name="model" value="claude-sonnet" class="hidden">
+            <span class="font-semibold text-[#4198ba]">Claude 3 Sonnet</span>
+          </label>
+          <label class="transition bg-gradient-to-r from-[#fef6e7] to-[#fff4ec] rounded-xl py-3 px-5 flex items-center gap-2 cursor-pointer model-opt hover:soft-ring">
+            <input type="radio" name="model" value="deepseek" class="hidden">
+            <span class="font-semibold text-[#d69e54]">DeepSeek</span>
+          </label>
+          <label class="transition bg-gradient-to-r from-[#f3e7fd] to-[#f0ecff] rounded-xl py-3 px-5 flex items-center gap-2 cursor-pointer model-opt hover:soft-ring">
+            <input type="radio" name="model" value="gemma" class="hidden">
+            <span class="font-semibold text-[#8d65d2]">Gemma</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Правая большая карточка -->
+    <div class="flex-1 flex flex-col gap-10 fade-in">
+      <!-- Типы заданий -->
+      <div class="pastel-card rounded-3xl p-7 card-shadow">
+        <h3 class="text-xl font-bold text-gray-700 mb-3">🗃️ Типы заданий</h3>
+        <div class="flex gap-6 overflow-x-auto pb-2">
+          <!-- Здесь кнопки, можно скроллить! -->
+          <button type="button" data-type="Essay" class="type-card min-w-[160px] p-5 rounded-2xl card-shadow bg-white text-center border-2 border-transparent hover:soft-ring transition flex flex-col items-center">
+            <span class="text-4xl mb-2">📝</span>
+            <span class="font-medium text-gray-800">Essay</span>
+          </button>
+          <button type="button" data-type="Email" class="type-card min-w-[160px] p-5 rounded-2xl card-shadow bg-white text-center border-2 border-transparent hover:soft-ring transition flex flex-col items-center">
+            <span class="text-4xl mb-2">📨</span>
+            <span class="font-medium text-gray-800">Email</span>
+          </button>
+          <button type="button" data-type="Interview" class="type-card min-w-[160px] p-5 rounded-2xl card-shadow bg-white text-center border-2 border-transparent hover:soft-ring transition flex flex-col items-center">
+            <span class="text-4xl mb-2">🎤</span>
+            <span class="font-medium text-gray-800">Interview</span>
+          </button>
+          <button type="button" data-type="Multiple Choice" class="type-card min-w-[160px] p-5 rounded-2xl card-shadow bg-white text-center border-2 border-transparent hover:soft-ring transition flex flex-col items-center">
+            <span class="text-4xl mb-2">🔍</span>
+            <span class="font-medium text-gray-800">Multiple Choice</span>
+          </button>
+        </div>
+      </div>
+      <!-- Форма генерации -->
+      <form method="POST" class="pastel-card rounded-3xl p-8 card-shadow space-y-6 fade-in" onsubmit="showLoading()">
+         <input type="hidden" name="model" id="modelInput" value="gpt">
+        <div class="grid md:grid-cols-2 gap-7">
+          <div>
+            <label for="level" class="block text-sm font-medium text-gray-700 mb-1">Уровень</label>
+            <select id="level" name="level" class="w-full rounded-xl px-4 py-3 border border-gray-300 shadow focus:ring-2 focus:ring-[#b08fff] bg-white text-lg">
+              <option value="FCE">FCE</option>
+              <option value="CAE">CAE</option>
+              <option value="CPE">CPE</option>
+            </select>
+          </div>
+          <div>
+            <label for="section" class="block text-sm font-medium text-gray-700 mb-1">Раздел экзамена</label>
+            <select id="section" name="section" onchange="updateSubtypes()" class="w-full rounded-xl px-4 py-3 border border-gray-300 shadow focus:ring-2 focus:ring-[#b08fff] bg-white text-lg">
+              <option value="Writing">Writing</option>
+              <option value="Reading">Reading</option>
+              <option value="Use of English">Use of English</option>
+              <option value="Speaking">Speaking</option>
+            </select>
+          </div>
+          <div>
+            <label for="subtype" class="block text-sm font-medium text-gray-700 mb-1">Тип задания</label>
+            <select id="subtype" name="task_type" class="w-full rounded-xl px-4 py-3 border border-gray-300 shadow focus:ring-2 focus:ring-[#b08fff] bg-white text-lg">
+              <!-- Заполняется через JS -->
+            </select>
+          </div>
+          <div>
+            <label for="topic" class="block text-sm font-medium text-gray-700 mb-1">Тематика</label>
+            <textarea id="topic" name="topic" rows="2" placeholder="например: Technology and communication" class="w-full rounded-xl px-4 py-3 border border-gray-300 shadow focus:ring-2 focus:ring-[#b08fff] bg-white text-lg"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-[#ffe0e8] to-[#ecdcff] text-[#7f4bdd] py-4 rounded-3xl text-xl font-bold transition shadow hover:scale-105 flex items-center justify-center gap-2 mt-2">
+          ⚡ Сгенерировать задание
+        </button>
+      </form>
+      {% if result %}
+      <div id="result-block" class="pastel-card rounded-3xl p-6 card-shadow whitespace-pre-wrap text-lg leading-relaxed fade-in mt-6">
+        {{ result|safe }}
+        {% if images %}
+          <div class="images-block mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for img in images %}
+              <img src="{{ img }}" alt="AI image" class="rounded-xl shadow-lg bg-white p-2 w-full object-cover">
+            {% endfor %}
+          </div>
+        {% endif %}
+        <!-- Кнопки PDF и Share под результатом и картинками -->
+        <div class="flex flex-wrap gap-4 mt-8">
+          <a href="{{ url_for('taskgen.download_pdf') }}"
+            class="bg-pink-500 text-white px-5 py-3 rounded-xl font-semibold shadow hover:scale-105 transition">
+            📄 Скачать PDF
+          </a>
+
+
+
+          <a id="share-tg" target="_blank"
+            class="bg-gradient-to-r from-blue-400 to-cyan-500 text-white px-6 py-3 rounded-xl font-bold shadow hover:scale-105 transition flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M21.05 ..."/></svg>
+            Telegram
+          </a>
+          <a id="share-wa" target="_blank"
+            class="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-xl font-bold shadow hover:scale-105 transition flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.52 ..."/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    {% else %}
+      <p class="text-center fade-in text-gray-400 mt-10">Здесь появится результат генерации...</p>
+    {% endif %}
+
+    </div>
+  </div>
+
+  <!-- JS: подсветка/логика (тот же, только по классам .model-opt и т.п.) -->
+  <script>
+    // Типы заданий
+    const typeCards = document.querySelectorAll('.type-card');
+    const subtypeSelect = document.getElementById('subtype');
+    typeCards.forEach(btn => {
+      btn.addEventListener('click', function() {
+        typeCards.forEach(b => b.classList.remove('soft-ring'));
+        btn.classList.add('soft-ring');
+        // sync select
+        const value = btn.getAttribute('data-type');
+        for (let i = 0; i < subtypeSelect.options.length; i++) {
+          if (subtypeSelect.options[i].text.includes(value)) {
+            subtypeSelect.selectedIndex = i; break;
+          }
+        }
+      });
+    });
+    // Модели — выделение
+const modelCards = document.querySelectorAll('.model-opt');
+const modelInput = document.getElementById('modelInput');
+modelCards.forEach(card => {
+  card.addEventListener('click', () => {
+    modelCards.forEach(c => c.classList.remove('active-model'));
+    card.classList.add('active-model');
+    // записываем выбранное значение в скрытое поле:
+    const val = card.querySelector('input[name="model"]').value;
+    modelInput.value = val;
+  });
+});
+
+    // select — типы заданий
+    const subtypes = {
+      Writing: [
+        ["Essay", "Аргументированный текст"],
+        ["Email", "Формальные и неформальные письма"],
+        ["Report", "Описание/анализ ситуации + рекомендации"],
+        ["Review", "Отзыв на фильм/книгу/место"],
+        ["Article", "Неформальный текст в блог/журнал"],
+        ["Story", "Краткий рассказ"],
+        ["Letter", "Письмо на нужную тему"]
+      ],
+      Reading: [
+        ["Multiple Choice", "8 вопросов по тексту"],
+        ["Gapped Text", "Вставить пропущенные предложения"],
+        ["Multiple Matching", "Сопоставить абзацы с утверждениями"]
+      ],
+      Speaking: [
+        ["Interview", "Ответы на личные вопросы"],
+        ["Long Turn", "Монолог по картинке или теме"],
+        ["Collaborative Task", "Диалог с другим кандидатом"],
+        ["Discussion", "Мнение и аргументация по теме"]
+      ],
+      Use_of_English: [
+        ["Open Cloze", "Пропущенные слова без подсказок"],
+        ["Word Formation", "Преобразовать слово"],
+        ["Key Word Transformations", "Переформулировать предложение"],
+        ["Multiple-choice Cloze", "12 пропусков с выбором ответа"]
+      ]
+    };
+    function updateSubtypes() {
+      const section = document.getElementById("section").value.replace(/\s+/g, "_");
+      const subtypeSelect = document.getElementById("subtype");
+      subtypeSelect.innerHTML = "";
+      subtypes[section].forEach(([value, label]) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = `${value} — ${label}`;
+        subtypeSelect.appendChild(option);
+      });
+    }
+    function showLoading() {
+      // если нужно, добавь плавную анимацию
+    }
+    updateSubtypes();
+  </script>
+  <script>
+  function savePDF() {
+    const element = document.getElementById('result-block');
+    html2pdf().from(element).set({
+      margin: 0.5,
+      filename: 'exam_task.pdf',
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { orientation: 'portrait', unit: 'in', format: 'a4', compressPDF: true }
+    }).save();
+  }
+
+  document.getElementById("download-pdf-btn")?.addEventListener("click", savePDF);
+
+  function getTaskText() {
+    const el = document.getElementById('result-block');
+    return el ? el.innerText.trim() : '';
+  }
+  document.getElementById('share-tg')?.addEventListener('click', function(e) {
+    const text = encodeURIComponent(getTaskText());
+    const url = `https://t.me/share/url?url=&text=${text}`;
+    this.setAttribute('href', url);
+  });
+  document.getElementById('share-wa')?.addEventListener('click', function(e) {
+    const text = encodeURIComponent(getTaskText());
+    const url = `https://wa.me/?text=${text}`;
+    this.setAttribute('href', url);
+  });
+  </script>
