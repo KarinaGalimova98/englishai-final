@@ -64,7 +64,7 @@ def save_base64_image(base64_data, filename, folder="static/generated_images"):
     file_path = os.path.join(folder, filename)
     with open(file_path, "wb") as f:
         f.write(base64.b64decode(base64_data))
-    return "/" + file_path.replace("\\", "/")
+    return "/" + file_path.replace("\\", "/") 
 
 
 def generate_images_from_descriptions(descriptions, api_key, api_secret):
