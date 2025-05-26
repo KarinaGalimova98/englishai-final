@@ -84,7 +84,7 @@ def get_interactive_task():
             "style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
             "</div>"
         )
-    else:  # Open Cloze, Key Word Transformations
+    else:  # Open Cloze, 
         input_html = (
             "<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
             "<input name='{n}' class='answer-input blank' style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
