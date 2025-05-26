@@ -4,6 +4,7 @@ from prompt_builder import build_prompt
 import random
 from flask_login import current_user
 from models import db
+import json
 
 interactive_blueprint = Blueprint("interactive", __name__)
 
@@ -23,7 +24,16 @@ def get_interactive_task():
     task_type = data["task_type"]
 
     # Загружаем шаблонную инфу из task_templates.json через find_format_info
-    format_info = find_format_info(exam, section, task_type)
+    with open("task_templates.json", encoding="utf-8") as f:
+        templates = json.load(f)
+    format_info = find_format_info(exam, section, task_type, templates)
+    instruction_example = format_info.get("instruction_example", "")
+    format_desc = format_info.get("format", "")
+    structure_desc = format_info.get("structure_description", "")
+    layout_notes = format_info.get("layout_notes", "")
+    visual_guidelines = format_info.get("visual_guidelines", "")
+    min_words = format_info.get("min_words")
+    max_words = format_info.get("max_words")
 
     # Случайный топик:
     default_topics = {
