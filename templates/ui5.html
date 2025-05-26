@@ -555,36 +555,35 @@
   const btn = document.querySelector('button[type="submit"]');
   const form = document.querySelector('form');
 
-  btn.addEventListener('click', function (e) {
-    e.preventDefault(); // Отменяем обычную отправку формы
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-    const spinner = document.getElementById('loading-spinner');
-    spinner.classList.remove('hidden'); // Показываем спиннер
+    // Показать спиннер сразу
+    document.getElementById('loading-spinner').classList.remove('hidden');
 
     btn.disabled = true;
     btn.innerHTML = "⏳ Подождите...";
 
-    const formData = new FormData(form);
-
+    // отправляем форму через fetch (асинхронно, не блокируя DOM)
     fetch("/", {
       method: "POST",
-      body: formData
+      body: new FormData(form)
     })
     .then(response => response.text())
     .then(html => {
-      // Просто заменяем текущую страницу на новую версию от сервера
       document.open();
       document.write(html);
       document.close();
     })
     .catch(err => {
-      alert("Произошла ошибка: " + err);
-      spinner.classList.add('hidden');
+      alert("Ошибка: " + err);
       btn.disabled = false;
       btn.innerHTML = "Сгенерировать задание";
+      document.getElementById('loading-spinner').classList.add('hidden');
     });
   });
 </script>
+
 
 
 
