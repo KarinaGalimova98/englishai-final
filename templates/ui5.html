@@ -135,6 +135,17 @@
   margin-bottom: 0.75rem;   /* отступ снизу перед <h2> */
   filter: brightness(0) invert(1); /* делаем черную картинку белой */
 }
+  .spinner {
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 
 
   </style>
@@ -227,6 +238,9 @@
           <label for="topic" class="block mb-2 text-white font-semibold">Тематика</label>
           <textarea id="topic" name="topic" rows="2" placeholder="например: Technology and communication" class="w-full p-3 rounded-xl"></textarea>
         </div>
+      </div>
+      <div id="loading-spinner" class="flex justify-center mt-4 hidden">
+        <div class="spinner"></div>
       </div>
 
       <button type="submit" class="neon-button w-full text-xl">Сгенерировать задание</button>
@@ -537,6 +551,42 @@
     slider.style.transition = "transform .5s ease";
   });
 </script>
+<script>
+  const btn = document.querySelector('button[type="submit"]');
+  const form = document.querySelector('form');
+
+  btn.addEventListener('click', function (e) {
+    e.preventDefault(); // Отменяем обычную отправку формы
+
+    const spinner = document.getElementById('loading-spinner');
+    spinner.classList.remove('hidden'); // Показываем спиннер
+
+    btn.disabled = true;
+    btn.innerHTML = "⏳ Подождите...";
+
+    const formData = new FormData(form);
+
+    fetch("/", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(html => {
+      // Просто заменяем текущую страницу на новую версию от сервера
+      document.open();
+      document.write(html);
+      document.close();
+    })
+    .catch(err => {
+      alert("Произошла ошибка: " + err);
+      spinner.classList.add('hidden');
+      btn.disabled = false;
+      btn.innerHTML = "Сгенерировать задание";
+    });
+  });
+</script>
+
+
 
 
 
