@@ -69,8 +69,10 @@ def get_interactive_task():
         )
     elif task_type == "Word Formation":
         input_html = (
-            "<div style='display:inline-flex; align-items:center; margin:0 4px;'>"
-            "<input name='{n}' class='answer-input blank' style='width:140px; padding:4px; border:2px dashed #aaa; background:transparent; outline:none; text-align:center;'>"
+            "<div style='display:inline-flex; align-items:center; margin: 0 4px;'>"
+            "<input name='{n}' class='answer-input blank' "
+            "style='width:140px; padding:4px; border:2px dashed #aaa; "
+            "background:transparent; outline:none; text-align:center;'>"
             "<span style='margin-left:6px; font-weight:bold;'>({WORD})</span>"
             "</div>"
         )
@@ -126,7 +128,7 @@ def get_interactive_task():
 
         "Important rules:\n"
         "- NEVER provide a separate list of answer choices at the bottom.\n"
-        "- Output HTML ONLY (no markdown, no backticks, no plain text).\n"
+        "- - Do not wrap the output in triple backticks (```), markdown, or preformatted text. Return only valid HTML."
         "- Follow authentic Cambridge exam layout exactly."
     )
 
