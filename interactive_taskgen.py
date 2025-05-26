@@ -71,15 +71,15 @@ def get_interactive_task():
     # Word Formation с исходным словом справа
     elif task_type == "Word Formation":
         input_html = (
-            "<div style='display:inline-flex; align-items:center; margin:0 4px;'>"
+            #"<div style='display:inline-flex; align-items:center; margin:0 4px;'>"
             "<input name='{n}' class='answer-input blank' style='border:none; width:140px; background:transparent; outline:none; text-align:center; border-bottom:2px dashed #aaa;'>"
             "<span style='margin-left:6px; font-weight:bold;'>({WORD})</span>"
-            "</div>"
+            #"</div>"
         )
     # Остальные (Open Cloze, Key Word Transformations и т.д.)
     else:
         input_html = (
-            "<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
+            #"<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
             "<input name='{n}' class='answer-input blank' style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
             "</div>"
         )
