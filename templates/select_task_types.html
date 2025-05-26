@@ -52,27 +52,26 @@
         vertical-align: middle;
       }
       .answer-input.blank {
-        min-width: 120px;
-        padding: 4px 8px;
-        font-size: 16px;
-        font-weight: 600;
-        border: 2px dashed #a1a1aa;
-        border-radius: 10px;
-        color: #1e293b;
-        background-color: #f8fafc;
-        transition: border-color 0.3s;
-      }
-      .answer-input.blank:focus {
-        border-color: #8b5cf6;
-      }
-      .answer-input.correct {
-        border-color: #22c55e;
-        background-color: #ecfdf5;
-      }
-      .answer-input.incorrect {
-        border-color: #ef4444;
-        background-color: #fef2f2;
-      }
+  min-width: 140px;               /* фиксированная минимальная ширина */
+  padding: 4px 8px;
+  font-weight: bold;
+  border: 2px dashed #aaa;       /* пунктирная рамка по периметру */
+  border-radius: 4px;
+  background-color: #fdfdfd;
+  transition: border-color 0.2s ease; /* плавный переход цвета рамки */
+}
+.answer-input.blank:focus {
+  border-color: #645af2;         /* подсветка при фокусе */
+}
+.answer-input.correct {
+  border-color: #40c057;         /* зелёная рамка для правильного ответа */
+  background-color: #e6ffe6;
+}
+.answer-input.incorrect {
+  border-color: #f03e3e;         /* красная рамка для неправильного ответа */
+  background-color: #ffe6e6;
+}
+
       .exam-btn, .task-btn {
         padding: 10px 20px;
         background-color: white;
