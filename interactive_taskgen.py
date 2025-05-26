@@ -5,7 +5,7 @@ import random
 import json
 from flask_login import current_user
 from models import db
-from typing import Dict, Tuple
+
 
 interactive_blueprint = Blueprint("interactive", __name__)
 
@@ -42,113 +42,60 @@ def get_interactive_task():
     }
     topic = random.choice(default_topics.get(section, ["General"]))
 
-    INPUT_HTML: Dict[str, str] = {
-    # Use of English
-    "Multiple-choice Cloze": (
-        "<select name='{n}' class='answer-input blank' style='min-width:100px;text-align:center;'>"
-        "<option value=''>—</option>"
-        "<option value='A'>A</option>"
-        "<option value='B'>B</option>"
-        "<option value='C'>C</option>"
-        "<option value='D'>D</option>"
-        "</select>"
-    ),
-    # Reading
-    "Multiple Choice": (
-        "<select name='{n}' class='answer-input blank' style='min-width:100px;text-align:center;'>"
-        "<option value=''>—</option>"
-        "<option value='A'>A</option>"
-        "<option value='B'>B</option>"
-        "<option value='C'>C</option>"
-        "<option value='D'>D</option>"
-        "</select>"
-    ),
-    "Multiple Matching": (
-        "<select name='{n}' class='answer-input blank' style='min-width:100px;text-align:center;'>"
-        "<option value=''>—</option>"
-        + "".join(f"<option value='{ltr}'>{ltr}</option>" for ltr in "ABCDEFGH")
-        + "</select>"
-    ),
-    "Gapped Text": (
-        "<select name='{n}' class='answer-input blank' style='min-width:100px;text-align:center;'>"
-        "<option value=''>—</option>"
-        + "".join(f"<option value='{ltr}'>{ltr}</option>" for ltr in "ABCDEFGH")
-        + "</select>"
-    ),
-    "Word Formation": (
-        "<div style='display:inline-flex;align-items:center;margin:0 4px;'>"
-        "<input name='{n}' class='answer-input blank' "
-        "style='width:140px;padding:4px;border:2px dashed #aaa;background:transparent;outline:none;text-align:center;'>"
-        "<span style='margin-left:6px;font-weight:bold;'>(WORD)</span>"
-        "</div>"
-    ),
-    "Key Word Transformations": (
-        "<div style='display:inline-block;width:280px;margin:0 4px;vertical-align:bottom;border-bottom:2px dashed #aaa;'>"
-        "<input name='{n}' class='answer-input blank' "
-        "style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
-        "</div>"
-    ),
-    "Open Cloze": (
-        "<div style='display:inline-block;width:160px;margin:0 4px;vertical-align:bottom;border-bottom:2px dashed #aaa;'>"
-        "<input name='{n}' class='answer-input blank' "
-        "style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
-        "</div>"
-    ),
-}
-    input_html = INPUT_HTML[task_type]
-
-        # --- Task‑specific heading -------------------------------------------------
-    if task_type == "Key Word Transformations":
-        task_block = (
-            f"Generate one {task_type} item for the {exam} exam ({section}).\n"
-            f"Provide two sentences.\n"
-            f" • Sentence 1: the original idea.\n"
-            f" • Sentence 2: starts similarly but contains ONE gap rendered with {input_html}. "
-            f"Format details: {format_desc}\n"
-            f"Layout notes: {layout_notes}\n"
-            f"Visual guidelines: {visual_guidelines}\n"
-            f"The candidate must complete it with 2‑5 words using the given KEY WORD.\n"
-            f"Print the KEY WORD in CAPITALS on a separate line just above sentence 2.\n"
-            f"After sentence 2 add: '(Use 2–5 words. Do not change the word given.)'.\n"
+        # HTML для каждого типа заданий:
+    if task_type == "Multiple-choice Cloze":
+        input_html = (
+            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
+            "<option value=''>—</option>"
+            "<option value='A'>A</option>"
+            "<option value='B'>B</option>"
+            "<option value='C'>C</option>"
+            "<option value='D'>D</option>"
+            "</select>"
         )
-    elif task_type in ("Multiple-choice Cloze", "Multiple Choice"):
-        task_block = (
-            f"Generate a short text followed by numbered questions. "
-            f"For each question, create exactly four answer choices labelled A), B), C), D).\n"
-            f"Format details: {format_desc}\n"
-            f"Layout notes: {layout_notes}\n"
-            f"Visual guidelines: {visual_guidelines}\n"
-            f"Use the placeholder {input_html} **inside each gap** for Multiple-choice Cloze. "
-            f"For classic Multiple Choice, list options below each question.\n"
-
-        )
-    elif task_type == "Multiple Matching":
-        task_block = (
-            "Generate a text (or several extracts) plus a list of statements. "
-            "Each answer should be selected from letters A–H using the {input_html} field. "
-            "Allow that one letter can be used more than once."
-            f"Format details: {format_desc}\n"
-            f"Layout notes: {layout_notes}\n"
-            f"Visual guidelines: {visual_guidelines}\n"
+    elif task_type in ["Multiple Matching", "Gapped Text"]:
+        input_html = (
+            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
+            "<option value=''>—</option>"
+            "<option value='A'>A</option>"
+            "<option value='B'>B</option>"
+            "<option value='C'>C</option>"
+            "<option value='D'>D</option>"
+            "<option value='E'>E</option>"
+            "<option value='F'>F</option>"
+            "<option value='G'>G</option>"
+            "<option value='H'>H</option>"
+            "</select>"
         )
     elif task_type == "Word Formation":
-        task_block = (
-            f"Generate a text ({exam} {task_type}) with gaps. "
-            f"Format details: {format_desc}\n"
-            f"Layout notes: {layout_notes}\n"
-            f"Visual guidelines: {visual_guidelines}\n"
-            f"Place the base word for each gap in CAPITALS at the end of the line in brackets. "
-            f"Inside the gap insert {input_html}."
+        input_html = (
+            "<div style='display:inline-flex; align-items:center; margin: 0 4px;'>"
+            "<input name='{n}' class='answer-input blank' "
+            "style='width:140px; padding:4px; border:2px dashed #aaa; "
+            "background:transparent; outline:none; text-align:center;'>"
+            "<span style='margin-left:6px; font-weight:bold;'>({WORD})</span>"
+            "</div>"
         )
-    else:
-        task_block = ""
+
+    elif task_type == "Key Word Transformations":
+        input_html = (
+            "<div style='display:inline-block;width:280px;margin:0 4px;vertical-align:bottom;border-bottom:2px dashed #aaa;'>"
+            "<input name='{n}' class='answer-input blank' "
+            "style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
+            "</div>"
+        )
+    else:  # Open Cloze, Key Word Transformations
+        input_html = (
+            "<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
+            "<input name='{n}' class='answer-input blank' style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
+            "</div>"
+        )
 
     # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
         f"You are a Cambridge exams - FCE, CAE, CPE,  task generator."
         f"Generate a {task_type} task for the {exam} exam, section: {section}."
         f"Topic: {topic}."
-        f"{task_block}"
         f"Instruction template: {instruction_example}\n"
         f"Format details: {format_desc}\n"
         f"Structure description: {structure_desc}\n"
