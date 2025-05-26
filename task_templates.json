@@ -71,7 +71,7 @@
         "images": 0,
         "layout_notes": "Each item shows the first sentence, then the keyword, then the second sentence with a blank.",
         "visual_guidelines": "Sentence pairs are clearly separated; the keyword is highlighted.",
-        "format": "Complete the second sentence so it has a similar meaning to the first, using the given keyword (do not change the keyword)."
+        "format": "Complete the second sentence so it has a similar meaning to the first, using between two and five words, including the word given. (do not change the keyword)."
       }
     },
     "Speaking": {
@@ -241,7 +241,7 @@
         "images": 0,
         "layout_notes": "Each item shows the first sentence, then the keyword, then the second sentence with a blank.",
         "visual_guidelines": "Sentence pairs are clearly separated; the keyword is highlighted.",
-        "format": "Complete the second sentence so it has a similar meaning to the first, using the given keyword (without changing it)."
+        "format": "Complete the second sentence so it has a similar meaning to the first, using between two and five words, including the word given (Do not change the word given)."
       }
     },
     "Speaking": {
@@ -364,7 +364,7 @@
         "instruction_example": "Complete the second sentence using the given key word.",
         "structure_description": "Pairs of sentences. In each pair, the second has a blank and a given key word.",
         "images": 0,
-        "format": "Complete the second sentence using the given key word.",
+        "format": "Complete the second sentence using between two and five words, including the word given (Do not change the word given).",
         "layout_notes": "Each item shows the first sentence, then the key word, then the second sentence with a gap.",
         "visual_guidelines": "Sentence pairs are clearly separated."
       },
