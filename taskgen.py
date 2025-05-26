@@ -52,7 +52,7 @@ def generate_with_claude_sonnet(prompt: str, api_key: str) -> str:
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost",
+        "HTTP-Referer": request.host_url.rstrip('/'),
         "X-Title": "Cambridge Task Generator"
     }
 
@@ -73,7 +73,7 @@ def generate_with_deepseek(prompt: str, api_key: str) -> str:
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost",
+        "HTTP-Referer": request.host_url.rstrip('/'),
         "X-Title": "Cambridge Task Generator"
     }
 
@@ -94,7 +94,7 @@ def generate_with_gemma(prompt: str, api_key: str) -> str:
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost",
+        "HTTP-Referer": request.host_url.rstrip('/'),
         "X-Title": "Cambridge Task Generator"
     }
 
@@ -115,7 +115,7 @@ def generate_with_gpt4o(prompt: str, api_key: str) -> str:
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost",
+        "HTTP-Referer": request.host_url.rstrip('/'),
         "X-Title": "Cambridge Task Generator"
     }
 
