@@ -85,33 +85,24 @@ def get_interactive_task():
 
     # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
-        f"You are a Cambridge English exam (FCE, CAE, CPE) task generator. "
-        f"Generate an authentic {task_type} task for the {exam} exam, section: {section}. "
-        f"Topic: {topic}. "
-        f"Example instruction: {instruction_example}. "
-        f"Task format: {format_desc}. "
-        f"Structure: {structure_desc}. "
-        f"Layout instructions: {layout_notes}. "
-        f"Visual guidelines: {visual_guidelines}. "
-        f"Minimum words: {min_words}. Maximum words: {max_words}. "
-
-        "Instructions for output format:\n"
-        "- NEVER show correct answers explicitly in the generated task.\n"
-        "- Return exactly one HTML block only.\n"
-        "- Insert input fields exactly where blanks should be.\n"
-
-        "Strict requirements per task type:\n\n"
-
-
-        "- At the end of the task, ALWAYS include JSON with answers exactly like:\n"
-        "<script type='application/json' id='answers'>[\"answer1\", \"answer2\", ...]</script>\n"
-
-        "Important rules:\n"
-        "- NEVER provide a separate list of answer choices at the bottom.\n"
-        "- - Do not wrap the output in triple backticks (```), markdown, or preformatted text. Return only valid HTML."
-        "- Follow authentic Cambridge exam layout exactly."
+        f"You are a Cambridge exams - FCE, CAE, CPE,  task generator."
+        f"Generate a {task_type} task for the {exam} exam, section: {section}."
+        f"Topic: {topic}."
+        f"Инструкция: {instruction_example}"
+        f"Формат: {format_desc}"
+        f"Описание структуры: {structure_desc}"
+        f"Оформление: {layout_notes}"
+        f"Визуальные требования: {visual_guidelines}"
+        f"Минимум слов в тексте: {min_words}"
+        f"Максимум слов в тексте: {max_words}"
+        f" Output format:\n"
+        f"- Do NOT show correct answers in the task."
+        f"- Return one HTML block only. Place input fields directly into the paragraph where the blank is."
+        f"- Use this field format for each gap: {input_html} Do not list options at the bottom."
+        f"- At the end, add this block:\n" 
+        f"<script type='application/json' id='answers'>[\"correct1\", \"correct2\", \"correct3\",...]</script>\n"
+        f"Do NOT use triple backticks or markdown formatting. Output only HTML."
     )
-
     
 
     # Генерация задания с использованием GEMMA
@@ -120,7 +111,8 @@ def get_interactive_task():
         task_type=task_type,
         topic=topic,
         section=section,
-        model_choice="gpt-4o"
+        model_choice="gpt-4o",
+        prompt = prompt1
     )
 
     if current_user.is_authenticated:
