@@ -120,8 +120,7 @@ def get_interactive_task():
         task_type=task_type,
         topic=topic,
         section=section,
-        model_choice="gpt-4o",
-        prompt = prompt1
+        model_choice="gpt-4o"
     )
 
     if current_user.is_authenticated:
