@@ -254,7 +254,7 @@
         };
       });
     </script>
-    <!-- <div id="spinner" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="spinner" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
       <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-pink-500 border-opacity-75"></div>
     </div>
     <script>
@@ -265,22 +265,39 @@
   const formData = new FormData(e.target);
   const level = formData.get("level");
   const task_type = formData.get("task_type");
+  const sectionMap = {
+    "use_of_english": "Use of English",
+    "reading": "Reading",
+    "test": "Test"
+  };
+  const section = sectionMap["{{ section }}"] || "{{ section }}";
 
-  const res = await fetch("/interactive_task", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      exam: level,
-      section: "{{ section }}",
-      task_type: task_type
-    })
-  });
-  const data = await res.json();
-  document.getElementById("generatedTask").innerHTML = data.html;
+  try {
+    const res = await fetch("/interactive_task", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        exam: level,
+        section: section,
+        task_type: task_type
+      })
+    });
+    const data = await res.json();
 
-  document.getElementById("spinner").classList.add("hidden");
+    const taskContainer = document.getElementById("generatedTask");
+    taskContainer.innerHTML = "";
+
+    const htmlParts = data.html.split(/(?=<div class=\"question-block\")/g);
+    htmlParts.forEach(block => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = block;
+      taskContainer.appendChild(card);
+    });
+  } finally {
+    document.getElementById("spinner").classList.add("hidden");
+  }
 };
-
-    </script> -->
+    </script> 
   </body>
 </html>
