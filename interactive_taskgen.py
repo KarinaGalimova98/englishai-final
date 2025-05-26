@@ -105,7 +105,9 @@ def get_interactive_task():
 
         "1. Multiple-choice Cloze:\n"
         f"{input_html}\n"
-        "- Provide exactly 4 answer choices per gap (A, B, C, D).\n"
+        "For each gap provide exactly FOUR options labeled explicitly with letters A, B, C, D.\n"
+        "Example:\n"
+        "(1) <select><option>A inexhaustible</option><option>B finite</option><option>C renewable</option><option>D expendable</option></select>\n"
         "- Correct answers must ONLY be the LETTERS (a, b, c, or d) in the JSON.\n"
         "Example JSON: [\"a\", \"d\", \"b\", ...]\n\n"
 
