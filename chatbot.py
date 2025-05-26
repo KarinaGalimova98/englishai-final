@@ -7,7 +7,7 @@ from models import db
 
 chat_blueprint = Blueprint('chat', __name__, template_folder='templates')
 
-API_KEY = "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"  #  OpenRouter
+API_KEY = "OPENROUTER_API_KEY"  #  OpenRouter
 MODEL_ID = "google/gemma-3-27b-it:free"
 
 SYSTEM_PROMPT = (
