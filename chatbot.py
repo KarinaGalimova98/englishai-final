@@ -4,10 +4,13 @@ from my_level_predictor import predict_level_combined
 import markdown
 from flask_login import current_user
 from models import db
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 chat_blueprint = Blueprint('chat', __name__, template_folder='templates')
 
-API_KEY = "OPENROUTER_API_KEY"  #  OpenRouter
+API_KEY = os.getenv("OPENROUTER_API_KEY")  #  OpenRouter
 MODEL_ID = "google/gemma-3-27b-it:free"
 
 SYSTEM_PROMPT = (
