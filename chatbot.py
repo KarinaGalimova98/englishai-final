@@ -49,7 +49,7 @@ SYSTEM_PROMPT = (
 def ask_openrouter(messages):
     headers = {
         "Authorization": f"Bearer {API_KEY}",
-        "HTTP-Referer": "http://localhost",  # или твой домен
+        "HTTP-Referer": request.host_url.rstrip('/'),  # или твой домен
         "X-Title": "English ChatBot",
         "Content-Type": "application/json"
     }
