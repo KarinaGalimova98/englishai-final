@@ -111,6 +111,7 @@ def build_prompt(
 
     prompt = (
         f"You are a Cambridge Exams task generator (supports FCE, CAE, CPE).\n"
+        f"Generate a {task_type} task for the {exam} exam, section: {section}."
         f"Topic: {topic}.\n"
         f"{task_block}"
         f"Instruction template: {instruction_example}\n"
