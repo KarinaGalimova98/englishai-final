@@ -255,6 +255,33 @@
         };
       });
     </script>
+    <div id="spinner" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-pink-500 border-opacity-75"></div>
+    </div>
+    <script>
+      document.getElementById("task-form").onsubmit = async (e) => {
+  e.preventDefault();
+  document.getElementById("spinner").classList.remove("hidden");
 
+  const formData = new FormData(e.target);
+  const level = formData.get("level");
+  const task_type = formData.get("task_type");
+
+  const res = await fetch("/interactive_task", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      exam: level,
+      section: "{{ section }}",
+      task_type: task_type
+    })
+  });
+  const data = await res.json();
+  document.getElementById("generatedTask").innerHTML = data.html;
+
+  document.getElementById("spinner").classList.add("hidden");
+};
+
+    </script>
   </body>
 </html>
