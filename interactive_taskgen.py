@@ -102,26 +102,6 @@ def get_interactive_task():
 
         "Strict requirements per task type:\n\n"
 
-        "1. Multiple-choice Cloze:\n"
-        "- For each gap, provide exactly FOUR answer choices labeled explicitly with letters A, B, C, D.\n"
-        "- Clearly shuffle the answer options randomly (DO NOT always put the correct answer first).\n"
-        "- Correct answers must ONLY be letters ('a', 'b', 'c', or 'd') corresponding to shuffled positions.\n"
-        f"HTML format:\n{input_html}\n\n"
-
-        "2. Multiple Matching, Gapped Text:\n"
-        "- Provide clearly labeled gaps and choices (A–H), shuffled randomly.\n"
-        "- Correct answers ONLY as lowercase letters.\n"
-        f"HTML format:\n{input_html}\n\n"
-
-        "3. Word Formation:\n"
-        "- Provide the word given for transformation clearly in parentheses (CAPITALIZED) next to each gap.\n"
-        "- Correct answers in JSON must be lowercase words (without parentheses).\n"
-        f"HTML format exactly:\n{input_html}\n\n"
-
-        "4. Open Cloze, Key Word Transformations:\n"
-        "- NO letters or words provided beside gaps.\n"
-        "- Correct answers in JSON are exact lowercase words or short phrases.\n"
-        f"HTML format:\n{input_html}\n\n"
 
         "- At the end of the task, ALWAYS include JSON with answers exactly like:\n"
         "<script type='application/json' id='answers'>[\"answer1\", \"answer2\", ...]</script>\n"
