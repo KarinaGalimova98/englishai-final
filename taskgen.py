@@ -122,7 +122,7 @@ def generate_with_gpt4o(prompt: str, api_key: str) -> str:
     data = {
         "model": "openai/gpt-4o",
         "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 1400,
+        "max_tokens": 3000,
         "temperature": 0.6
     }
 
