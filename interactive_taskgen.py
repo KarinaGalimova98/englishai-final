@@ -111,7 +111,7 @@ def get_interactive_task():
         task_type=task_type,
         topic=topic,
         section=section,
-        model_choice="gpt-4o",
+        model_choice="gemma",
         prompt = prompt1
     )
 
