@@ -42,10 +42,10 @@ def get_interactive_task():
     }
     topic = random.choice(default_topics.get(section, ["General"]))
 
-    # Multiple-choice Cloze только 4 варианта A-D
+        # HTML для каждого типа заданий:
     if task_type == "Multiple-choice Cloze":
         input_html = (
-            "<select name='{n}' class='answer-input blank' style='min-width:60px; text-align:center;'>"
+            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
             "<option value=''>—</option>"
             "<option value='A'>A</option>"
             "<option value='B'>B</option>"
@@ -53,10 +53,9 @@ def get_interactive_task():
             "<option value='D'>D</option>"
             "</select>"
         )
-    # Multiple Matching и Gapped Text до 8 вариантов (A–H)
     elif task_type in ["Multiple Matching", "Gapped Text"]:
         input_html = (
-            "<select name='{n}' class='answer-input blank' style='min-width:60px; text-align:center;'>"
+            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
             "<option value=''>—</option>"
             "<option value='A'>A</option>"
             "<option value='B'>B</option>"
@@ -68,77 +67,68 @@ def get_interactive_task():
             "<option value='H'>H</option>"
             "</select>"
         )
-    # Word Formation с исходным словом справа
     elif task_type == "Word Formation":
         input_html = (
-            #"<div style='display:inline-flex; align-items:center; margin:0 4px;'>"
-            "<input name='{n}' class='answer-input blank' style='border:none; width:140px; background:transparent; outline:none; text-align:center; border-bottom:2px dashed #aaa;'>"
+            "<div style='display:inline-flex; align-items:center; margin:0 4px;'>"
+            "<input name='{n}' class='answer-input blank' style='width:140px; padding:4px; border:2px dashed #aaa; background:transparent; outline:none; text-align:center;'>"
             "<span style='margin-left:6px; font-weight:bold;'>({WORD})</span>"
-            #"</div>"
+            "</div>"
         )
-    # Остальные (Open Cloze, Key Word Transformations и т.д.)
-    else:
+    else:  # Open Cloze, Key Word Transformations
         input_html = (
-            #"<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
+            "<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
             "<input name='{n}' class='answer-input blank' style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
             "</div>"
         )
 
-    # Обновлённый, чёткий и однозначный prompt:
+    # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
         f"You are a Cambridge English exam (FCE, CAE, CPE) task generator. "
-        f"Generate a realistic {task_type} task for the {exam} exam, section: {section}. "
+        f"Generate an authentic {task_type} task for the {exam} exam, section: {section}. "
         f"Topic: {topic}. "
-        f"Instruction example: {instruction_example} "
-        f"Task format: {format_desc} "
-        f"Structure description: {structure_desc} "
-        f"Layout instructions: {layout_notes} "
-        f"Visual guidelines: {visual_guidelines} "
+        f"Example instruction: {instruction_example}. "
+        f"Task format: {format_desc}. "
+        f"Structure: {structure_desc}. "
+        f"Layout instructions: {layout_notes}. "
+        f"Visual guidelines: {visual_guidelines}. "
         f"Minimum words: {min_words}. Maximum words: {max_words}. "
 
-        "Output format instructions:\n"
-        "- Do NOT show correct answers in the task itself.\n"
-        "- Return one HTML block only.\n"
-        "- Place input fields directly into the paragraphs where blanks are located.\n"
+        "Instructions for output format:\n"
+        "- NEVER show correct answers explicitly in the generated task.\n"
+        "- Return exactly one HTML block only.\n"
+        "- Insert input fields exactly where blanks should be.\n"
 
-        "- Use the following formats exactly according to task type:\n\n"
+        "Strict requirements per task type:\n\n"
 
         "1. Multiple-choice Cloze:\n"
-        f"{input_html}\n"
-        "For each gap provide exactly FOUR options labeled explicitly with letters A, B, C, D.\n"
-        "Example:\n"
-        "(1) <select><option>A inexhaustible</option><option>B finite</option><option>C renewable</option><option>D expendable</option></select>\n"
-        "- Correct answers must ONLY be the LETTERS (a, b, c, or d) in the JSON.\n"
-        "Example JSON: [\"a\", \"d\", \"b\", ...]\n\n"
+        "- For each gap, provide exactly FOUR answer choices labeled explicitly with letters A, B, C, D.\n"
+        "- Clearly shuffle the answer options randomly (DO NOT always put the correct answer first).\n"
+        "- Correct answers must ONLY be letters ('a', 'b', 'c', or 'd') corresponding to shuffled positions.\n"
+        f"HTML format:\n{input_html}\n\n"
 
         "2. Multiple Matching, Gapped Text:\n"
-        f"{input_html}\n"
-        "- Clearly label each gap numerically.\n"
-        "- Correct answers must ONLY be the LETTERS (a–h) in the JSON.\n"
-        "Example JSON: [\"f\", \"a\", \"h\", ...]\n\n"
+        "- Provide clearly labeled gaps and choices (A–H), shuffled randomly.\n"
+        "- Correct answers ONLY as lowercase letters.\n"
+        f"HTML format:\n{input_html}\n\n"
 
         "3. Word Formation:\n"
-        f"{input_html}\n"
-        "- Place provided transformation words clearly in parentheses next to the gaps (e.g., DEFINE).\n"
-        "- Correct answers should be provided in JSON without parentheses, lowercase.\n"
-        "Example JSON: [\"definition\", \"global\", ...]\n\n"
+        "- Provide the word given for transformation clearly in parentheses (CAPITALIZED) next to each gap.\n"
+        "- Correct answers in JSON must be lowercase words (without parentheses).\n"
+        f"HTML format exactly:\n{input_html}\n\n"
 
         "4. Open Cloze, Key Word Transformations:\n"
-        f"{input_html}\n"
-        "- No extra letters or words provided next to gaps.\n"
-        "- Correct answers in JSON must be lowercase words or phrases exactly as they should appear.\n"
-        "Example JSON: [\"have\", \"taken up\", ...]\n\n"
+        "- NO letters or words provided beside gaps.\n"
+        "- Correct answers in JSON are exact lowercase words or short phrases.\n"
+        f"HTML format:\n{input_html}\n\n"
 
-        "- At the end, always include a JSON script with correct answers exactly in this format:\n"
+        "- At the end of the task, ALWAYS include JSON with answers exactly like:\n"
         "<script type='application/json' id='answers'>[\"answer1\", \"answer2\", ...]</script>\n"
 
-        "Important:\n"
-        "- Never list answer options separately at the bottom.\n"
-        "- Output must contain only HTML tags (no markdown, no backticks, no plain text).\n"
-        "- Format must closely replicate authentic Cambridge exam layout."
-        "- Correct answers must match the shuffled position of the correct option."
+        "Important rules:\n"
+        "- NEVER provide a separate list of answer choices at the bottom.\n"
+        "- Output HTML ONLY (no markdown, no backticks, no plain text).\n"
+        "- Follow authentic Cambridge exam layout exactly."
     )
-
 
     
 
