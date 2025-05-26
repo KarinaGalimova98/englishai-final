@@ -105,6 +105,8 @@ def get_interactive_task():
             f" • Sentence 1: the original idea.\n"
             f" • Sentence 2: starts similarly but contains ONE gap rendered with {input_html}. "
             f"Format details: {format_desc}\n"
+            f"Layout notes: {layout_notes}\n"
+            f"Visual guidelines: {visual_guidelines}\n"
             f"The candidate must complete it with 2‑5 words using the given KEY WORD.\n"
             f"Print the KEY WORD in CAPITALS on a separate line just above sentence 2.\n"
             f"After sentence 2 add: '(Use 2–5 words. Do not change the word given.)'.\n"
@@ -114,6 +116,8 @@ def get_interactive_task():
             f"Generate a short text followed by numbered questions. "
             f"For each question, create exactly four answer choices labelled A), B), C), D).\n"
             f"Format details: {format_desc}\n"
+            f"Layout notes: {layout_notes}\n"
+            f"Visual guidelines: {visual_guidelines}\n"
             f"Use the placeholder {input_html} **inside each gap** for Multiple-choice Cloze. "
             f"For classic Multiple Choice, list options below each question.\n"
 
@@ -124,11 +128,15 @@ def get_interactive_task():
             "Each answer should be selected from letters A–H using the {input_html} field. "
             "Allow that one letter can be used more than once."
             f"Format details: {format_desc}\n"
+            f"Layout notes: {layout_notes}\n"
+            f"Visual guidelines: {visual_guidelines}\n"
         )
     elif task_type == "Word Formation":
         task_block = (
             f"Generate a text ({exam} {task_type}) with gaps. "
             f"Format details: {format_desc}\n"
+            f"Layout notes: {layout_notes}\n"
+            f"Visual guidelines: {visual_guidelines}\n"
             f"Place the base word for each gap in CAPITALS at the end of the line in brackets. "
             f"Inside the gap insert {input_html}."
         )
