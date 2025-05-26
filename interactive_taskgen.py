@@ -136,6 +136,7 @@ def get_interactive_task():
         "- Never list answer options separately at the bottom.\n"
         "- Output must contain only HTML tags (no markdown, no backticks, no plain text).\n"
         "- Format must closely replicate authentic Cambridge exam layout."
+        "- Correct answers must match the shuffled position of the correct option."
     )
 
 
