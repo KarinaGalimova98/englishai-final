@@ -224,7 +224,7 @@ def generate_task(exam, task_type,topic,section, model_choice="deepseek",prompt 
         )
         generated = response.choices[0].message.content
 
-    elif model_choice == "claude-sonnet":
+    elif model_choice == "claude":
         generated = generate_with_claude_sonnet(prompt, api_key=os.getenv("OPENROUTER_API_KEY"))
 
     elif model_choice == "deepseek":
