@@ -140,7 +140,7 @@ def call_gemini(prompt: str, api_key: str) -> str:
         
     }
     data = {
-        "model": "meta-llama/llama-4-scout",
+        "model": "google/gemini-2.5-flash-preview-05-20",
         "messages": [
             {"role": "user", "content": prompt}
         ],
