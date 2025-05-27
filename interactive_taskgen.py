@@ -78,7 +78,7 @@ def get_interactive_task():
     topic = random.choice(default_topics.get(section, ["General"]))
 
     examples = get_rag_examples(exam, section, task_type)
-    # Обновлённый prompt с явными указаниями Gemma:
+    
 
     # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
