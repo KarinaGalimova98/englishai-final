@@ -83,10 +83,68 @@ def get_interactive_task():
 
     examples = get_rag_examples(exam, section, task_type)
     # Обновлённый prompt с явными указаниями Gemma:
+   # HTML для каждого типа заданий:
+    if task_type == "Multiple-choice Cloze":
+        input_html = (
+            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
+            "<option value=''>—</option>"
+            "<option value='A'>A</option>"
+            "<option value='B'>B</option>"
+            "<option value='C'>C</option>"
+            "<option value='D'>D</option>"
+            "</select>"
+        )
+    elif task_type in ["Multiple Matching", "Gapped Text"]:
+        input_html = (
+            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
+            "<option value=''>—</option>"
+            "<option value='A'>A</option>"
+            "<option value='B'>B</option>"
+            "<option value='C'>C</option>"
+            "<option value='D'>D</option>"
+            "<option value='E'>E</option>"
+            "<option value='F'>F</option>"
+            "<option value='G'>G</option>"
+            "<option value='H'>H</option>"
+            "</select>"
+        )
+    elif task_type == "Word Formation":
+        input_html = (
+            "<div style='display:inline-flex; align-items:center; margin: 0 4px;'>"
+            "<input name='{n}' class='answer-input blank' "
+            "style='width:140px; padding:4px; border:2px dashed #aaa; "
+            "background:transparent; outline:none; text-align:center;'>"
+            "<span style='margin-left:6px; font-weight:bold;'>({WORD})</span>"
+            "</div>"
+        )
+
+    elif task_type == "Key Word Transformations":
+        input_html = (
+            "<div style='display:inline-block;width:280px;margin:0 4px;vertical-align:bottom;border-bottom:2px dashed #aaa;'>"
+            "<input name='{n}' class='answer-input blank' "
+            "style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
+            "</div>"
+        )
+    else:  # Open Cloze, 
+        
+        input_html = (
+            "<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
+            "<input name='{n}' class='answer-input blank' style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
+            "</div>"
+        )
+
+    # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
         f"You are a Cambridge exams - FCE, CAE, CPE,  task generator."
         f"Generate a {task_type} task for the {exam} exam, section: {section}."
-        f"Requirements: Strictly follow the Cambridge exam style. The task must include exactly the required number of gaps/items/questions, and the layout should be as in real Cambridge exam books.\n"
+        f"Here are some examples:\n" + "\n\n---\n\n".join(examples) + "\n\n"
+        f"Topic: {topic}."
+        f"Instruction template: {instruction_example}\n"
+        f"Format details: {format_desc}\n"
+        f"Structure description: {structure_desc}\n"
+        f"Layout notes: {layout_notes}\n"
+        f"Visual guidelines: {visual_guidelines}\n"
+        f"Min words: {min_words}; Max words: {max_words}.\n"
         f" Output format:\n"
         f"- Do NOT show correct answers in the task."
         f"- Return one HTML block only. Place input fields directly into the paragraph where the blank is."
@@ -94,16 +152,6 @@ def get_interactive_task():
         f"- At the end, add this block:\n" 
         f"<script type='application/json' id='answers'>[\"correct1\", \"correct2\", \"correct3\",...]</script>\n"
         f"Do NOT use triple backticks or markdown formatting. Output only HTML."
-        f"Input type: select (use '<select name=\"{{n}}\ class='answer-input blank'>{option_labels}</select>' for each gap/item)"
-        f"EXAMPLES:\n" + "\n\n---\n\n".join(examples) + 
-        f"Topic: {topic}.\n"
-        f"Instruction template: {instruction_example}\n"
-        f"Format details: {format_desc}\n"
-        f"Structure description: {structure_desc}\n"
-        f"Layout notes: {layout_notes}\n"
-        f"Visual guidelines: {visual_guidelines}\n"
-        f"Min words: {min_words}; Max words: {max_words}.\n"
-        f"Number of gaps/items/questions: {num_gaps}\n"
     )
     
 
