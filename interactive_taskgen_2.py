@@ -139,7 +139,7 @@ def get_interactive_task():
                 ]
             }
         ],
-        "max_tokens": 2024,
+        "max_tokens": 4000,
         "temperature": 0.2
     }
 
