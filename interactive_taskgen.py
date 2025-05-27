@@ -88,7 +88,12 @@ def get_interactive_task():
         f"Generate a {task_type} task for the {exam} exam, section: {section}."
         f"Requirements: Strictly follow the Cambridge exam style. The task must include exactly the required number of gaps/items/questions, and the layout should be as in real Cambridge exam books.\n"
         f" Output format:\n"
-        f" Do NOT show correct answers in the task."
+        f"- Do NOT show correct answers in the task."
+        f"- Return one HTML block only. Place input fields directly into the paragraph where the blank is."
+        f"- Use this field format for each gap: {input_html} Do not list options at the bottom."
+        f"- At the end, add this block:\n" 
+        f"<script type='application/json' id='answers'>[\"correct1\", \"correct2\", \"correct3\",...]</script>\n"
+        f"Do NOT use triple backticks or markdown formatting. Output only HTML."
         f"Input type: select (use '<select name=\"{{n}}\ class='answer-input blank'>{option_labels}</select>' for each gap/item)"
         f"EXAMPLES:\n" + "\n\n---\n\n".join(examples) + 
         f"Topic: {topic}.\n"
@@ -99,9 +104,6 @@ def get_interactive_task():
         f"Visual guidelines: {visual_guidelines}\n"
         f"Min words: {min_words}; Max words: {max_words}.\n"
         f"Number of gaps/items/questions: {num_gaps}\n"
-        f"Input type: {input_type} (use '{input_html}' for each gap/item)\n"
-        
-       
     )
     
 
@@ -115,8 +117,6 @@ def get_interactive_task():
         prompt = prompt1
         
     )
-
-
 
     if current_user.is_authenticated:
         current_user.tasks_today += 1
