@@ -92,9 +92,10 @@ def get_interactive_task():
     examples_text = "\n\n".join(f"{i+1}. {ex}" for i, ex in enumerate(examples))
 
     # 2. Найди фото для prompt
-    exam_folder = exam.upper()   # FCE, CAE, CPE
-    photo_name = TASK_IMAGE_MAP.get(task_type, "1.jpg")
+    
     photo_path = find_image_file(exam, task_type)
+    print("PHOTO PATH:", photo_path)
+    print("PHOTO EXISTS:", os.path.isfile(photo_path))
     if not photo_path:
         return jsonify({"html": "<b>Image file not found!</b>"}), 500
 
@@ -114,7 +115,7 @@ def get_interactive_task():
         "(Or include 'options' if it's a multiple choice or cloze, and 'keyword' for Key Word Transformations.)\n"
         "DO NOT return explanations, comments or markdown. Only pure JSON!"
     )
-
+    print("PROMPT TEXT:", prompt_text)
     # 4. Запрос к OpenRouter (Llama-4 Maverick)cd
     api_url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
@@ -141,6 +142,7 @@ def get_interactive_task():
     }
 
     response = requests.post(api_url, headers=headers, json=data_api)
+    print("RESPONSE STATUS:", response.status_code)
     try:
         answer = response.json()
         # Обычно Llama отвечает так:
