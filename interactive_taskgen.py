@@ -109,7 +109,6 @@ def get_interactive_task():
     num_gaps = rule_info.get("num_gaps")
     input_type = rule_info.get("input_type", "")
     option_labels = rule_info.get("option_labels", [])
-
     input_html = rule_info.get("input_html", "")
     
 
@@ -165,7 +164,7 @@ def get_interactive_task():
     except Exception as e:
         items = [{"text_before": "Sorry, there was an error generating the task.", "text_after": str(e), "options": []}]
 
-    html = render_html(items, rules)
+    html = render_html(items, rule_info)
 
     if current_user.is_authenticated:
         current_user.tasks_today += 1
