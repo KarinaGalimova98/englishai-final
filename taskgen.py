@@ -131,7 +131,7 @@ def generate_with_gpt4o(prompt: str, api_key: str) -> str:
     return response.json()["choices"][0]["message"]["content"]
 
 def call_gemini(prompt: str, api_key: str) -> str:
-    url = "https://openrouter.ai/api/v1/chat/completions"
+    url = "https://openrouter.ai/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
