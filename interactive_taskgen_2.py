@@ -39,7 +39,9 @@ def get_rag_examples(exam, section, task_type, k=3):
         task = task_data[i]
         if task["task_type"] == task_type and task["exam"] == exam and task["section"] == section:
             examples.append(task["text"])
-    return examples
+    examples_text = examples[0]
+            
+    return examples_text
 
 def normalize_name(name):
     return name.strip().lower().replace("-", " ").replace("_", " ").replace("  ", " ")
