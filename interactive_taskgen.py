@@ -114,7 +114,7 @@ def get_interactive_task():
         task_type=task_type,
         topic=topic,
         section=section,
-        model_choice="gemini",
+        model_choice="gpt4free",
         prompt = prompt1
         
     )

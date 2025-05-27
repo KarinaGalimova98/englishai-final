@@ -22,6 +22,7 @@ from models import db
 from markupsafe import Markup
 import markdown
 import os
+from g4f.client import Client
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -152,6 +153,18 @@ def call_gemini(prompt: str, api_key: str) -> str:
     response.raise_for_status()
     return response.json()["choices"][0]["message"]["content"]
 
+client = Client()
+def generate_with_gpt4free(prompt, model="gpt-4o"):
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"[gpt4free error]: {e}")
+        return "❌ Ошибка генерации."
+
 
 
 # Находим нужный формат задания
@@ -258,6 +271,9 @@ def generate_task(exam, task_type,topic,section, model_choice="deepseek",prompt 
 
     elif model_choice == "gemini":
         generated = call_gemini(prompt, api_key=os.getenv("OPENROUTER_API_KEY"))
+
+    elif model_choice == "gpt4free":
+        generated = generate_with_gpt4free(prompt, model="gpt-4o")
 
 
     image_links = []
