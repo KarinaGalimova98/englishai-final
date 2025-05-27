@@ -41,7 +41,17 @@ def get_rag_examples(exam, section, task_type, k=3):
             examples.append(task["text"])
     return examples
 
+def normalize_name(name):
+    return name.strip().lower().replace("-", " ").replace("_", " ").replace("  ", " ")
 
+def find_image_file(exam, task_type):
+    folder = os.path.join("static", "exams_exmpls", exam)
+    target = normalize_name(task_type)
+    for fname in os.listdir(folder):
+        fname_base = os.path.splitext(fname)[0]
+        if normalize_name(fname_base) == target:
+            return os.path.join(folder, fname)
+    return None  # если не найдено
 # Маппинг task_type на номер фото или на имя файла
 TASK_IMAGE_MAP = {
     "Open Cloze": "1.jpg",
@@ -84,8 +94,8 @@ def get_interactive_task():
     # 2. Найди фото для prompt
     exam_folder = exam.upper()   # FCE, CAE, CPE
     photo_name = TASK_IMAGE_MAP.get(task_type, "1.jpg")
-    photo_path = os.path.join("static", "exams_exmpls", exam, f"{task_type}.png")
-    if not os.path.isfile(photo_path):
+    photo_path = find_image_file(exam, task_type)
+    if not photo_path:
         return jsonify({"html": "<b>Image file not found!</b>"}), 500
 
     # Кодируем в base64 (OpenRouter требует base64 для image_url)
