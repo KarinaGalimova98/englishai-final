@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, jsonify
+from flask import Blueprint, request, jsonify, render_template
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import random
@@ -150,3 +150,32 @@ def get_interactive_task():
     html = render_html(items, {"input_type": "select" if task_type in ["Multiple-choice Cloze", "Multiple Choice", "Gapped Text", "Multiple Matching"] else "input"})
 
     return jsonify({"html": html})
+
+
+@interactive_blueprint.route("/use_of_english")
+def use_of_english_page():
+    return render_template("use_of_english.html")
+
+@interactive_blueprint.route("/select_task_types/<section>")
+def select_task_type(section):
+    levels = ["FCE", "CAE", "CPE"]
+    section_map = {
+        "use_of_english": "Use of English",
+        "reading": "Reading",
+        "test": "Test"
+    }
+
+    section_machine = section.lower()  # 'use_of_english'
+    section_display = section_map.get(section_machine, section_machine)
+
+    section = section.lower()
+    if section == "use_of_english":
+        task_types = ["Multiple-choice Cloze", "Open Cloze", "Word Formation", "Key Word Transformations"]
+    elif section == "reading":
+        task_types = ["Multiple Matching", "Gapped Text", "Multiple Choice"]
+    elif section == "test":
+        return render_template("test.html")
+    else:
+        task_types = []
+
+    return render_template("select_task_types.html", section=section_display, levels=levels, task_types=task_types)
