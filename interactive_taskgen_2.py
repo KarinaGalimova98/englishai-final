@@ -102,12 +102,13 @@ def get_interactive_task():
         "DO NOT return explanations, comments or markdown. Only pure JSON!"
     )
 
-    # 4. Запрос к OpenRouter (Llama-4 Maverick)
+    # 4. Запрос к OpenRouter (Llama-4 Maverick)cd
     api_url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "HTTP-Referer": request.host_url.rstrip('/'),  
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "HTTP-Referer": request.host_url.rstrip('/'),
+        "X-Title": "Cambridge Task Generator"
     }
     data_api = {
         "model": "meta-llama/llama-4-maverick:free",
