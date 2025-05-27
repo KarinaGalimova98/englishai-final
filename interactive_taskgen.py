@@ -2,9 +2,10 @@ from flask import Blueprint, request, jsonify, render_template
 from taskgen import generate_task, find_format_info
 from sentence_transformers import SentenceTransformer
 import random
-import json
+import pathlib, json
 from flask_login import current_user
 from models import db
+from rules import get as get_rules
 
 
 interactive_blueprint = Blueprint("interactive", __name__)
@@ -16,12 +17,69 @@ select_based_tasks = [
     "Gapped Text"                  # Reading
 ]
 
+RULES = json.loads(pathlib.Path("task_format_rules.json").read_text(encoding="utf-8"))
+
+def get_rules(task_type: str, exam: str) -> dict:
+    block = RULES[task_type]
+    return block.get(exam, block.get("all"))
+
+
+# === HTML renderer (one function for all types) ==============================
+def render_html(items: list, rules: dict) -> str:
+    """Convert model JSON into ready‑to‑serve HTML using rules."""
+    tpl = rules["input_html"]
+
+    if rules["input_type"] == "select":
+        labels = rules["option_labels"]
+
+        def make_field(n, opts):
+            opts_html = "".join(
+                f"<option value='{lbl}'>{lbl}) {opt}</option>"
+                for lbl, opt in zip(labels, opts)
+            )
+            return tpl.format(n=n, options=opts_html)
+    else:  # input
+        make_field = lambda n, _opts: tpl.format(n=n)
+
+    html_blocks = []
+    for i, it in enumerate(items, 1):
+        field = make_field(i, it.get("options", []))
+        html_blocks.append(
+            f"<p>{it.get('text_before','')} {field} {it.get('text_after','')}</p>"
+        )
+    return "\n".join(html_blocks)
+
+# === universal prompt builder ===============================================
+def build_prompt(task_type: str, exam: str, rules: dict) -> str:
+    p = ["You are a Cambridge Exams task generator."]
+
+    if "num_gaps" in rules:
+        n = rules["num_gaps"]
+        p.append(f"Generate ONE {task_type} text for {exam} with EXACTLY {n} numbered gaps (1–{n}).")
+    if "num_items" in rules:
+        n = rules["num_items"]
+        p.append(f"Generate EXACTLY {n} {task_type} items for {exam}.")
+    if "num_questions" in rules:
+        n = rules["num_questions"]
+        p.append(f"Generate a text followed by {n} questions (A–D) for {exam}.")
+
+    if "option_labels" in rules:
+        p.append("For EACH gap/question provide options labeled " + ", ".join(rules["option_labels"]) + ".") 
+    if "answer_length" in rules:
+        p.append(f"Each answer must contain {rules['answer_length']}.") 
+
+    p.append("Return ONLY JSON list with keys 'text_before', 'text_after', 'options' (if applicable). No HTML, no markdown.")
+    return "\n".join(p)
+
+
 @interactive_blueprint.route("/interactive_task", methods=["POST"])
 def get_interactive_task():
     data = request.json
     exam = data["exam"]
     section = data["section"]
     task_type = data["task_type"]
+    rules = get_rules(task_type, exam)
+
 
     with open("task_templates.json", encoding="utf-8") as f:
         templates = json.load(f)
@@ -42,59 +100,10 @@ def get_interactive_task():
     }
     topic = random.choice(default_topics.get(section, ["General"]))
 
-        # HTML для каждого типа заданий:
-    if task_type == "Multiple-choice Cloze":
-        input_html = (
-            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
-            "<option value=''>—</option>"
-            "<option value='A'>A</option>"
-            "<option value='B'>B</option>"
-            "<option value='C'>C</option>"
-            "<option value='D'>D</option>"
-            "</select>"
-        )
-    elif task_type in ["Multiple Matching", "Gapped Text"]:
-        input_html = (
-            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
-            "<option value=''>—</option>"
-            "<option value='A'>A</option>"
-            "<option value='B'>B</option>"
-            "<option value='C'>C</option>"
-            "<option value='D'>D</option>"
-            "<option value='E'>E</option>"
-            "<option value='F'>F</option>"
-            "<option value='G'>G</option>"
-            "<option value='H'>H</option>"
-            "</select>"
-        )
-    elif task_type == "Word Formation":
-        input_html = (
-            "<div style='display:inline-flex; align-items:center; margin: 0 4px;'>"
-            "<input name='{n}' class='answer-input blank' "
-            "style='width:140px; padding:4px; border:2px dashed #aaa; "
-            "background:transparent; outline:none; text-align:center;'>"
-            "<span style='margin-left:6px; font-weight:bold;'>({WORD})</span>"
-            "</div>"
-        )
-
-    elif task_type == "Key Word Transformations":
-        input_html = (
-            "<div style='display:inline-block;width:280px;margin:0 4px;vertical-align:bottom;border-bottom:2px dashed #aaa;'>"
-            "<input name='{n}' class='answer-input blank' "
-            "style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
-            "</div>"
-        )
-    else:  # Open Cloze, 
-        input_html = (
-            "<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
-            "<input name='{n}' class='answer-input blank' style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
-            "</div>"
-        )
-
+       
     # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
-        f"You are a Cambridge exams - FCE, CAE, CPE,  task generator."
-        f"Generate a {task_type} task for the {exam} exam, section: {section}."
+        build_prompt(task_type, exam, rules),
         f"Topic: {topic}."
         f"Instruction template: {instruction_example}\n"
         f"Format details: {format_desc}\n"
@@ -102,13 +111,7 @@ def get_interactive_task():
         f"Layout notes: {layout_notes}\n"
         f"Visual guidelines: {visual_guidelines}\n"
         f"Min words: {min_words}; Max words: {max_words}.\n"
-        f" Output format:\n"
-        f"- Do NOT show correct answers in the task."
-        f"- Return one HTML block only. Place input fields directly into the paragraph where the blank is."
-        f"- Use this field format for each gap: {input_html} Do not list options at the bottom."
-        f"- At the end, add this block:\n" 
-        f"<script type='application/json' id='answers'>[\"correct1\", \"correct2\", \"correct3\",...]</script>\n"
-        f"Do NOT use triple backticks or markdown formatting. Output only HTML."
+       
     )
     
 
@@ -122,11 +125,14 @@ def get_interactive_task():
         prompt = prompt1
     )
 
+    items = json.loads(generated_task)
+    html  = render_html(items, rules)
+
     if current_user.is_authenticated:
         current_user.tasks_today += 1
         db.session.commit()
 
-    return jsonify({"html": generated_task})
+    return jsonify({"html": html})
 
 
 
