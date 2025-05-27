@@ -1,14 +1,21 @@
 from flask import Blueprint, request, jsonify, render_template
+import numpy as np
 from taskgen import generate_task, find_format_info
 from sentence_transformers import SentenceTransformer
 import random
 import pathlib, json
 from flask_login import current_user
 from models import db
+import faiss
 
 
 
 interactive_blueprint = Blueprint("interactive", __name__)
+
+embed_model = SentenceTransformer("all-mpnet-base-v2")
+index = faiss.read_index("task_index.faiss")
+with open("task_data.json", encoding="utf-8") as f:
+    task_data = json.load(f)
 
 select_based_tasks = [
     "Multiple-choice Cloze",       # Use of English
@@ -23,6 +30,16 @@ def get_rules(task_type: str, exam: str) -> dict:
     block = RULES[task_type]
     return block.get(exam, block.get("all"))
 
+def get_rag_examples(exam, section, task_type, k=3):
+    query = f"{exam} {section} {task_type}"
+    q_embed = embed_model.encode([query])
+    D, I = index.search(np.array(q_embed).astype("float32"), k)
+    examples = []
+    for i in I[0]:
+        task = task_data[i]
+        if task["task_type"] == task_type and task["exam"] == exam and task["section"] == section:
+            examples.append(task["text"])
+    return examples
 
 # --- универсальные json-примеры для prompt (по типу) ---
 EXAMPLES = {
@@ -161,9 +178,10 @@ def get_interactive_task():
     }
     topic = random.choice(default_topics.get(section, ["General"]))
 
-       
+    examples = get_rag_examples(exam, section, task_type)
     # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
+        f"EXAMPLES:\n" + "\n\n---\n\n".join(examples) + 
         build_prompt(task_type, exam, rules)+ "\n"
         f"Topic: {topic}.\n"
         f"Instruction template: {instruction_example}\n"
@@ -184,6 +202,7 @@ def get_interactive_task():
         section=section,
         model_choice="gemma",
         prompt = prompt1
+        
     )
 
     clean = clean_json(generated_task)
