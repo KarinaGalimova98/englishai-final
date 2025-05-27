@@ -41,51 +41,7 @@ def get_rag_examples(exam, section, task_type, k=3):
             examples.append(task["text"])
     return examples
 
-# --- универсальные json-примеры для prompt (по типу) ---
-EXAMPLES = {
-    "Open Cloze": """
-[
-  {"text_before": "Many people believe that ", "text_after": " is the key to success."},
-  {"text_before": "However, it ", "text_after": " not always guarantee happiness."}
-]
-""",
-    "Word Formation": """
-[
-  {"text_before": "The new policy led to a ", "text_after": " (CHANGE) in the law."},
-  {"text_before": "Citizens demanded greater ", "text_after": " (RESPONSIBLE) from officials."}
-]
-""",
-    "Multiple-choice Cloze": """
-[
-  {"text_before": "The museum is ", "options": ["easy", "simple", "soft", "smooth"], "text_after": " to find."},
-  {"text_before": "It was built in the ", "options": ["middle", "centre", "heart", "core"], "text_after": " of the city."}
-]
-""",
-    "Key Word Transformations": """
-[
-  {"text_before": "He started playing football when he was six.", "keyword": "since", "text_after": ""},
-  {"text_before": "This is the first time I have eaten sushi.", "keyword": "never", "text_after": ""}
-]
-""",
-    "Multiple Matching": """
-[
-  {"text_before": "Which speaker mentions learning from mistakes?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "text_after": ""},
-  {"text_before": "Who found the experience exciting?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "text_after": ""}
-]
-""",
-    "Gapped Text": """
-[
-  {"text_before": "The solution to the problem lies in ", "options": ["A", "B", "C", "D", "E", "F", "G"], "text_after": "."},
-  {"text_before": "Experts argue that ", "options": ["A", "B", "C", "D", "E", "F", "G"], "text_after": " can be effective."}
-]
-""",
-    "Multiple Choice": """
-[
-  {"text_before": "What is the main idea of the passage?", "options": ["A brief history", "A personal story", "A scientific discovery", "A prediction"], "text_after": ""},
-  {"text_before": "Why did the author...", "options": ["Because...", "So that...", "Although...", "While..."], "text_after": ""}
-]
-"""
-}
+
 
 def render_html(items: list, rules: dict) -> str:
     tpl = rules["input_html"]
@@ -136,8 +92,7 @@ def build_prompt(task_type: str, exam: str, rules: dict) -> str:
     if "answer_length" in rules:
         p.append(f"Each answer must contain {rules['answer_length']}.")
     # Пример для жёсткой структуры!
-    ex = EXAMPLES.get(task_type, EXAMPLES["Open Cloze"])
-    p.append(f"Return ONLY a JSON array like this (NO extra text, NO markdown):\n{ex.strip()}")
+    p.append(f"Return ONLY a JSON array like this (NO extra text, NO markdown)")
     return "\n".join(p)
 
 def clean_json(s: str) -> str:
