@@ -1,0 +1,103 @@
+{
+    "Multiple-choice Cloze": {
+        "FCE": {
+            "section": "Use of English",
+            "num_gaps": 8,
+            "input_type": "select",
+            "option_labels": ["A", "B", "C", "D"],
+            "instruction": "Choose the correct word for each gap.",
+            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+        },
+        "CAE": {
+            "section": "Use of English",
+            "num_gaps": 12,
+            "input_type": "select",
+            "option_labels": ["A", "B", "C", "D"],
+            "instruction": "Choose the correct word for each gap.",
+            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+        },
+        "CPE": {
+            "section": "Use of English",
+            "num_gaps": 12,
+            "input_type": "select",
+            "option_labels": ["A", "B", "C", "D"],
+            "instruction": "Choose the correct word for each gap.",
+            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+        }
+    },
+    "Open Cloze": {
+        "all": {
+            "section": "Use of English",
+            "num_gaps": 12,
+            "input_type": "input",
+            "instruction": "Write one word in each gap.",
+            "input_html": "<input name='{n}' class='answer-input blank' style='width:100px;'>"
+        }
+    },
+    "Word Formation": {
+        "all": {
+            "section": "Use of English",
+            "num_items": 8,
+            "input_type": "input",
+            "instruction": "Use the word in brackets to form a word that fits in the gap.",
+            "input_html": "<input name='{n}' class='answer-input blank' style='width:140px;'>"
+        }
+    },
+    "Key Word Transformations": {
+        "all": {
+            "section": "Use of English",
+            "num_items": 6,
+            "input_type": "input",
+            "answer_length": "2–5 words",
+            "instruction": "Use 2–5 words. Do not change the word given.",
+            "input_html": "<input name='{n}' class='answer-input blank' style='width:300px;'>",
+            "keyword_position": "above_gap"
+        }
+    },
+    "Multiple Matching": {
+        "all": {
+            "section": "Reading",
+            "num_items": 5,
+            "input_type": "select",
+            "option_labels": ["A", "B", "C", "D", "E", "F", "G", "H"],
+            "instruction": "Match the prompts to the correct paragraph (A–H). Options may be used more than once.",
+            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+        }
+    },
+    "Gapped Text": {
+        "all": {
+            "section": "Reading",
+            "num_gaps": 6,
+            "input_type": "select",
+            "option_labels": ["A", "B", "C", "D", "E", "F", "G"],
+            "instruction": "Choose the correct sentence (A–G) for each gap. One option is extra.",
+            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+        }
+    },
+    "Multiple Choice": {
+        "FCE": {
+            "section": "Reading",
+            "num_questions": 6,
+            "input_type": "select",
+            "option_labels": ["A", "B", "C", "D"],
+            "instruction": "Choose the correct answer (A–D) for each question.",
+            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+        },
+        "CAE": {
+            "section": "Reading",
+            "num_questions": 6,
+            "input_type": "select",
+            "option_labels": ["A", "B", "C", "D"],
+            "instruction": "Choose the correct answer (A–D) for each question.",
+            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+        },
+        "CPE": {
+            "section": "Reading",
+            "num_questions": 6,
+            "input_type": "select",
+            "option_labels": ["A", "B", "C", "D"],
+            "instruction": "Choose the correct answer (A–D) for each question.",
+            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+        }
+    }
+}
