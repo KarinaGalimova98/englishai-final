@@ -38,10 +38,6 @@ def get_rag_examples(exam, section, task_type, k=3):
 
 
 
-
-
-
-
 @interactive_blueprint.route("/interactive_task", methods=["POST"])
 def get_interactive_task():
     data = request.json
@@ -83,55 +79,6 @@ def get_interactive_task():
 
     examples = get_rag_examples(exam, section, task_type)
     # Обновлённый prompt с явными указаниями Gemma:
-   # HTML для каждого типа заданий:
-    if task_type == "Multiple-choice Cloze":
-        input_html = (
-            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
-            "<option value=''>—</option>"
-            "<option value='A'>A</option>"
-            "<option value='B'>B</option>"
-            "<option value='C'>C</option>"
-            "<option value='D'>D</option>"
-            "</select>"
-        )
-    elif task_type in ["Multiple Matching", "Gapped Text"]:
-        input_html = (
-            "<select name='{n}' class='answer-input blank' style='min-width:100px; text-align:center;'>"
-            "<option value=''>—</option>"
-            "<option value='A'>A</option>"
-            "<option value='B'>B</option>"
-            "<option value='C'>C</option>"
-            "<option value='D'>D</option>"
-            "<option value='E'>E</option>"
-            "<option value='F'>F</option>"
-            "<option value='G'>G</option>"
-            "<option value='H'>H</option>"
-            "</select>"
-        )
-    elif task_type == "Word Formation":
-        input_html = (
-            "<div style='display:inline-flex; align-items:center; margin: 0 4px;'>"
-            "<input name='{n}' class='answer-input blank' "
-            "style='width:140px; padding:4px; border:2px dashed #aaa; "
-            "background:transparent; outline:none; text-align:center;'>"
-            "<span style='margin-left:6px; font-weight:bold;'>({WORD})</span>"
-            "</div>"
-        )
-
-    elif task_type == "Key Word Transformations":
-        input_html = (
-            "<div style='display:inline-block;width:280px;margin:0 4px;vertical-align:bottom;border-bottom:2px dashed #aaa;'>"
-            "<input name='{n}' class='answer-input blank' "
-            "style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
-            "</div>"
-        )
-    else:  # Open Cloze, 
-        
-        input_html = (
-            "<div style='display:inline-block; width:160px; margin:0 4px; vertical-align:bottom; border-bottom:2px dashed #aaa;'>"
-            "<input name='{n}' class='answer-input blank' style='border:none;width:100%;background:transparent;outline:none;text-align:center;'>"
-            "</div>"
-        )
 
     # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
