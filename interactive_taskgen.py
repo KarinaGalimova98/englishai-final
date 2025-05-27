@@ -24,11 +24,6 @@ select_based_tasks = [
     "Gapped Text"                  # Reading
 ]
 
-RULES = json.loads(pathlib.Path("task_format_rules.json").read_text(encoding="utf-8"))
-
-def get_rules(task_type: str, exam: str) -> dict:
-    block = RULES[task_type]
-    return block.get(exam, block.get("all"))
 
 def get_rag_examples(exam, section, task_type, k=3):
     query = f"{exam} {section} {task_type}"
@@ -74,26 +69,7 @@ def render_html(items: list, rules: dict) -> str:
         )
     return "\n".join(html_blocks)
 
-def build_prompt(task_type: str, exam: str, rules: dict) -> str:
-    p = ["You are a Cambridge Exams task generator.",
-         f"Generate a {task_type} for {exam} (English exam), original and in Cambridge textbook style."]
 
-    if "num_gaps" in rules:
-        n = rules["num_gaps"]
-        p.append(f"The task must have EXACTLY {n} numbered gaps (1–{n}).")
-    if "num_items" in rules:
-        n = rules["num_items"]
-        p.append(f"The task must have EXACTLY {n} items.")
-    if "num_questions" in rules:
-        n = rules["num_questions"]
-        p.append(f"The task must include a text followed by {n} questions (A–D).")
-    if "option_labels" in rules:
-        p.append("For EACH gap/question provide options labeled " + ", ".join(rules["option_labels"]) + ".")
-    if "answer_length" in rules:
-        p.append(f"Each answer must contain {rules['answer_length']}.")
-    # Пример для жёсткой структуры!
-    p.append(f"Return ONLY a JSON array like this (NO extra text, NO markdown)")
-    return "\n".join(p)
 
 def clean_json(s: str) -> str:
     s = s.strip()
@@ -111,7 +87,7 @@ def get_interactive_task():
     exam = data["exam"]
     section = data["section"]
     task_type = data["task_type"]
-    rules = get_rules(task_type, exam)
+    
 
 
     with open("task_templates.json", encoding="utf-8") as f:
@@ -125,6 +101,18 @@ def get_interactive_task():
     min_words = format_info.get("min_words")
     max_words = format_info.get("max_words")
 
+    with open("task_format_rules.json", encoding="utf-8") as f:
+        rules = json.load(f)
+    task_block = rules[task_type]
+    rule_info = task_block.get(exam, task_block.get("all", {}))
+    section = rule_info.get("section", "")
+    num_gaps = rule_info.get("num_gaps")
+    input_type = rule_info.get("input_type", "")
+    option_labels = rule_info.get("option_labels", [])
+
+    input_html = rule_info.get("input_html", "")
+    
+
     # Случайная тема по секции
     default_topics = {
         "Reading": ["Technology", "Education", "Travel"],
@@ -136,8 +124,13 @@ def get_interactive_task():
     examples = get_rag_examples(exam, section, task_type)
     # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
+        f"You are a Cambridge exams - FCE, CAE, CPE,  task generator."
+        f"Generate a {task_type} task for the {exam} exam, section: {section}."
+        f"Requirements: Strictly follow the Cambridge exam style. The task must include exactly the required number of gaps/items/questions, and the layout should be as in real Cambridge exam books.\n"
+        f" Output format:\n"
+        f" Do NOT show correct answers in the task."
+        f"Input type: select (use '<select name=\"{{n}}\ class='answer-input blank'>{option_labels}</select>' for each gap/item)"
         f"EXAMPLES:\n" + "\n\n---\n\n".join(examples) + 
-        build_prompt(task_type, exam, rules)+ "\n"
         f"Topic: {topic}.\n"
         f"Instruction template: {instruction_example}\n"
         f"Format details: {format_desc}\n"
@@ -145,6 +138,9 @@ def get_interactive_task():
         f"Layout notes: {layout_notes}\n"
         f"Visual guidelines: {visual_guidelines}\n"
         f"Min words: {min_words}; Max words: {max_words}.\n"
+        f"Number of gaps/items/questions: {num_gaps}\n"
+        f"Input type: {input_type} (use '{input_html}' for each gap/item)\n"
+        
        
     )
     
