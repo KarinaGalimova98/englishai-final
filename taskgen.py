@@ -131,12 +131,13 @@ def generate_with_gpt4o(prompt: str, api_key: str) -> str:
     return response.json()["choices"][0]["message"]["content"]
 
 def call_gemini(prompt: str, api_key: str) -> str:
-    url = "https://openrouter.ai/v1/chat/completions"
+    url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
         "HTTP-Referer": request.host_url.rstrip('/'),
-        "X-Title": "Cambridge Task Generator"
+        "X-Title": "Cambridge Task Generator",
+        "X-OpenRouter-Model": "google/gemini-2.5-pro-exp-03-25"
     }
     data = {
         "model": "google/gemini-2.5-pro-exp-03-25",
