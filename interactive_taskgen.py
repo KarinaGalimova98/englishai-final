@@ -89,6 +89,13 @@ def get_interactive_task():
     prompt1 = (
         f"You are a Cambridge exams - FCE, CAE, CPE,  task generator."
         f"Generate a {task_type} task for the {exam} exam, section: {section}."
+        f" Output format:\n"
+        f"- Do NOT show correct answers in the task."
+        f"- Return one HTML block only. Place input fields directly into the paragraph where the blank is."
+        f"- Use this field format for each gap: {input_html} Do not list options at the bottom."
+        f"- At the end, add this block:\n" 
+        f"<script type='application/json' id='answers'>[\"correct1\", \"correct2\", \"correct3\",...]</script>\n"
+        f"Do NOT use triple backticks or markdown formatting. Output only HTML."
         f"Here are some examples:\n" + "\n\n---\n\n".join(examples) + "\n\n"
         f"Topic: {topic}."
         f"Instruction template: {instruction_example}\n"
@@ -97,13 +104,7 @@ def get_interactive_task():
         f"Layout notes: {layout_notes}\n"
         f"Visual guidelines: {visual_guidelines}\n"
         f"Min words: {min_words}; Max words: {max_words}.\n"
-        f" Output format:\n"
-        f"- Do NOT show correct answers in the task."
-        f"- Return one HTML block only. Place input fields directly into the paragraph where the blank is."
-        f"- Use this field format for each gap: {input_html} Do not list options at the bottom."
-        f"- At the end, add this block:\n" 
-        f"<script type='application/json' id='answers'>[\"correct1\", \"correct2\", \"correct3\",...]</script>\n"
-        f"Do NOT use triple backticks or markdown formatting. Output only HTML."
+        
     )
     
 
