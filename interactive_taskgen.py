@@ -24,66 +24,114 @@ def get_rules(task_type: str, exam: str) -> dict:
     return block.get(exam, block.get("all"))
 
 
-# === HTML renderer (one function for all types) ==============================
+# --- универсальные json-примеры для prompt (по типу) ---
+EXAMPLES = {
+    "Open Cloze": """
+[
+  {"text_before": "Many people believe that ", "text_after": " is the key to success."},
+  {"text_before": "However, it ", "text_after": " not always guarantee happiness."}
+]
+""",
+    "Word Formation": """
+[
+  {"text_before": "The new policy led to a ", "text_after": " (CHANGE) in the law."},
+  {"text_before": "Citizens demanded greater ", "text_after": " (RESPONSIBLE) from officials."}
+]
+""",
+    "Multiple-choice Cloze": """
+[
+  {"text_before": "The museum is ", "options": ["easy", "simple", "soft", "smooth"], "text_after": " to find."},
+  {"text_before": "It was built in the ", "options": ["middle", "centre", "heart", "core"], "text_after": " of the city."}
+]
+""",
+    "Key Word Transformations": """
+[
+  {"text_before": "He started playing football when he was six.", "keyword": "since", "text_after": ""},
+  {"text_before": "This is the first time I have eaten sushi.", "keyword": "never", "text_after": ""}
+]
+""",
+    "Multiple Matching": """
+[
+  {"text_before": "Which speaker mentions learning from mistakes?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "text_after": ""},
+  {"text_before": "Who found the experience exciting?", "options": ["A", "B", "C", "D", "E", "F", "G", "H"], "text_after": ""}
+]
+""",
+    "Gapped Text": """
+[
+  {"text_before": "The solution to the problem lies in ", "options": ["A", "B", "C", "D", "E", "F", "G"], "text_after": "."},
+  {"text_before": "Experts argue that ", "options": ["A", "B", "C", "D", "E", "F", "G"], "text_after": " can be effective."}
+]
+""",
+    "Multiple Choice": """
+[
+  {"text_before": "What is the main idea of the passage?", "options": ["A brief history", "A personal story", "A scientific discovery", "A prediction"], "text_after": ""},
+  {"text_before": "Why did the author...", "options": ["Because...", "So that...", "Although...", "While..."], "text_after": ""}
+]
+"""
+}
+
 def render_html(items: list, rules: dict) -> str:
-    """Convert model JSON into ready‑to‑serve HTML using rules."""
     tpl = rules["input_html"]
+    input_type = rules.get("input_type", "input")
+    labels = rules.get("option_labels", [])
 
-    if rules["input_type"] == "select":
-        labels = rules["option_labels"]
-
-        def make_field(n, opts):
+    def make_field(n, opts):
+        if input_type == "select":
             opts_html = "".join(
                 f"<option value='{lbl}'>{lbl}) {opt}</option>"
                 for lbl, opt in zip(labels, opts)
             )
             return tpl.format(n=n, options=opts_html)
-    else:  # input
-        make_field = lambda n, _opts: tpl.format(n=n)
+        else:
+            return tpl.format(n=n)
 
     html_blocks = []
     for i, it in enumerate(items, 1):
-        field = make_field(i, it.get("options", []))
+        # Старайся быть лояльным к формату: str → dict, пустое options → []
+        if isinstance(it, str):
+            try:
+                it = json.loads(it)
+            except Exception:
+                it = {"text_before": it, "options": [], "text_after": ""}
+        # Для input-полей не нужен options
+        options = it.get("options") if isinstance(it.get("options", []), list) else []
+        field = make_field(i, options)
         html_blocks.append(
-            f"<p>{it.get('text_before','')} {field} {it.get('text_after','')}</p>"
+            f"<p>{it.get('text_before', '')} {field} {it.get('text_after', '')}</p>"
         )
     return "\n".join(html_blocks)
 
-# === universal prompt builder ===============================================
 def build_prompt(task_type: str, exam: str, rules: dict) -> str:
-    p = ["You are a Cambridge Exams task generator."]
+    p = ["You are a Cambridge Exams task generator.",
+         f"Generate a {task_type} for {exam} (English exam), original and in Cambridge textbook style."]
 
     if "num_gaps" in rules:
         n = rules["num_gaps"]
-        p.append(f"Generate ONE {task_type} text for {exam} with EXACTLY {n} numbered gaps (1–{n}).")
+        p.append(f"The task must have EXACTLY {n} numbered gaps (1–{n}).")
     if "num_items" in rules:
         n = rules["num_items"]
-        p.append(f"Generate EXACTLY {n} {task_type} items for {exam}.")
+        p.append(f"The task must have EXACTLY {n} items.")
     if "num_questions" in rules:
         n = rules["num_questions"]
-        p.append(f"Generate a text followed by {n} questions (A–D) for {exam}.")
-
+        p.append(f"The task must include a text followed by {n} questions (A–D).")
     if "option_labels" in rules:
-        p.append("For EACH gap/question provide options labeled " + ", ".join(rules["option_labels"]) + ".") 
+        p.append("For EACH gap/question provide options labeled " + ", ".join(rules["option_labels"]) + ".")
     if "answer_length" in rules:
-        p.append(f"Each answer must contain {rules['answer_length']}.") 
-
-    p.append("Return ONLY JSON list with keys 'text_before', 'text_after', 'options' (if applicable). No HTML, no markdown.")
+        p.append(f"Each answer must contain {rules['answer_length']}.")
+    # Пример для жёсткой структуры!
+    ex = EXAMPLES.get(task_type, EXAMPLES["Open Cloze"])
+    p.append(f"Return ONLY a JSON array like this (NO extra text, NO markdown):\n{ex.strip()}")
     return "\n".join(p)
 
-
 def clean_json(s: str) -> str:
-    """Удаляет все лишние символы до первой [ или {, а также обёртки ```json ... ```."""
     s = s.strip()
-    # если начинается с ```
     if s.startswith("```"):
-        # убираем все ```
         s = s.replace("```json", "").replace("```", "")
-    # находим первую скобку
-    first = min([s.find("{"), s.find("[")])
-    if first > 0:
-        s = s[first:]
+    first_bracket = min([i for i in [s.find("["), s.find("{")] if i >= 0])
+    if first_bracket > 0:
+        s = s[first_bracket:]
     return s.strip()
+
 
 @interactive_blueprint.route("/interactive_task", methods=["POST"])
 def get_interactive_task():
@@ -139,8 +187,15 @@ def get_interactive_task():
     )
 
     clean = clean_json(generated_task)
-    items = json.loads(clean)
-    html  = render_html(items, rules)
+    try:
+        items = json.loads(clean)
+        # Исправление формата если вдруг получили не список
+        if not isinstance(items, list):
+            items = [items]
+    except Exception as e:
+        items = [{"text_before": "Sorry, there was an error generating the task.", "text_after": str(e), "options": []}]
+
+    html = render_html(items, rules)
 
     if current_user.is_authenticated:
         current_user.tasks_today += 1
