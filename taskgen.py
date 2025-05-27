@@ -130,7 +130,25 @@ def generate_with_gpt4o(prompt: str, api_key: str) -> str:
     response.raise_for_status()
     return response.json()["choices"][0]["message"]["content"]
 
-
+def call_gemini(prompt_text, api_key=None):
+    url = "https://openrouter.ai/api/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": request.host_url.rstrip('/'),
+        "X-Title": "Cambridge Task Generator"
+    }
+    data = {
+        "model": "google/gemini-2.5-pro-exp-03-25",
+        "messages": [
+            {"role": "user", "content": prompt_text}
+        ],
+        "max_tokens": 3048,
+        "temperature": 0.2,
+    }
+    response = requests.post(url, headers=headers, json=data)
+    response.raise_for_status()
+    return response.json()["choices"][0]["message"]["content"]
 
 
 
@@ -235,6 +253,9 @@ def generate_task(exam, task_type,topic,section, model_choice="deepseek",prompt 
 
     elif model_choice == "gpt-4o":
         generated = generate_with_gpt4o(prompt, api_key=os.getenv("OPENROUTER_API_KEY"))
+
+    elif model_choice == "gemini":
+        generated = call_gemini(prompt, api_key=os.getenv("OPENROUTER_API_KEY"))
 
 
     image_links = []
