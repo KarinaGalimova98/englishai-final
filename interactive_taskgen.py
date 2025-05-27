@@ -5,7 +5,7 @@ import random
 import pathlib, json
 from flask_login import current_user
 from models import db
-from rules import get as get_rules
+
 
 
 interactive_blueprint = Blueprint("interactive", __name__)
@@ -103,8 +103,8 @@ def get_interactive_task():
        
     # Обновлённый prompt с явными указаниями Gemma:
     prompt1 = (
-        build_prompt(task_type, exam, rules),
-        f"Topic: {topic}."
+        build_prompt(task_type, exam, rules)+ "\n"
+        f"Topic: {topic}.\n"
         f"Instruction template: {instruction_example}\n"
         f"Format details: {format_desc}\n"
         f"Structure description: {structure_desc}\n"
