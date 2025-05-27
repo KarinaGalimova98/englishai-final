@@ -130,7 +130,7 @@ def generate_with_gpt4o(prompt: str, api_key: str) -> str:
     response.raise_for_status()
     return response.json()["choices"][0]["message"]["content"]
 
-def call_gemini(prompt_text, api_key=None):
+def call_gemini(prompt: str, api_key: str) -> str:
     url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -141,7 +141,7 @@ def call_gemini(prompt_text, api_key=None):
     data = {
         "model": "google/gemini-2.5-pro-exp-03-25",
         "messages": [
-            {"role": "user", "content": prompt_text}
+            {"role": "user", "content": prompt}
         ],
         "max_tokens": 3048,
         "temperature": 0.2,
