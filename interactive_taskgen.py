@@ -7,10 +7,15 @@ import pathlib, json
 from flask_login import current_user
 from models import db
 import faiss
+from dotenv import load_dotenv
+import os
+import requests
 
-
-
+load_dotenv()
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 interactive_blueprint = Blueprint("interactive", __name__)
+
+
 
 embed_model = SentenceTransformer("all-mpnet-base-v2")
 index = faiss.read_index("task_index.faiss")
@@ -108,7 +113,7 @@ def get_interactive_task():
         task_type=task_type,
         topic=topic,
         section=section,
-        model_choice="gemma",
+        model_choice="gemini",
         prompt = prompt1
         
     )
