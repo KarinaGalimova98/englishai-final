@@ -154,7 +154,7 @@ def call_gemini(prompt: str, api_key: str) -> str:
     return response.json()["choices"][0]["message"]["content"]
 
 client = Client()
-def generate_with_gpt4free(prompt, model="gpt-4o"):
+def generate_with_gpt4free(prompt, model="gpt-4.5-preview"):
     try:
         response = client.chat.completions.create(
             model=model,
@@ -273,7 +273,7 @@ def generate_task(exam, task_type,topic,section, model_choice="deepseek",prompt 
         generated = call_gemini(prompt, api_key=os.getenv("OPENROUTER_API_KEY"))
 
     elif model_choice == "gpt4free":
-        generated = generate_with_gpt4free(prompt, model="gpt-4o")
+        generated = generate_with_gpt4free(prompt, model="gpt-4.5-preview")
 
 
     image_links = []
