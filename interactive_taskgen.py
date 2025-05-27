@@ -38,47 +38,8 @@ def get_rag_examples(exam, section, task_type, k=3):
 
 
 
-def render_html(items: list, rules: dict) -> str:
-    tpl = rules["input_html"]
-    input_type = rules.get("input_type", "input")
-    labels = rules.get("option_labels", [])
-
-    def make_field(n, opts):
-        if input_type == "select":
-            opts_html = "".join(
-                f"<option value='{lbl}'>{lbl}) {opt}</option>"
-                for lbl, opt in zip(labels, opts)
-            )
-            return tpl.format(n=n, options=opts_html)
-        else:
-            return tpl.format(n=n)
-
-    html_blocks = []
-    for i, it in enumerate(items, 1):
-        # Старайся быть лояльным к формату: str → dict, пустое options → []
-        if isinstance(it, str):
-            try:
-                it = json.loads(it)
-            except Exception:
-                it = {"text_before": it, "options": [], "text_after": ""}
-        # Для input-полей не нужен options
-        options = it.get("options") if isinstance(it.get("options", []), list) else []
-        field = make_field(i, options)
-        html_blocks.append(
-            f"<p>{it.get('text_before', '')} {field} {it.get('text_after', '')}</p>"
-        )
-    return "\n".join(html_blocks)
 
 
-
-def clean_json(s: str) -> str:
-    s = s.strip()
-    if s.startswith("```"):
-        s = s.replace("```json", "").replace("```", "")
-    first_bracket = min([i for i in [s.find("["), s.find("{")] if i >= 0])
-    if first_bracket > 0:
-        s = s[first_bracket:]
-    return s.strip()
 
 
 @interactive_blueprint.route("/interactive_task", methods=["POST"])
@@ -155,22 +116,13 @@ def get_interactive_task():
         
     )
 
-    clean = clean_json(generated_task)
-    try:
-        items = json.loads(clean)
-        # Исправление формата если вдруг получили не список
-        if not isinstance(items, list):
-            items = [items]
-    except Exception as e:
-        items = [{"text_before": "Sorry, there was an error generating the task.", "text_after": str(e), "options": []}]
 
-    html = render_html(items, rule_info)
 
     if current_user.is_authenticated:
         current_user.tasks_today += 1
         db.session.commit()
 
-    return jsonify({"html": html})
+    return jsonify({"html": generated_task})
 
 
 
