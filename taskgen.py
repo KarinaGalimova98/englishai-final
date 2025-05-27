@@ -60,7 +60,7 @@ def generate_with_claude_sonnet(prompt: str, api_key: str) -> str:
         "model": "anthropic/claude-3-sonnet-20240229",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 1400,
-        "temperature": 0.2
+        "temperature": 0.5
     }
 
     response = requests.post(url, headers=headers, json=data)
@@ -81,7 +81,7 @@ def generate_with_deepseek(prompt: str, api_key: str) -> str:
         "model": "deepseek/deepseek-prover-v2:free",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 3000,
-        "temperature": 0.2
+        "temperature": 0.5
     }
 
     response = requests.post(url, headers=headers, json=data)
@@ -102,7 +102,7 @@ def generate_with_gemma(prompt: str, api_key: str) -> str:
         "model": "google/gemma-3-27b-it:free",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 3000,
-        "temperature": 0.2
+        "temperature": 0.5
     }
 
     response = requests.post(url, headers=headers, json=data)
@@ -123,7 +123,7 @@ def generate_with_gpt4o(prompt: str, api_key: str) -> str:
         "model": "openai/gpt-4o",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 3000,
-        "temperature": 0.2
+        "temperature": 0.5
     }
 
     response = requests.post(url, headers=headers, json=data)
