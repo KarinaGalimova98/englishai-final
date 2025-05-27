@@ -137,10 +137,10 @@ def call_gemini(prompt: str, api_key: str) -> str:
         "Content-Type": "application/json",
         "HTTP-Referer": request.host_url.rstrip('/'),
         "X-Title": "Cambridge Task Generator",
-        "X-OpenRouter-Model": "google/gemini-2.5-pro-exp-03-25"
+        
     }
     data = {
-        "model": "google/gemini-2.5-pro-exp-03-25",
+        "model": "google/gemini-2.0-flash-exp:free",
         "messages": [
             {"role": "user", "content": prompt}
         ],
