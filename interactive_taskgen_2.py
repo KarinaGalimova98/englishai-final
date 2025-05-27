@@ -39,12 +39,12 @@ def get_rag_examples(exam, section, task_type, k=3):
         task = task_data[i]
         if task["task_type"] == task_type and task["exam"] == exam and task["section"] == section:
             examples.append(task["text"])
-    examples_text = examples[0]
+    
             
-    return examples_text
+    return examples[:1]
 
 def normalize_name(name):
-    return name.strip().lower().replace("-", " ").replace("_", " ").replace("  ", " ")
+    return name.strip().lower().replace("-", " ").replace("_", " ").replace(".", "").replace("  ", " ")
 
 def find_image_file(exam, task_type):
     folder = os.path.join("static", "exams_exmpls", exam)
@@ -90,7 +90,7 @@ def get_interactive_task():
     task_type = data["task_type"]
 
     # 1. Найди RAG-примеры (top 3)
-    examples = get_rag_examples(exam, section, task_type)
+    examples = get_rag_examples(exam, section, task_type, k=1)
     examples_text = "\n\n".join(f"{i+1}. {ex}" for i, ex in enumerate(examples))
 
     # 2. Найди фото для prompt
