@@ -143,6 +143,7 @@ def get_interactive_task():
 
     response = requests.post(api_url, headers=headers, json=data_api)
     print("RESPONSE STATUS:", response.status_code)
+    print("RAW RESPONSE:", response.text)
     try:
         answer = response.json()
         # Обычно Llama отвечает так:
