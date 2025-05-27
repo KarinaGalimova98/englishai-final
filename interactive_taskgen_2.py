@@ -110,8 +110,6 @@ def get_interactive_task():
         "Below is a photo of a real Cambridge exam task of the required type.\n"
         "Your job is to generate a **completely new** task in exactly the same format and visual style, as shown on the photo.\n"
         "The content/topic and complexity must be like in the examples below.\n\n"
-        "EXAMPLES (real Cambridge tasks):\n"
-        f"{examples_text}\n\n"
         "Return ONLY a JSON array, where each gap/item is an object like this:\n"
         "  {'text_before': ..., 'text_after': ...}\n"
         "(Or include 'options' if it's a multiple choice or cloze, and 'keyword' for Key Word Transformations.)\n"
