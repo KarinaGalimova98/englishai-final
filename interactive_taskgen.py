@@ -72,6 +72,19 @@ def build_prompt(task_type: str, exam: str, rules: dict) -> str:
     return "\n".join(p)
 
 
+def clean_json(s: str) -> str:
+    """Удаляет все лишние символы до первой [ или {, а также обёртки ```json ... ```."""
+    s = s.strip()
+    # если начинается с ```
+    if s.startswith("```"):
+        # убираем все ```
+        s = s.replace("```json", "").replace("```", "")
+    # находим первую скобку
+    first = min([s.find("{"), s.find("[")])
+    if first > 0:
+        s = s[first:]
+    return s.strip()
+
 @interactive_blueprint.route("/interactive_task", methods=["POST"])
 def get_interactive_task():
     data = request.json
@@ -125,7 +138,8 @@ def get_interactive_task():
         prompt = prompt1
     )
 
-    items = json.loads(generated_task)
+    clean = clean_json(generated_task)
+    items = json.loads(clean)
     html  = render_html(items, rules)
 
     if current_user.is_authenticated:
