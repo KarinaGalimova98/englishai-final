@@ -84,7 +84,10 @@ def get_interactive_task():
     # 2. Найди фото для prompt
     exam_folder = exam.upper()   # FCE, CAE, CPE
     photo_name = TASK_IMAGE_MAP.get(task_type, "1.jpg")
-    photo_path = os.path.join("static", "Exam Examples", exam_folder, photo_name)
+    photo_path = os.path.join("static", "exams_exmpls", exam, f"{task_type}.png")
+    if not os.path.isfile(photo_path):
+        return jsonify({"html": "<b>Image file not found!</b>"}), 500
+
     # Кодируем в base64 (OpenRouter требует base64 для image_url)
     with open(photo_path, "rb") as f:
         img_base64 = base64.b64encode(f.read()).decode("utf-8")
