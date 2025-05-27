@@ -24,6 +24,7 @@ faiss-cpu
 PyMuPDF==1.22.3
 gunicorn
 python-dotenv
+g4f[all]
 
 
 
