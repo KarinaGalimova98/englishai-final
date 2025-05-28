@@ -198,12 +198,12 @@
         const answers = JSON.parse(document.getElementById("answers").textContent);
         let correctCount = 0;
         let realIndex = 0;
+
         document.querySelectorAll(".answer-input").forEach((input) => {
           const tag = input.tagName.toLowerCase();
-          const userAnswer = (tag === 'select' ? input.value : input.value.trim()).toLowerCase();
-
-          const name = input.getAttribute("name");
-          const correctAnswer = answers[realIndex]?.toLowerCase();
+          const rawInput = (tag === 'select' ? input.value : input.value.trim());
+          const userAnswer = rawInput?.toLowerCase() || "";
+          const correctAnswer = answers[realIndex]?.toLowerCase() || "";
 
           input.classList.remove("correct", "incorrect");
           let oldIcon = input.parentElement.querySelector(".feedback-icon");
@@ -214,6 +214,10 @@
           const icon = document.createElement("span");
           icon.className = "feedback-icon";
 
+          const answerSpan = document.createElement("span");
+          answerSpan.className = "correct-answer";
+          answerSpan.textContent = ` (${correctAnswer})`;
+
           if (userAnswer === correctAnswer) {
             input.classList.add("correct");
             icon.textContent = "✅";
@@ -223,15 +227,12 @@
             input.classList.add("incorrect");
             icon.textContent = "❌";
             icon.style.color = "crimson";
-            const answerSpan = document.createElement("span");
-            answerSpan.className = "correct-answer";
-            answerSpan.textContent = ` (${correctAnswer})`;
-            const container = input.parentElement;
-            container.appendChild(icon);
-            container.appendChild(answerSpan);
           }
-          realIndex++;
+
           input.parentElement.appendChild(icon);
+          input.parentElement.appendChild(answerSpan);
+
+          realIndex++;
         });
 
         alert(`Вы правильно выполнили ${correctCount} из ${answers.length}`);
