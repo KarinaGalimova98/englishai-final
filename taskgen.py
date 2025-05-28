@@ -153,7 +153,7 @@ def call_gemini(prompt: str, api_key: str) -> str:
     return response.json()["choices"][0]["message"]["content"]
 
 def generate_with_sonnet(prompt, system="You are a Cambridge exam task generator (FCE, CAE, CPE). You strictly follow instructions and return only raw HTML with select fields and a script with correct answers."):
-    url = "https://sonnetapi-claude3-andresdevvv.koyeb.app/api/chat"
+    url = "http://localhost:3032/v1/chat/completions"
 
     headers = {
         "Content-Type": "application/json"
