@@ -116,10 +116,7 @@ def get_interactive_task():
         prompt = prompt1
         
     )
-    # Чистим HTML, оставляя только от начала задания:
-    start_index = raw_html.find("For questions")
-    if start_index != -1:
-        raw_html = raw_html[start_index:]
+    
     # 1. Ищем правильные ответы из <script id="answers">...</script>
     match = re.search(r"<script[^>]*id=[\"']answers[\"'][^>]*>(.*?)</script>", raw_html, re.DOTALL)
     if match:
