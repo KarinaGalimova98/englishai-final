@@ -152,24 +152,7 @@ def call_gemini(prompt: str, api_key: str) -> str:
     response.raise_for_status()
     return response.json()["choices"][0]["message"]["content"]
 
-def generate_with_sonnet(prompt, system="You are a Cambridge exam task generator (FCE, CAE, CPE). You strictly follow instructions and return only raw HTML with select fields and a script with correct answers."):
-    url = "http://localhost:3032/v1/chat/completions"
 
-    headers = {
-        "Content-Type": "application/json"
-    }
-
-    data = {
-        "model": "claude3.7",
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": prompt}
-        ]
-    }
-
-    response = requests.post(url, json=data, headers=headers)
-    response.raise_for_status()
-    return response.json()["choices"][0]["message"]["content"]
 
 
 
@@ -279,8 +262,6 @@ def generate_task(exam, task_type,topic,section, model_choice="deepseek",prompt 
     elif model_choice == "gemini":
         generated = call_gemini(prompt, api_key=os.getenv("OPENROUTER_API_KEY"))
 
-    elif model_choice == "sonnet":
-        generated = generate_with_sonnet(prompt)
 
     
 
