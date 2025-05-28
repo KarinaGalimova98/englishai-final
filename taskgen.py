@@ -141,7 +141,7 @@ def call_gemini(prompt: str, api_key: str) -> str:
     }
     data = {
         #"model": "google/gemini-2.5-flash-preview-05-20", 
-        "model":"deepseek/deepseek-chat-v3-0324:free",
+        "model":"dgoogle/gemini-2.5-flash-preview-05-20",
         "messages": [
             {"role": "user", "content": prompt}
         ],
