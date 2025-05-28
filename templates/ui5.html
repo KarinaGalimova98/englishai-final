@@ -146,52 +146,62 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
- .model-btn {
-    position: relative;
-    display: block;
-    padding: 0.75rem 1.25rem;
-    color: white;
-    font-weight: 500;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
-  }
-  .model-btn:hover {
-    background-color: rgba(168, 85, 247, 0.5);
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
-  }
-  .model-btn input:checked ~ .model-name {
-    color: #ec4899;
-    font-weight: 600;
-  }
-  .model-btn input:checked {
-    outline: 2px solid #ec4899;
-  }
-  .tooltip-card {
-    display: none;
-    position: absolute;
-    top: 100%;
-    margin-top: 0.75rem;
-    z-index: 50;
-    width: 16rem;
-    padding: 1rem;
-    font-size: 0.875rem;
-    border-radius: 0.75rem;
-    flex-direction: column;
-    background: rgba(30, 30, 40, 0.85);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(16px);
-  }
-  .group:hover .tooltip-card {
-    display: flex;
-  }
-  @media (max-width: 768px) {
-    .tooltip-card {
-      display: none !important;
-    }
-  }
+ .model-opt {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  color: white;
+  position: relative;
+}
+
+.model-opt:hover,
+.model-opt input:checked + .model-label {
+  border-color: #a78bfa;
+  background: rgba(168, 139, 250, 0.3);
+  box-shadow: 0 0 10px #a78bfa88;
+}
+
+.model-opt input {
+  display: none;
+}
+
+.model-opt .model-label {
+  font-weight: 600;
+  flex: 1;
+}
+
+.tooltip-card {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  margin-top: 0.75rem;
+  width: 260px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  border-radius: 1rem;
+  display: none;
+  flex-direction: column;
+  background: rgba(25, 25, 35, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.model-opt:hover .tooltip-card {
+  display: flex;
+}
+
+.tooltip-card ul {
+  margin-left: 1rem;
+  color: white;
+}
+
 
   
 
@@ -220,94 +230,99 @@
       <!-- Выбор модели генерации -->
 <div class="bg-white/5 rounded-3xl p-6">
   <h2 class="text-white font-bold text-lg mb-4">Выбери модель генерации</h2>
-  <div class="flex flex-wrap gap-4">
-        <!-- GPT-4 -->
-    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white peer-checked:ring-2 peer-checked:ring-purple-400 peer-checked:bg-purple-700/40 peer-checked:shadow-xl">
-    <input type="radio" name="model" value="gpt" class="peer hidden" />
-    <div class="flex items-center gap-2">
-      <span>GPT-4</span>
-      <span class="text-yellow-400 text-sm">🪙</span>
+  <div class="flex flex-wrap gap-4 justify-center">
+       <!-- Claude -->
+  <label class="model-opt">
+    <input type="radio" name="model" value="claude">
+    <span class="model-label flex items-center gap-2">
+      <img src="/static/claude-color.png" alt="claude" style="height: 22px;">
+      Claude
+      <span class="text-yellow-400">🪙</span>
+    </span>
+    <div class="tooltip-card">
+      <div style="color: #f9a8d4; font-weight: bold;">Claude 3 Sonnet</div>
+      <div style="color: #facc15;">⭐⭐⭐⭐☆</div>
+      <ul>
+        <li>Пишет живые, понятные тексты</li>
+        <li>Очень «человечный» стиль</li>
+        <li><span style="color: #facc15;">💰 Платная</span></li>
+      </ul>
     </div>
-      <div class="tooltip-card">
-        <div class="font-semibold text-pink-300 mb-1">GPT-4</div>
-        <div class="text-yellow-300 mb-2">⭐⭐⭐⭐⭐</div>
-        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
-          <li>Отлично справляется с любыми типами заданий</li>
-          <li>Понимает структуру Cambridge-экзаменов</li>
-          <li><span class="text-yellow-400">🪙 Платная модель</span></li>
-        </ul>
-      </div>
-    </label>
+  </label>
 
-    <!-- Claude 3 Sonnet -->
-    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
-      <input type="radio" name="model" value="claude" class="peer hidden" />
-      <div class="flex items-center gap-2">
-        <span>Claude 3 Sonnet</span>
-        <span class="text-yellow-400 text-sm">🪙</span>
-      </div>
-      <div class="tooltip-card">
-        <div class="font-semibold text-orange-300 mb-1">Claude 3 Sonnet</div>
-        <div class="text-yellow-300 mb-2">⭐⭐⭐⭐☆</div>
-        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
-          <li>Пишет тексты, похожие на человеческие</li>
-          <li>Часто даёт логичные и понятные формулировки</li>
-          <li><span class="text-yellow-400">🪙 Платная модель</span></li>
-        </ul>
-      </div>
-    </label>
+  <!-- DeepSeek -->
+  <label class="model-opt">
+    <input type="radio" name="model" value="deepseek">
+    <span class="model-label flex items-center gap-2">
+      <img src="/static/deepseek.png" alt="deepseek" style="height: 20px;">
+      DeepSeek
+    </span>
+    <div class="tooltip-card">
+      <div style="color: #67e8f9; font-weight: bold;">DeepSeek</div>
+      <div style="color: #facc15;">⭐⭐⭐☆</div>
+      <ul>
+        <li>Форматирует аккуратно</li>
+        <li>Бесплатная альтернатива</li>
+        <li>Подходит для коротких заданий</li>
+      </ul>
+    </div>
+  </label>
 
-    <!-- ChatGPT-4o -->
-    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
-      <input type="radio" name="model" value="gpt-4o" class="peer hidden" />
-      <div class="flex items-center gap-2">
-        <span>GPT-4o</span>
-        <span class="text-yellow-400 text-sm">🪙</span>
-      </div>
-      <div class="tooltip-card">
-        <div class="font-semibold text-blue-300 mb-1">ChatGPT-4o</div>
-        <div class="text-yellow-300 mb-2">⭐⭐⭐⭐⭐</div>
-        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
-          <li>Быстрая и точная модель</li>
-          <li>Подходит для всех секций экзамена</li>
-          <li><span class="text-yellow-400">🪙 Платная модель</span></li>
-        </ul>
-      </div>
-    </label>
+  <!-- GPT-4 -->
+  <label class="model-opt">
+    <input type="radio" name="model" value="gpt-4">
+    <span class="model-label flex items-center gap-2">
+      <img src="/static/openai.png" alt="gpt-4" style="height: 20px;">
+      GPT-4
+      <span class="text-yellow-400">🪙</span>
+    </span>
+    <div class="tooltip-card">
+      <div style="color: #f9a8d4; font-weight: bold;">GPT-4</div>
+      <div style="color: #facc15;">⭐⭐⭐⭐⭐</div>
+      <ul>
+        <li>Отлично справляется с любыми заданиями</li>
+        <li>Понимает структуру Cambridge-экзаменов</li>
+        <li><span style="color: #facc15;">💰 Платная</span></li>
+      </ul>
+    </div>
+  </label>
 
-    <!-- DeepSeek -->
-    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
-      <input type="radio" name="model" value="deepseek" class="peer hidden" />
-      <div class="flex items-center gap-2">
-        <span>DeepSeek</span>
-      </div>
-      <div class="tooltip-card">
-        <div class="font-semibold text-cyan-300 mb-1">DeepSeek</div>
-        <div class="text-yellow-300 mb-2">⭐⭐⭐☆</div>
-        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
-          <li>Бесплатная альтернатива GPT</li>
-          <li>Хорошо справляется с форматированием</li>
-          <li>Подходит для коротких заданий</li>
-        </ul>
-      </div>
-    </label>
+  <!-- ChatGPT-4o -->
+  <label class="model-opt">
+    <input type="radio" name="model" value="gpt-4o">
+    <span class="model-label flex items-center gap-2">
+      <img src="/static/openai.png" alt="gpt-4o" style="height: 20px;">
+      ChatGPT-4o
+      <span class="text-yellow-400">🪙</span>
+    </span>
+    <div class="tooltip-card">
+      <div style="color: #38bdf8; font-weight: bold;">ChatGPT-4o</div>
+      <div style="color: #facc15;">⭐⭐⭐⭐⭐</div>
+      <ul>
+        <li>Быстрая и точная модель</li>
+        <li>Подходит для всех секций экзамена</li>
+        <li><span style="color: #facc15;">💰 Платная</span></li>
+      </ul>
+    </div>
+  </label>
 
-    <!-- Gemma -->
-    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
-      <input type="radio" name="model" value="gemma" class="peer hidden" />
-      <div class="flex items-center gap-2">
-        <span>Gemma</span>
-      </div>
-      <div class="tooltip-card">
-        <div class="font-semibold text-gray-300 mb-1">Gemma</div>
-        <div class="text-yellow-300 mb-2">⭐⭐☆☆☆</div>
-        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
-          <li>Быстрая и лёгкая модель</li>
-          <li>Идеальна для простых заданий и тренировки</li>
-          <li><span class="text-green-300">Бесплатная модель</span></li>
-        </ul>
-      </div>
-    </label>
+  <!-- Gemma -->
+  <label class="model-opt">
+    <input type="radio" name="model" value="gemma">
+    <span class="model-label flex items-center gap-2">
+      <img src="/static/gemma-color.png" alt="gemma" style="height: 20px;">
+      Gemma
+    </span>
+    <div class="tooltip-card">
+      <div style="color: #c4b5fd; font-weight: bold;">Gemma</div>
+      <div style="color: #facc15;">⭐⭐☆☆☆</div>
+      <ul>
+        <li>Самая лёгкая и быстрая</li>
+        <li>Подходит для простых тестов и повторений</li>
+        <li><span style="color: #4ade80;">Бесплатная</span></li>
+      </ul>
+    </div>
+  </label>
 
 
 
