@@ -146,17 +146,54 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+  .model-btn {
+    position: relative;
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: white;
+    font-weight: 500;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+  .model-btn:hover {
+    background-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+  }
+  .model-btn input:checked ~ .model-name {
+    color: #ec4899;
+    font-weight: 600;
+  }
+  .model-btn input:checked {
+    outline: 2px solid #ec4899;
+  }
+  .tooltip-card {
+    position: absolute;
+    top: 100%;
+    margin-top: 0.75rem;
+    z-index: 50;
+    width: 16rem;
+    padding: 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    display: none;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+  }
+  .model-btn:hover .tooltip-card {
+    display: flex;
+  }
   @media (max-width: 768px) {
-    .group-hover\:flex {
+    .tooltip-card {
       display: none !important;
     }
-    .peer-checked\:flex {
-      display: flex !important;
-      position: relative;
-      top: 0;
-      margin-top: 0.5rem;
-    }
   }
+
+  
 
 
   </style>
@@ -653,6 +690,17 @@
   });
 </script>
 
+<script>
+  document.querySelectorAll('.model-btn').forEach(btn => {
+    const input = btn.querySelector('input[type="radio"]');
+    const tooltip = btn.querySelector('.tooltip-card');
+
+    input.addEventListener('change', () => {
+      // скрыть все подсказки
+      document.querySelectorAll('.tooltip-card').forEach(t => t.style.display = 'none');
+    });
+  });
+</script>
 
 
 
