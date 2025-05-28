@@ -3,13 +3,13 @@ import numpy as np
 from taskgen import generate_task, find_format_info
 from sentence_transformers import SentenceTransformer
 import random
-import pathlib, json
+import re, json
 from flask_login import current_user
 from models import db
 import faiss
 from dotenv import load_dotenv
 import os
-import requests
+
 
 load_dotenv()
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
@@ -114,7 +114,7 @@ def get_interactive_task():
     
     #f"Here is  example:\n" + "\n\n---\n\n".join(examples) + "\n\n"
     # Генерация задания с использованием GEMMA
-    generated_task, _ = generate_task(
+    raw_html, _ = generate_task(
         exam=exam,
         task_type=task_type,
         topic=topic,
@@ -123,6 +123,24 @@ def get_interactive_task():
         prompt = prompt1
         
     )
+    # 1. Ищем правильные ответы из <script id="answers">...</script>
+    match = re.search(r"<script[^>]*id=[\"']answers[\"'][^>]*>(.*?)</script>", raw_html, re.DOTALL)
+    if match:
+        answers_raw = match.group(1)
+        try:
+            correct_answers = json.loads(answers_raw.strip())
+        except Exception as e:
+            print(f"[⚠️ Ошибка разбора ответов]: {e}")
+            correct_answers = []
+    else:
+        correct_answers = []
+
+    # 2. Удаляем старый блок ответов из HTML
+    cleaned_html = re.sub(r"<script[^>]*id=[\"']answers[\"'][^>]*>.*?</script>", "", raw_html, flags=re.DOTALL)
+
+    # 3. Вставляем свой корректный блок
+    answer_script = f"<script type='application/json' id='answers'>{json.dumps(correct_answers, ensure_ascii=False)}</script>"
+    generated_task = cleaned_html + "\n" + answer_script
 
     if current_user.is_authenticated:
         current_user.tasks_today += 1
