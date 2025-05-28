@@ -146,6 +146,17 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+  @media (max-width: 768px) {
+    .group-hover\:flex {
+      display: none !important;
+    }
+    .peer-checked\:flex {
+      display: flex !important;
+      position: relative;
+      top: 0;
+      margin-top: 0.5rem;
+    }
+  }
 
 
   </style>
@@ -173,41 +184,99 @@
 <div class="bg-white/5 rounded-3xl p-6">
   <h2 class="text-white font-bold text-lg mb-4">Выбери модель генерации</h2>
   <div class="flex flex-wrap gap-4">
-    <label class="cursor-pointer">
-      <input type="radio" name="model" value="gpt" class="hidden peer" checked>
-      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
-        <img src="{{ url_for('static', filename='openai.png') }}" alt="GPT-4" class="w-6 h-6">
+        <!-- GPT-4 -->
+    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
+      <input type="radio" name="model" value="gpt" class="peer hidden" />
+      <div class="flex items-center gap-2">
         <span>GPT-4</span>
+        <span class="text-yellow-400 text-sm">🪙</span>
+      </div>
+      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
+                  peer-checked:flex md:group-hover:flex">
+        <div class="font-semibold text-pink-300 mb-1">GPT-4</div>
+        <div class="text-yellow-300 mb-2">⭐⭐⭐⭐⭐</div>
+        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
+          <li>Отлично справляется с любыми типами заданий</li>
+          <li>Понимает структуру Cambridge-экзаменов</li>
+          <li><span class="text-yellow-400">🪙 Платная модель</span></li>
+        </ul>
       </div>
     </label>
-    <label class="cursor-pointer">
-      <input type="radio" name="model" value="claude" class="hidden peer">
-      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
-        <img src="{{ url_for('static', filename='claude-color.png') }}" alt="Claude 3 Sonnet" class="w-6 h-6">
+
+    <!-- Claude 3 Sonnet -->
+    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
+      <input type="radio" name="model" value="claude" class="peer hidden" />
+      <div class="flex items-center gap-2">
         <span>Claude 3 Sonnet</span>
+        <span class="text-yellow-400 text-sm">🪙</span>
+      </div>
+      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
+                  peer-checked:flex md:group-hover:flex">
+        <div class="font-semibold text-orange-300 mb-1">Claude 3 Sonnet</div>
+        <div class="text-yellow-300 mb-2">⭐⭐⭐⭐☆</div>
+        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
+          <li>Пишет тексты, похожие на человеческие</li>
+          <li>Часто даёт логичные и понятные формулировки</li>
+          <li><span class="text-yellow-400">🪙 Платная модель</span></li>
+        </ul>
       </div>
     </label>
-    <label class="cursor-pointer">
-      <input type="radio" name="model" value="deepseek" class="hidden peer">
-      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
-        <img src="{{ url_for('static', filename='deepseek.png') }}" alt="DeepSeek" class="w-6 h-6">
+
+    <!-- ChatGPT-4o -->
+    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
+      <input type="radio" name="model" value="gpt-4o" class="peer hidden" />
+      <div class="flex items-center gap-2">
+        <span>GPT-4o</span>
+        <span class="text-yellow-400 text-sm">🪙</span>
+      </div>
+      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
+                  peer-checked:flex md:group-hover:flex">
+        <div class="font-semibold text-blue-300 mb-1">ChatGPT-4o</div>
+        <div class="text-yellow-300 mb-2">⭐⭐⭐⭐⭐</div>
+        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
+          <li>Быстрая и точная модель</li>
+          <li>Подходит для всех секций экзамена</li>
+          <li><span class="text-yellow-400">🪙 Платная модель</span></li>
+        </ul>
+      </div>
+    </label>
+
+    <!-- DeepSeek -->
+    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
+      <input type="radio" name="model" value="deepseek" class="peer hidden" />
+      <div class="flex items-center gap-2">
         <span>DeepSeek</span>
       </div>
+      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
+                  peer-checked:flex md:group-hover:flex">
+        <div class="font-semibold text-cyan-300 mb-1">DeepSeek</div>
+        <div class="text-yellow-300 mb-2">⭐⭐⭐☆</div>
+        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
+          <li>Бесплатная альтернатива GPT</li>
+          <li>Хорошо справляется с форматированием</li>
+          <li>Подходит для коротких заданий</li>
+        </ul>
+      </div>
     </label>
-    <label class="cursor-pointer">
-      <input type="radio" name="model" value="gemma" class="hidden peer">
-      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
-        <img src="{{ url_for('static', filename='gemma-color.png') }}" alt="Gemma" class="w-6 h-6">
+
+    <!-- Gemma -->
+    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
+      <input type="radio" name="model" value="gemma" class="peer hidden" />
+      <div class="flex items-center gap-2">
         <span>Gemma</span>
       </div>
-    </label>
-    <label class="cursor-pointer">
-      <input type="radio" name="model" value="gpt-4o" class="hidden peer">
-      <div class="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-transparent peer-checked:border-fuchsia-500 hover:border-white transition-all duration-300 hover:shadow-[0_0_12px_3px_rgba(255,255,255,0.3)] peer-checked:shadow-[0_0_16px_4px_rgba(255,255,255,0.5)] text-white">
-        <img src="{{ url_for('static', filename='gpt4o.png') }}" alt="GPT-4o" class="w-6 h-6">
-        <span>ChatGPT-4o</span>
+      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
+                  peer-checked:flex md:group-hover:flex">
+        <div class="font-semibold text-gray-300 mb-1">Gemma</div>
+        <div class="text-yellow-300 mb-2">⭐⭐☆☆☆</div>
+        <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
+          <li>Быстрая и лёгкая модель</li>
+          <li>Идеальна для простых заданий и тренировки</li>
+          <li><span class="text-green-300">Бесплатная модель</span></li>
+        </ul>
       </div>
     </label>
+
 
 
   </div>
