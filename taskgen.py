@@ -146,7 +146,7 @@ def call_gemini(prompt: str, api_key: str) -> str:
             {"role": "user", "content": prompt}
         ],
         "max_tokens": 3048,
-        "temperature": 0.2,
+        "temperature": 0.4,
     }
     response = requests.post(url, headers=headers, json=data)
     response.raise_for_status()
