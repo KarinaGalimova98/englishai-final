@@ -106,6 +106,12 @@
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
       transition: opacity 0.6s ease, transform 0.4s ease;
     }
+    .answer-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
 
    
 
@@ -229,8 +235,9 @@
             icon.style.color = "crimson";
           }
 
-          input.parentElement.appendChild(icon);
-          input.parentElement.appendChild(answerSpan);
+          const wrapper = input.closest(".answer-wrapper") || input.parentElement;
+          wrapper.appendChild(icon);
+          wrapper.appendChild(answerSpan);
 
           realIndex++;
         });
