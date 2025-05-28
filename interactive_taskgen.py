@@ -102,7 +102,7 @@ def get_interactive_task():
         f"4. The number of answers MUST match the number of input fields exactly.\n"
         f"   If there are 6 input fields, then 6 answers are required, in the same order.\n\n"
         f"5. DO NOT skip any answers. DO NOT use index 0. Start from 1.\n\n"
-        f"Here is  example:\n" + "\n\n---\n\n".join(examples[0]) + "\n\n"
+        f"Here is  example:\n" + "\n\n---\n\n".join(examples) + "\n\n"
         f"Topic: {topic}."
         f"Instruction template: {instruction_example}\n"
         f"Format details: {format_desc}\n"
