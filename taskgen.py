@@ -22,7 +22,6 @@ from models import db
 from markupsafe import Markup
 import markdown
 import os
-from g4f.client import Client
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -141,7 +140,7 @@ def call_gemini(prompt: str, api_key: str) -> str:
         
     }
     data = {
-        #"model": "google/gemini-2.5-flash-preview-05-20",
+        #"model": "google/gemini-2.5-flash-preview-05-20", deepseek/deepseek-r1:free
         "model":"deepseek/deepseek-chat-v3-0324:free",
         "messages": [
             {"role": "user", "content": prompt}
