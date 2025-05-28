@@ -154,7 +154,7 @@ def call_gemini(prompt: str, api_key: str) -> str:
     return response.json()["choices"][0]["message"]["content"]
 
 client = Client()
-def generate_with_gpt4free(prompt, model="gpt-4.5-preview"):
+def generate_with_gpt4free(prompt, model="gpt-4"):
     try:
         response = client.chat.completions.create(
             model=model,
