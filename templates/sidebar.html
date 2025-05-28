@@ -1,4 +1,26 @@
 <!-- sidebar.html -->
+ <style>
+  @media (max-width: 768px) {
+    #sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    #sidebar.show {
+      transform: translateX(0);
+    }
+    #hamburger-btn {
+      display: block;
+    }
+  }
+  @media (min-width: 769px) {
+    #hamburger-btn {
+      display: none;
+    }
+  }
+</style>
+<!-- Кнопка-гамбургер -->
+<button id="hamburger-btn" class="fixed top-4 left-4 z-50 text-white text-3xl">☰</button>
+
 <div class="w-20 min-h-screen bg-white/10 backdrop-blur-xl shadow-xl text-white flex flex-col items-center py-6 space-y-8 rounded-r-3xl z-50 relative">
   {% set active = request.path %}
 
@@ -29,6 +51,14 @@
   </a>
   {% endif %}
 </div>
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const hamburger = document.getElementById('hamburger-btn');
+
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('show');
+  });
+</script>
 
 
 
