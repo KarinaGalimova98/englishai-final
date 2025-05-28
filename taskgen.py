@@ -273,7 +273,7 @@ def generate_task(exam, task_type,topic,section, model_choice="deepseek",prompt 
         generated = call_gemini(prompt, api_key=os.getenv("OPENROUTER_API_KEY"))
 
     elif model_choice == "gpt4free":
-        generated = generate_with_gpt4free(prompt, model="gpt-4.5-preview")
+        generated = generate_with_gpt4free(prompt, model="gpt-4")
 
 
     image_links = []
