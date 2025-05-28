@@ -146,7 +146,7 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
-  .model-btn {
+ .model-btn {
     position: relative;
     display: block;
     padding: 0.75rem 1.25rem;
@@ -169,6 +169,7 @@
     outline: 2px solid #ec4899;
   }
   .tooltip-card {
+    display: none;
     position: absolute;
     top: 100%;
     margin-top: 0.75rem;
@@ -178,11 +179,10 @@
     font-size: 0.875rem;
     border-radius: 0.75rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    display: none;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
+    background: rgba(25, 25, 35, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
   }
   .group:hover .tooltip-card {
     display: flex;
