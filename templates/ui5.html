@@ -178,10 +178,10 @@
     padding: 1rem;
     font-size: 0.875rem;
     border-radius: 0.75rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     flex-direction: column;
-    background: rgba(25, 25, 35, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(30, 30, 40, 0.85);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(16px);
   }
   .group:hover .tooltip-card {
@@ -222,12 +222,12 @@
   <h2 class="text-white font-bold text-lg mb-4">Выбери модель генерации</h2>
   <div class="flex flex-wrap gap-4">
         <!-- GPT-4 -->
-    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white">
-      <input type="radio" name="model" value="gpt" class="peer hidden" />
-      <div class="flex items-center gap-2">
-        <span>GPT-4</span>
-        <span class="text-yellow-400 text-sm">🪙</span>
-      </div>
+    <label class="relative group block p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-white peer-checked:ring-2 peer-checked:ring-purple-400 peer-checked:bg-purple-700/40 peer-checked:shadow-xl">
+    <input type="radio" name="model" value="gpt" class="peer hidden" />
+    <div class="flex items-center gap-2">
+      <span>GPT-4</span>
+      <span class="text-yellow-400 text-sm">🪙</span>
+    </div>
       <div class="tooltip-card">
         <div class="font-semibold text-pink-300 mb-1">GPT-4</div>
         <div class="text-yellow-300 mb-2">⭐⭐⭐⭐⭐</div>
