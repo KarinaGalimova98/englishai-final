@@ -95,6 +95,8 @@ def get_interactive_task():
         f"After the task HTML, insert this line:\n"
         f"<script type=\"application/json\" id=\"answers\">[\"answer1\", ..., \"answer{num_gaps}\"]</script>\n"
         f"Only output raw HTML — no markdown, no explanations, no reasoning. "
+        f"Format the task exactly as in real Cambridge exams of this type."
+        f"Ensure the structure matches the authentic layout of this task in the exam."
         f"The topic is: {topic}. "
         f"Instruction example: {instruction_example}"
         f"Format details: {format_desc}\n"
