@@ -228,8 +228,7 @@
         <span>GPT-4</span>
         <span class="text-yellow-400 text-sm">🪙</span>
       </div>
-      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
-                  peer-checked:flex md:group-hover:flex">
+      <div class="tooltip-card">
         <div class="font-semibold text-pink-300 mb-1">GPT-4</div>
         <div class="text-yellow-300 mb-2">⭐⭐⭐⭐⭐</div>
         <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
@@ -247,8 +246,7 @@
         <span>Claude 3 Sonnet</span>
         <span class="text-yellow-400 text-sm">🪙</span>
       </div>
-      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
-                  peer-checked:flex md:group-hover:flex">
+      <div class="tooltip-card">
         <div class="font-semibold text-orange-300 mb-1">Claude 3 Sonnet</div>
         <div class="text-yellow-300 mb-2">⭐⭐⭐⭐☆</div>
         <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
@@ -266,8 +264,7 @@
         <span>GPT-4o</span>
         <span class="text-yellow-400 text-sm">🪙</span>
       </div>
-      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
-                  peer-checked:flex md:group-hover:flex">
+      <div class="tooltip-card">
         <div class="font-semibold text-blue-300 mb-1">ChatGPT-4o</div>
         <div class="text-yellow-300 mb-2">⭐⭐⭐⭐⭐</div>
         <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
@@ -284,8 +281,7 @@
       <div class="flex items-center gap-2">
         <span>DeepSeek</span>
       </div>
-      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
-                  peer-checked:flex md:group-hover:flex">
+      <div class="tooltip-card">
         <div class="font-semibold text-cyan-300 mb-1">DeepSeek</div>
         <div class="text-yellow-300 mb-2">⭐⭐⭐☆</div>
         <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
@@ -302,8 +298,7 @@
       <div class="flex items-center gap-2">
         <span>Gemma</span>
       </div>
-      <div class="absolute z-50 hidden group-hover:flex flex-col top-full mt-2 w-64 bg-white/10 text-white backdrop-blur-lg p-4 rounded-xl shadow-xl text-sm
-                  peer-checked:flex md:group-hover:flex">
+      <div class="tooltip-card">
         <div class="font-semibold text-gray-300 mb-1">Gemma</div>
         <div class="text-yellow-300 mb-2">⭐⭐☆☆☆</div>
         <ul class="list-disc ml-4 space-y-1 text-white/90 text-left">
@@ -689,21 +684,6 @@
     });
   });
 </script>
-
-<script>
-  document.querySelectorAll('.model-btn').forEach(btn => {
-    const input = btn.querySelector('input[type="radio"]');
-    const tooltip = btn.querySelector('.tooltip-card');
-
-    input.addEventListener('change', () => {
-      // скрыть все подсказки
-      document.querySelectorAll('.tooltip-card').forEach(t => t.style.display = 'none');
-    });
-  });
-</script>
-
-
-
 
 
 </body>
