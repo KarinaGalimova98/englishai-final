@@ -21,7 +21,7 @@
 <!-- Кнопка-гамбургер -->
 <button id="hamburger-btn" class="fixed top-4 left-4 z-50 text-white text-3xl">☰</button>
 
-<div class="w-20 min-h-screen bg-white/10 backdrop-blur-xl shadow-xl text-white flex flex-col items-center py-6 space-y-8 rounded-r-3xl z-50 relative">
+<div id="sidebar" class="w-20 min-h-screen bg-white/10 backdrop-blur-xl shadow-xl text-white flex flex-col items-center py-6 space-y-8 rounded-r-3xl z-50 fixed top-0 left-0">
   {% set active = request.path %}
 
   <a href="/" class="group transition hover:scale-110 relative">
