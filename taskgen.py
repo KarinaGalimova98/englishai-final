@@ -140,8 +140,8 @@ def call_gemini(prompt: str, api_key: str) -> str:
         
     }
     data = {
-        #"model": "google/gemini-2.5-flash-preview-05-20", deepseek/deepseek-r1:free
-        "model":"tngtech/deepseek-r1t-chimera:free",
+        #"model": "google/gemini-2.5-flash-preview-05-20", 
+        "model":"deepseek/deepseek-r1:free",
         "messages": [
             {"role": "user", "content": prompt}
         ],
