@@ -6,7 +6,7 @@
             "input_type": "select",
             "option_labels": ["A", "B", "C", "D"],
             "instruction": "Choose the correct word for each gap.",
-            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+            "input_html": "<div class='answer-wrapper'><select name='{n}' class='answer-input blank'>{options}</select></div>"
         },
         "CAE": {
             "section": "Use of English",
@@ -14,7 +14,7 @@
             "input_type": "select",
             "option_labels": ["A", "B", "C", "D"],
             "instruction": "Choose the correct word for each gap.",
-            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+            "input_html": "<div class='answer-wrapper'><select name='{n}' class='answer-input blank'>{options}</select></div>"
         },
         "CPE": {
             "section": "Use of English",
@@ -22,7 +22,7 @@
             "input_type": "select",
             "option_labels": ["A", "B", "C", "D"],
             "instruction": "Choose the correct word for each gap.",
-            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+            "input_html": "<div class='answer-wrapper'><select name='{n}' class='answer-input blank'>{options}</select></div>"
         }
     },
     "Open Cloze": {
@@ -61,7 +61,7 @@
             "input_type": "select",
             "option_labels": ["A", "B", "C", "D", "E", "F", "G", "H"],
             "instruction": "Match the prompts to the correct paragraph (A–H). Options may be used more than once.",
-            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+            "input_html": "<div class='answer-wrapper'><select name='{n}' class='answer-input blank'>{options}</select></div>"
         }
     },
     "Gapped Text": {
@@ -71,7 +71,7 @@
             "input_type": "select",
             "option_labels": ["A", "B", "C", "D", "E", "F", "G"],
             "instruction": "Choose the correct sentence (A–G) for each gap. One option is extra.",
-            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+            "input_html": "<div class='answer-wrapper'><select name='{n}' class='answer-input blank'>{options}</select></div>"
         }
     },
     "Multiple Choice": {
@@ -81,7 +81,7 @@
             "input_type": "select",
             "option_labels": ["A", "B", "C", "D"],
             "instruction": "Choose the correct answer (A–D) for each question.",
-            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+            "input_html": "<div class='answer-wrapper'><select name='{n}' class='answer-input blank'>{options}</select></div>"
         },
         "CAE": {
             "section": "Reading",
@@ -89,7 +89,7 @@
             "input_type": "select",
             "option_labels": ["A", "B", "C", "D"],
             "instruction": "Choose the correct answer (A–D) for each question.",
-            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+            "input_html": "<div class='answer-wrapper'><select name='{n}' class='answer-input blank'>{options}</select></div>"
         },
         "CPE": {
             "section": "Reading",
@@ -97,7 +97,7 @@
             "input_type": "select",
             "option_labels": ["A", "B", "C", "D"],
             "instruction": "Choose the correct answer (A–D) for each question.",
-            "input_html": "<select name='{n}' class='answer-input blank'>{options}</select>"
+            "input_html": "<div class='answer-wrapper'><select name='{n}' class='answer-input blank'>{options}</select></div>"
         }
     }
 }
