@@ -76,9 +76,9 @@ def get_interactive_task():
 
     # Случайная тема по секции
     default_topics = {
-        "Reading": ["Technology", "Education", "Travel"],
-        "Use of English": ["Culture", "Lifestyle", "Environment"],
-        "Grammar": ["Society", "Science", "Work"]
+        "Reading": [ "Technology", "Education", "Travel", "Environment", "Health", "Art", "Media", "History", "Future", "Friendship"],
+        "Use of English": ["Culture", "Lifestyle", "Environment", "Social Media", "Work", "Relationships", "Science", "Learning", "Sport"],
+        "Grammar": ["Society", "Science", "Work", "Globalization", "Hobbies", "Daily Life", "Internet", "Advertising", "Traditions"]
     }
     topic = random.choice(default_topics.get(section, ["General"]))
 
