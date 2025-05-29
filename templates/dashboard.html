@@ -41,19 +41,19 @@
   <!-- Sidebar -->
   <div class="sidebar w-64 flex flex-col">
 
-    <h1 class="text-xl font-bold mb-6">DASHBOARD</h1>
+    <h1 class="text-xl font-bold mb-6"></h1>
     <nav class="space-y-4">
       <a href="/" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium shadow-lg hover:scale-105 transition z-50">
         <img src="{{ url_for('static', filename='back_icon.png') }}" alt="Назад" class="w-5 h-5 filter brightness-200">
         На главную
       </a>
-      <a href="/logout" class="block hover:text-red-300 mt-4">Выйти</a>
+      <a href="/logout" class="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-500 text-white font-medium shadow-lg hover:scale-105 transition z-50">Выйти</a>
     </nav>
   </div>
 
   <!-- Main content -->
   <div class="flex-1 p-10">
-    <h2 class="text-3xl font-bold mb-6">Привет, {{ user.email }}</h2>
+    <h2 class="text-3xl font-bold mb-6 text-white">Привет, {{ user.email }}</h2>
     {% if user.is_admin %}
     <a href="/admin-users"
         class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded-xl mb-6 transition">
