@@ -43,12 +43,12 @@
 
     <h1 class="text-xl font-bold mb-6">DASHBOARD</h1>
     <nav class="space-y-4">
-      <a href="/" class="fixed top-6 left-72 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium shadow-lg hover:scale-105 transition z-50">
+      <a href="/" class="gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium shadow-lg hover:scale-105 transition z-50">
       <img src="{{ url_for('static', filename='back_icon.png') }}" alt="Назад" class="w-4 h-4 filter brightness-200">
       На главную
       </a>
       <a href="#" class="block hover:text-gray-200">Мои задания</a>
-      <a href="#" class="block hover:text-gray-200">Настройки</a>
+      
       <a href="/logout" class="block hover:text-red-300 mt-4">Выйти</a>
     </nav>
   </div>
