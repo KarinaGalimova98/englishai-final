@@ -11,7 +11,7 @@ load_dotenv()
 chat_blueprint = Blueprint('chat', __name__, template_folder='templates')
 
 API_KEY = os.getenv("OPENROUTER_API_KEY")  #  OpenRouter
-MODEL_ID = "meta-llama/llama-3.3-8b-instruct:free"
+MODEL_ID = "qwen/qwen3-235b-a22b:free"
 
 SYSTEM_PROMPT = (
         """
