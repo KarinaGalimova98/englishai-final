@@ -109,10 +109,11 @@
       </div>
       {% endif %}
   
-      <form method="post" class="mt-6 flex gap-4">
-        <textarea name="message" rows="2" class="flex-1 p-3 rounded-xl resize-none text-black" placeholder="Type your reply..." required></textarea>
+      <form id="chat-form" class="mt-6 flex gap-4" autocomplete="off">
+        <textarea name="message" id="chat-input" rows="2" class="flex-1 p-3 rounded-xl resize-none text-black" placeholder="Type your reply..." required></textarea>
         <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl font-semibold">Send</button>
       </form>
+
   
       <div class="mt-4 flex justify-between items-center">
         <a href="/" class="text-indigo-200 underline hover:text-white">⬅ Back to Generator</a>
@@ -134,7 +135,65 @@
       }
     };
   </script>
-  
+  <script>
+document.getElementById("chat-form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const textarea = document.getElementById("chat-input");
+    const msg = textarea.value.trim();
+    if (!msg) return;
+    textarea.value = "";
+
+    let chatBox = document.getElementById("chat-container");
+
+    // Покажи сообщение пользователя сразу
+    chatBox.innerHTML += `<div class="flex justify-end">
+      <div class="max-w-2xl px-6 py-4 text-lg leading-relaxed rounded-3xl shadow-md bg-indigo-500 text-white">
+        <strong class="font-bold">User:</strong> ${msg}
+      </div>
+    </div>`;
+    chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+
+    // Покажи индикатор загрузки (можешь стилизовать красивее)
+    chatBox.innerHTML += `<div id="bot-typing" class="flex justify-start">
+      <div class="max-w-2xl px-6 py-4 text-lg leading-relaxed rounded-3xl shadow-md bg-white bg-opacity-80 text-black italic">Bot is typing...</div>
+    </div>`;
+    chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+
+    // Отправь на backend
+    const resp = await fetch("/chat/api/send", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({message: msg})
+    });
+    const data = await resp.json();
+
+    // Убери индикатор загрузки
+    document.getElementById("bot-typing")?.remove();
+
+    // Покажи ответ бота
+    if (data.messages && data.messages.length > 0) {
+      const botMsg = data.messages[data.messages.length - 1];
+      chatBox.innerHTML += `<div class="flex justify-start">
+        <div class="max-w-2xl px-6 py-4 text-lg leading-relaxed rounded-3xl shadow-md bg-white bg-opacity-80 text-black">
+          <strong class="font-bold">Bot:</strong> ${botMsg.text}
+        </div>
+      </div>`;
+      chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+    }
+
+    // Если есть итоговый результат — покажи ниже чата
+    if (data.result) {
+      let resultBlock = document.querySelector("#chat-result");
+      if (!resultBlock) {
+        resultBlock = document.createElement("div");
+        resultBlock.id = "chat-result";
+        document.querySelector(".flex-1.flex.flex-col.h-full.relative.z-10").appendChild(resultBlock);
+      }
+      resultBlock.innerHTML = `<div class="mt-6 bg-green-100 text-green-900 p-4 rounded-xl text-center shadow">${data.result}</div>`;
+    }
+});
+</script>
+
 </body>
 </html>
 
