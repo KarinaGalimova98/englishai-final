@@ -11,7 +11,7 @@ load_dotenv()
 chat_blueprint = Blueprint('chat', __name__, template_folder='templates')
 
 API_KEY = os.getenv("OPENROUTER_API_KEY")  #  OpenRouter
-MODEL_ID = "deepseek/deepseek-chat-v3-0324:free"
+MODEL_ID = "deepseek/deepseek-chat:free"
 
 SYSTEM_PROMPT = (
         """
