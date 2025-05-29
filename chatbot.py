@@ -140,7 +140,7 @@ def chat():
 
         return render_template("chat.html", messages=messages, result=result, greeting=False)
 
-@chat_blueprint.route("/chat/api/send", methods=["POST"])
+@chat_blueprint.route("/chat", methods=["POST"])
 def chat_api_send():
     data = request.get_json()
     user_text = data.get("message", "").strip()
