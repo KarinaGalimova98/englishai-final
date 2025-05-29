@@ -5,6 +5,7 @@ import markdown
 from flask_login import current_user
 from models import db
 import os
+from flask import jsonify
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -139,7 +140,56 @@ def chat():
 
         return render_template("chat.html", messages=messages, result=result, greeting=False)
 
+@chat_blueprint.route("/chat/api/send", methods=["POST"])
+def chat_api_send():
+    data = request.get_json()
+    user_text = data.get("message", "").strip()
+    messages = session.get("messages", [])
+    result = None
 
+    if user_text:
+        messages.append({"sender": "user", "text": user_text})
+        user_reply_count = len([m for m in messages if m["sender"] == "user"])
+
+        if user_reply_count <= 15:
+            try:
+                bot_reply = ask_openrouter(messages)
+            except Exception as e:
+                bot_reply = f"(Ошибка: {str(e)})"
+            messages.append({"sender": "bot", "text": bot_reply})
+        else:
+            level_request = messages + [{
+                "sender": "user",
+                "text": "Please stop the lesson and estimate my English level. Only answer with a CEFR level from A1 to C2."
+            }]
+            try:
+                llm_level = ask_openrouter(level_request)
+            except Exception as e:
+                llm_level = f"(Ошибка: {str(e)})"
+            try:
+                combined_pred = predict_level_combined(messages)
+            except Exception as e:
+                combined_pred = f"(Ошибка предсказания: {str(e)})"
+
+            result = (
+                "🎉 <strong>Поздравляем! Вы прошли тест.</strong><br><br>"
+                f"🤖 <strong>Бот оценил ваш уровень как</strong>: <span class='text-purple-700'>{llm_level}</span><br>"
+                f"📊 <strong>Наша обученная модель оценила ваш уровень</strong> как: <span class='text-indigo-600'>{combined_pred}</span>"
+            )
+
+        session["messages"] = messages
+        session.modified = True
+        if current_user.is_authenticated:
+            current_user.chatbot_today += 1
+            db.session.commit()
+
+        # Вернуть последние сообщения и результат (если нужен)
+        return jsonify({
+            "messages": messages[-2:],
+            "result": result
+        })
+
+    return jsonify({"error": "Пустое сообщение"}), 400
 
 
 @chat_blueprint.route("/chat/reset", methods=["POST"])
