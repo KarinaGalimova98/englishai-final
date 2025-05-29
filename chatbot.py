@@ -79,14 +79,13 @@ def ask_openrouter(messages):
 def chat():
     messages = session.get("messages", [])
     result = None
-  # Проверка: были ли ответы от пользователя
     user_started = any(m["sender"] == "user" for m in messages)
 
-    # Показываем приветствие, только если пользователь ещё не начал
+    # 1. Первый вход — показываем приветствие
     if request.method == "GET" and not user_started:
         return render_template("chat.html", messages=messages, result=None, greeting=True)
 
-    # Если нажали “Начать”
+    # 2. Если нажали “Начать”
     if request.method == "POST" and request.form.get("start") == "yes":
         try:
             bot_greeting = ask_openrouter([])
@@ -96,13 +95,12 @@ def chat():
         session["messages"] = messages
         return render_template("chat.html", messages=messages, result=None, greeting=False)
 
-    # Пользователь отправил сообщение
+    # 3. Пользователь отправил сообщение через старую POST-форму
     if request.method == "POST":
         user_text = request.form.get("message", "").strip()
         if user_text:
             messages.append({"sender": "user", "text": user_text})
             user_reply_count = len([m for m in messages if m["sender"] == "user"])
-
             if user_reply_count <= 15:
                 try:
                     bot_reply = ask_openrouter(messages)
@@ -130,14 +128,20 @@ def chat():
                     f"📊 <strong>Наша обученная модель оценила ваш уровень</strong> как: <span class='text-indigo-600'>{combined_pred}</span>"
                     "</div>"
                 )
-
         session["messages"] = messages
         session.modified = True
         if current_user.is_authenticated:
             current_user.chatbot_today += 1
             db.session.commit()
-
         return render_template("chat.html", messages=messages, result=result, greeting=False)
+
+    # 4. Если GET и чат уже был начат — показать чат!
+    if request.method == "GET" and user_started:
+        return render_template("chat.html", messages=messages, result=None, greeting=False)
+
+    # 5. На всякий случай: если ничего не сработало — показать приветствие
+    return render_template("chat.html", messages=messages, result=None, greeting=True)
+
 
 
 
