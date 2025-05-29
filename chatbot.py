@@ -11,11 +11,12 @@ load_dotenv()
 chat_blueprint = Blueprint('chat', __name__, template_folder='templates')
 
 API_KEY = os.getenv("OPENROUTER_API_KEY")  #  OpenRouter
-MODEL_ID = "deepseek/deepseek-chat:free"
+MODEL_ID = "deepseek/deepseek-r1-0528:free"
 
 SYSTEM_PROMPT = (
         """
-        You are an English tutor helping Russian-speaking learners assess their CEFR level (A1–C2). Run a 15-turn diagnostic session in 3 structured parts.
+        You are an English tutor helping Russian-speaking learners assess their CEFR level (A1–C2). Ask only ONE question or give only ONE task at a time, then wait for the user's answer before proceeding. 
+        Run a 15-turn diagnostic session in 3 structured parts.
 
         PART 1: Conversation (Turns 1–9)
         Ask 9 questions of increasing difficulty. Start with basic topics: hobbies, food, daily life. 
