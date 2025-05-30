@@ -39,6 +39,7 @@
             margin-right: 20px;
             cursor: pointer;
             transition: 0.3s;
+            text-decoration: none;
         }
         .btn:hover {
             background: #eee;
@@ -80,6 +81,12 @@
             text-align: center;
             margin-top: 50px;
         }
+        img.demo-gif {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -87,8 +94,7 @@
         <!-- Hero -->
         <h1>Cambridge Exam Task Generator</h1>
         <p>AI генератор заданий для FCE, CAE, CPE</p>
-        <button class="btn">Начать</button>
-        <button class="btn">Узнать об экзаменах</button>
+        <a href="/" class="btn">Начать</a>
 
         <!-- О сервисе -->
         <h2>О сервисе</h2>
@@ -132,7 +138,9 @@
         <div class="work-demo">
             <p>Вы выбираете экзамен, тип задания — система создаёт новое задание строго по формату Cambridge.</p>
             <p>Доступны все секции: Use of English, Reading, Writing, Speaking.</p>
+            <img src="/static/demo.gif" alt="Демонстрация работы" class="demo-gif">
         </div>
     </div>
 </body>
 </html>
+
