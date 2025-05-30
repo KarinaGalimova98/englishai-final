@@ -12,11 +12,19 @@
       }
 
       .card {
-        background-color: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        padding: 32px;
-        transition: all 0.2s ease-in-out;
+        padding: 20px;
+      }
+
+      @media (min-width: 768px) {
+        .card {
+          padding: 28px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .card {
+          padding: 32px;
+        }
       }
       .card:hover {
         transform: translateY(-3px);
@@ -52,14 +60,16 @@
         vertical-align: middle;
       }
       .answer-input.blank {
-  min-width: 140px;               /* фиксированная минимальная ширина */
-  padding: 4px 8px;
-  font-weight: bold;
-  border: 2px dashed #aaa;       /* пунктирная рамка по периметру */
-  border-radius: 4px;
-  background-color: #fdfdfd;
-  transition: border-color 0.2s ease; /* плавный переход цвета рамки */
-}
+      min-width: 60px;
+      max-width: 100%;              /* фиксированная минимальная ширина */
+      padding: 4px 8px;
+      font-weight: bold;
+      border: 2px dashed #6be9f1;       /* пунктирная рамка по периметру */
+      border-radius: 4px;
+      background-color: #fdfdfd;
+      transition: border-color 0.2s ease; 
+      width: auto;/* плавный переход цвета рамки */
+    }
 .answer-input.blank:focus {
   border-color: #645af2;         /* подсветка при фокусе */
 }
@@ -125,7 +135,8 @@
       Назад
     </button>
 
-    <div class="max-w-4xl mx-auto space-y-6 px-3">
+    <div class="max-w-4xl mx-auto space-y-6 px-2 sm:px-4 md:px-6">
+
       
       
       <h1 class="text-4xl font-extrabold text-center text-white">Выбери уровень и тип задания</h1>
@@ -156,7 +167,8 @@
         </form>
       </div>
 
-      <div id="generatedTask" class="grid grid-cols-1">
+      <div id="generatedTask" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6">
+
         <!-- Сюда вставятся карточки заданий -->
         {{ task_html | safe }}
       </div>

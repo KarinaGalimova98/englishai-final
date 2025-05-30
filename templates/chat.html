@@ -79,7 +79,8 @@
     {% if not greeting %}
 
   <!-- Fullscreen Chat -->
-  <div class="flex-1 flex flex-col px-8 py-10 overflow-hidden">
+  <div class="flex-1 flex flex-col px-4 sm:px-6 md:px-10 py-6 overflow-hidden">
+
     <div class="absolute inset-0 z-0 opacity-60">
       <img src="{{ url_for('static', filename='sunset.jpg') }}"
            alt="Background"
@@ -88,12 +89,13 @@
   
     <!-- Контент поверх -->
     <div class="flex-1 flex flex-col h-full relative z-10">
-      <h1 class="text-3xl font-bold mb-6 text-white">🗨️ Practice your English with AI</h1>
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-white">🗨️ Practice your English with AI</h1>
   
-      <div id="chat-container" class="flex-1 overflow-y-auto space-y-4 px-4 py-6 bg-white bg-opacity-10 rounded-3xl shadow-inner">
+      <div id="chat-container" class="flex-1 overflow-y-auto space-y-4 px-2 sm:px-4 py-4 bg-white bg-opacity-10 rounded-3xl shadow-inner">
+
         {% for m in messages %}
           <div class="flex {% if m.sender == 'user' %}justify-end{% else %}justify-start{% endif %}">
-            <div class="max-w-2xl px-6 py-4 text-lg leading-relaxed rounded-3xl shadow-md
+            <div class="max-w-full sm:max-w-xl md:max-w-2xl px-4 py-3 text-base sm:text-lg leading-relaxed rounded-3xl shadow-md
               {% if m.sender == 'user' %}bg-indigo-500 text-white{% else %}bg-white bg-opacity-80 text-black{% endif %}">
               <strong class="font-bold">{{ m.sender.capitalize() }}:</strong> {{ m.text|safe }}
 
@@ -109,7 +111,8 @@
       </div>
       {% endif %}
   
-      <form method="post" class="mt-6 flex gap-4">
+      <form method="post" class="mt-6 flex flex-col sm:flex-row gap-3">
+
         <textarea name="message" rows="2" class="flex-1 p-3 rounded-xl resize-none text-black" placeholder="Type your reply..." required></textarea>
         <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl font-semibold">Send</button>
       </form>

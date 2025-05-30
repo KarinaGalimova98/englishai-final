@@ -73,12 +73,17 @@
   {% endif %}
 </div>
 <script>
-  const sidebar = document.getElementById('sidebar');
-  const hamburger = document.getElementById('hamburger-btn');
-
-  hamburger.addEventListener('click', () => {
-    sidebar.classList.toggle('show');
-  });
+  function setupSidebarToggle() {
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.getElementById('hamburger-btn');
+    if (sidebar && hamburger) {
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+      });
+    }
+  }
+  // вызываем при загрузке
+  document.addEventListener('DOMContentLoaded', setupSidebarToggle);
 </script>
 
 
