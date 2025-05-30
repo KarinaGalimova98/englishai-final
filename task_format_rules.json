@@ -31,7 +31,7 @@
             "num_gaps": 12,
             "input_type": "input",
             "instruction": "Write one word in each gap.",
-            "input_html": "<input name='{n}' class='answer-input blank' style='width:100px;'>"
+            "input_html": "<div class='answer-wrapper'><input name='{n}' class='answer-input blank' style='width:300px;'></div>"
         }
     },
     "Word Formation": {
@@ -40,7 +40,7 @@
             "num_items": 8,
             "input_type": "input",
             "instruction": "Use the word in brackets to form a word that fits in the gap.",
-            "input_html": "<input name='{n}' class='answer-input blank' style='width:140px;'>"
+            "input_html": "<div class='answer-wrapper'><input name='{n}' class='answer-input blank' style='width:300px;'></div>"
         }
     },
     "Key Word Transformations": {
@@ -50,7 +50,7 @@
             "input_type": "input",
             "answer_length": "2–5 words",
             "instruction": "Use 2–5 words. Do not change the word given.",
-            "input_html": "<input name='{n}' class='answer-input blank' style='width:300px;'>",
+            "input_html": "<div class='answer-wrapper'><input name='{n}' class='answer-input blank' style='width:300px;'></div>",
             "keyword_position": "above_gap"
         }
     },
