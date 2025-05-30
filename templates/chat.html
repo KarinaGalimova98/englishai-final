@@ -55,7 +55,7 @@
   {% include 'sidebar.html' %}
  
 
-<div class="flex flex-col h-full md:h-auto w-full max-w-xl mx-auto bg-white">
+<div class="flex flex-col h-screen md:h-screen w-full px-4">
   {% if greeting %}
         <!-- Blur фон -->
     <div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"></div>
@@ -99,7 +99,7 @@
     <div class="flex-1 flex flex-col h-full relative z-10">
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-white">🗨️ Practice your English with AI</h1>
   
-      <div id="chat-container" class="flex-1 overflow-y-auto space-y-2 sm:space-y-3 md:space-y-4 px-2 sm:px-4 py-4 bg-white bg-opacity-10 rounded-3xl shadow-inner">
+      <div id="chat-container" class="flex-1 overflow-y-auto space-y-3 px-4 py-4 bg-white bg-opacity-10 rounded-3xl shadow-inner">
 
 
         {% for m in messages %}
@@ -122,7 +122,7 @@
       </div>
       {% endif %}
   
-      <form method="post" class="mt-6 flex flex-col sm:flex-row gap-3">
+      <form method="post" class="mt-4 flex flex-col sm:flex-row gap-3">
 
         <textarea name="message" rows="2" class="flex-1 p-4 text-lg rounded-xl resize-none text-black" placeholder="Type your reply..." required></textarea>
         <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-7 py-3 rounded-xl font-semibold text-lg">Send</button>
