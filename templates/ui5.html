@@ -230,7 +230,7 @@
       <!-- Выбор модели генерации -->
 <div class="bg-white/5 rounded-3xl p-6">
   <h2 class="text-white font-bold text-lg mb-4">Выбери модель генерации</h2>
-  <div class="flex flex-wrap gap-4 justify-center">
+  <div class="flex flex-wrap gap-4 justify-center sm:flex-col sm:items-start">
        <!-- Claude -->
   <label class="model-opt">
     <input type="radio" name="model" value="claude">
@@ -264,6 +264,7 @@
         <li>Форматирует аккуратно</li>
         <li>Бесплатная альтернатива</li>
         <li>Подходит для коротких заданий</li>
+        <li><span style="color: #4ade80;">Бесплатная</span></li>
       </ul>
     </div>
   </label>
@@ -331,14 +332,14 @@
       <div class="grid md:grid-cols-2 gap-6">
         <div>
           <label for="level" class="block mb-2 text-white font-semibold">Уровень</label>
-          <select id="level" name="level" class="w-full p-3 rounded-xl">
+          <select id="level" name="level" class="w-full text-sm sm:text-base p-3 rounded-xl">
             <option value="FCE">FCE</option>
             <option value="CAE">CAE</option>
             <option value="CPE">CPE</option>
           </select>
         </div>
         <div>
-          <label for="section" class="block mb-2 text-white font-semibold">Раздел экзамена</label>
+          <label for="section" class="block mb-2 text-sm sm:text-base text-white font-semibold">Раздел экзамена</label>
           <select id="section" name="section" onchange="updateSubtypes()" class="w-full p-3 rounded-xl">
             <option value="Writing">Writing</option>
             <option value="Reading">Reading</option>
@@ -347,11 +348,11 @@
           </select>
         </div>
         <div>
-          <label for="subtype" class="block mb-2 text-white font-semibold">Тип задания</label>
+          <label for="subtype" class="block mb-2 text-sm sm:text-base text-white font-semibold">Тип задания</label>
           <select id="subtype" name="task_type" class="w-full p-3 rounded-xl"></select>
         </div>
         <div>
-          <label for="topic" class="block mb-2 text-white font-semibold">Тематика</label>
+          <label for="topic" class="block mb-2 text-sm sm:text-base text-white font-semibold">Тематика</label>
           <textarea id="topic" name="topic" rows="2" placeholder="например: Technology and communication" class="w-full p-3 rounded-xl"></textarea>
         </div>
       </div>
@@ -359,11 +360,11 @@
         <div class="spinner"></div>
       </div>
 
-      <button type="submit" class="neon-button w-full text-xl">Сгенерировать задание</button>
+      <button type="submit" class="neon-button w-full sm:w-full text-center py-3 text-sm">Сгенерировать задание</button>
       
     </form>
     <!-- Типы заданий -->
-<div class="mt-10 relative">
+<div class="text-sm sm:text-base mt-10 relative">
   <h2 class="text-white text-2xl font-bold mb-6">Типы заданий</h2>
 
   <div class="slider-container relative overflow-hidden mx-auto" style="max-width:1088px;">
