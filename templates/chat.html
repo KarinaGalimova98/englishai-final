@@ -103,8 +103,9 @@
 
         {% for m in messages %}
           <div class="flex {% if m.sender == 'user' %}justify-end{% else %}justify-start{% endif %}">
-            <div class="max-w-full sm:max-w-2xl lg:max-w-4xl px-5 py-4 text-lg sm:text-xl md:text-2xl leading-relaxed rounded-3xl shadow-md
-                {% if m.sender == 'user' %}bg-indigo-500 text-white{% else %}bg-white bg-opacity-80 text-black{% endif %}">
+            <div class="w-[90%] sm:max-w-2xl lg:max-w-4xl px-5 py-4 text-lg sm:text-xl md:text-2xl leading-relaxed rounded-3xl shadow-md
+              {% if m.sender == 'user' %}bg-indigo-500 text-white{% else %}bg-white bg-opacity-80 text-black{% endif %}">
+
 
               <strong class="font-bold">{{ m.sender.capitalize() }}:</strong> {{ m.text|safe }}
 
