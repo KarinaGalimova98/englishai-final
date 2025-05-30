@@ -36,7 +36,7 @@
       animation: scale-out 0.4s cubic-bezier(.45,1.5,.59,1) both;
     }
     .chatbot-page .chat-container {
-    margin-left: 40px; /* ширина sidebar, если sidebar шире/уже — поменяй */
+    margin-left: 80px; /* ширина sidebar, если sidebar шире/уже — поменяй */
   }
   .chat-bg {
     position: fixed;
@@ -55,7 +55,7 @@
   {% include 'sidebar.html' %}
  
 
-<div class="flex flex-col h-screen md:h-screen w-full px-4">
+<div class="chat-container flex flex-col h-screen md:h-screen w-full px-4">
   {% if greeting %}
         <!-- Blur фон -->
     <div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"></div>
