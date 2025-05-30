@@ -36,8 +36,13 @@
       animation: scale-out 0.4s cubic-bezier(.45,1.5,.59,1) both;
     }
     .chatbot-page .chat-container {
-    margin-left: 80px; /* ширина sidebar, если sidebar шире/уже — поменяй */
+    margin-left: 0; /* ширина sidebar, если sidebar шире/уже — поменяй */
   }
+    @media (min-width: 768px) {
+    .chatbot-page .chat-container {
+      margin-left: 80px;
+    }
+}
   .chat-bg {
     position: fixed;
     inset: 0;
