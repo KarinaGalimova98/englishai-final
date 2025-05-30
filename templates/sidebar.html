@@ -1,25 +1,26 @@
 <!-- sidebar.html -->
  <style>
   @media (max-width: 768px) {
-    #sidebar {
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-    }
-    #sidebar.show {
-      transform: translateX(0);
-    }
-    #hamburger-btn {
-      display: block;
-    }
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: left 0.3s ease;
+    z-index: 999; /* чуть ниже чем бургер */
   }
-  @media (min-width: 769px) {
-    #hamburger-btn {
-      display: none;
-    }
+  #sidebar.show {
+    left: 0;
   }
+  #hamburger-btn {
+    display: block;
+  }
+}
 </style>
 <!-- Кнопка-гамбургер -->
-<button id="hamburger-btn" class="fixed top-4 left-4 z-50 text-white text-3xl">☰</button>
+<div style="position: fixed; top: 0; left: 0; z-index: 1000;">
+  <button id="hamburger-btn" class="top-4 left-4 text-white text-3xl">☰</button>
+</div>
+
 
 <div id="sidebar" class="w-20 min-h-screen bg-white/10 backdrop-blur-xl shadow-xl text-white flex flex-col items-center py-6 space-y-8 rounded-r-3xl z-50 fixed top-0 left-0">
   {% set active = request.path %}

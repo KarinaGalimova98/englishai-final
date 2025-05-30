@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Cambridge Exam Task Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #8d65d2, #45b4e6);
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 30px;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #fff;
+            color: #8d65d2;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            margin-right: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #eee;
+        }
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+        .exam-cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .exam-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            width: 250px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+        .work-demo {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero -->
+        <h1>Cambridge Exam Task Generator</h1>
+        <p>AI генератор заданий для FCE, CAE, CPE</p>
+        <button class="btn">Начать</button>
+        <button class="btn">Узнать об экзаменах</button>
+
+        <!-- О сервисе -->
+        <h2>О сервисе</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>AI-генерация</h3>
+                <p>Задания создаются искусственным интеллектом по реальным экзаменационным шаблонам.</p>
+            </div>
+            <div class="card">
+                <h3>Точное соответствие</h3>
+                <p>FCE / CAE / CPE — полное соблюдение форматов Cambridge Exams.</p>
+            </div>
+            <div class="card">
+                <h3>Практика и рост</h3>
+                <p>Решайте задания, отслеживайте прогресс и улучшайте знания.</p>
+            </div>
+        </div>
+
+        <!-- О Cambridge Exams -->
+        <h2>О Cambridge Exams</h2>
+        <div class="exam-cards">
+            <div class="exam-card">
+                <h3>FCE</h3>
+                <p>Upper-Intermediate</p>
+                <p>Для поступления в ВУЗы, работы, путешествий.</p>
+            </div>
+            <div class="exam-card">
+                <h3>CAE</h3>
+                <p>Advanced (C1)</p>
+                <p>Требуется для профессий, учёбы за рубежом.</p>
+            </div>
+            <div class="exam-card">
+                <h3>CPE</h3>
+                <p>Proficiency (C2)</p>
+                <p>Максимальный академический уровень.</p>
+            </div>
+        </div>
+
+        <!-- Как это работает -->
+        <h2>Как это работает</h2>
+        <div class="work-demo">
+            <p>Вы выбираете экзамен, тип задания — система создаёт новое задание строго по формату Cambridge.</p>
+            <p>Доступны все секции: Use of English, Reading, Writing, Speaking.</p>
+        </div>
+    </div>
+</body>
+</html>
