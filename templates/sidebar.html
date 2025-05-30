@@ -1,43 +1,63 @@
-<!-- sidebar.html -->
- <style>
-  @media (max-width: 768px) {
+<style>
+  /* Основной стиль сайдбара для десктопа */
   #sidebar {
     position: fixed;
     top: 0;
-    left: -100%;
-    transition: left 0.3s ease;
-    z-index: 999; /* чуть ниже чем бургер */
-  }
-  #sidebar.show {
     left: 0;
+    width: 5rem;
+    min-height: 100vh;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    z-index: 999;
   }
-  #hamburger-btn {
-    display: block;
+
+  /* Бургер скрыт на десктопе */
+  #hamburger-container {
+    display: none;
   }
-}
+
+  /* Мобильная версия — прячем сайдбар, показываем бургер */
+  @media (max-width: 768px) {
+    #sidebar {
+      left: -100%;
+      transition: left 0.3s ease;
+    }
+    #sidebar.show {
+      left: 0;
+    }
+    #hamburger-container {
+      display: block;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1000;
+    }
+  }
 </style>
-<!-- Кнопка-гамбургер -->
-<div style="position: fixed; top: 0; left: 0; z-index: 1000;">
-  <button id="hamburger-btn" class="top-4 left-4 text-white text-3xl">☰</button>
+
+<!-- Бургер -->
+<div id="hamburger-container">
+  <button id="hamburger-btn" class="text-white text-3xl">☰</button>
 </div>
 
-
-<div id="sidebar" class="w-20 min-h-screen bg-white/10 backdrop-blur-xl shadow-xl text-white flex flex-col items-center py-6 space-y-8 rounded-r-3xl z-50 fixed top-0 left-0">
+<!-- Sidebar -->
+<div id="sidebar" class="flex flex-col items-center py-6 space-y-8 rounded-r-3xl text-white">
   {% set active = request.path %}
 
   <a href="/" class="group transition hover:scale-110 relative">
     <img src="{{ url_for('static', filename='ai_12882687.png') }}" alt="Генератор" class="h-10 w-10 filter invert transition duration-300 group-hover:invert-0 group-hover:brightness-200 group-hover:drop-shadow-lg {{ 'opacity-100' if active == '/' else 'opacity-50' }} group-hover:opacity-100">
-    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Генератор</span>
+    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Генератор заданий</span>
   </a>
 
   <a href="/chat" class="group transition hover:scale-110 relative">
     <img src="{{ url_for('static', filename='chat_1766486.png') }}" alt="Чат" class="h-10 w-10 filter invert transition duration-300 group-hover:invert-0 group-hover:brightness-200 group-hover:drop-shadow-lg {{ 'opacity-100' if active == '/' else 'opacity-50' }} group-hover:opacity-100">
-    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Уровень</span>
+    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Чат-бот</span>
   </a>
 
   <a href="/use_of_english" class="group transition hover:scale-110 relative">
     <img src="{{ url_for('static', filename='alphabet_3422714.png') }}" alt="Use of English" class="h-10 w-10 filter invert transition duration-300 group-hover:invert-0 group-hover:brightness-200 group-hover:drop-shadow-lg {{ 'opacity-100' if active == '/' else 'opacity-50' }} group-hover:opacity-100">
-    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Use of English</span>
+    <span class="absolute left-12 top-1/2 -translate-y-1/2 bg-white text-black text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">Use of English & Reading practice</span>
   </a>
 
   {% if current_user.is_authenticated %}
