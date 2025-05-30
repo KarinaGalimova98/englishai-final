@@ -89,7 +89,7 @@ def get_interactive_task():
     prompt1 = (
         f"You are a Cambridge exams - FCE, CAE, CPE,  task generator."
         f"Generate an interactive {task_type} task for the {exam} exam, section {section}. "
-        f"The task should contain exactly {num_gaps} gaps. Each gap must be replaced with this HTML:\n"
+        f"The task should contain exactly {num_gaps} gaps. Each gap must be ALWAYS replaced with this HTML :\n"
         f"{input_html}\n"
         f"The name attribute should be 1 to {num_gaps}. "
         f"After the task HTML, insert this line:\n"
@@ -104,7 +104,8 @@ def get_interactive_task():
         f"Layout notes: {layout_notes}\n"
         f"Visual guidelines: {visual_guidelines}\n"
         f"Min words: {min_words}; Max words: {max_words}.\n"
-        
+        f"In Multiple Choice Cloze tasks, all answer choices (A, B, C, D) must appear only inside the dropdown (<select>) fields in the gaps. Do NOT write any list of answer options, explanations, or correct answers after the task or anywhere else — only inside each <select>."
+        f"After the task HTML, insert this line only once for browser validation:<script type=\"application/json\" id=\"answers\">[...]</script>"
     )
     
     #f"Here is  example:\n" + "\n\n---\n\n".join(examples) + "\n\n"
