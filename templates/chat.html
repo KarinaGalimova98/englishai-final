@@ -40,7 +40,8 @@
 </style>
   </style>
 </head>
-<div class="flex h-screen overflow-hidden text-white text-base sm:text-lg md:text-xl">
+<div class="flex h-screen overflow-hidden text-white text-lg sm:text-xl md:text-2xl">
+
 
   {% include 'sidebar.html' %}
  
@@ -97,9 +98,9 @@
 
         {% for m in messages %}
           <div class="flex {% if m.sender == 'user' %}justify-end{% else %}justify-start{% endif %}">
-            <div class="max-w-full sm:max-w-2xl lg:max-w-4xl px-4 py-3 text-base sm:text-lg leading-relaxed rounded-3xl shadow-md
+            <div class="max-w-full sm:max-w-2xl lg:max-w-4xl px-5 py-4 text-lg sm:text-xl md:text-2xl leading-relaxed rounded-3xl shadow-md
+                {% if m.sender == 'user' %}bg-indigo-500 text-white{% else %}bg-white bg-opacity-80 text-black{% endif %}">
 
-              {% if m.sender == 'user' %}bg-indigo-500 text-white{% else %}bg-white bg-opacity-80 text-black{% endif %}">
               <strong class="font-bold">{{ m.sender.capitalize() }}:</strong> {{ m.text|safe }}
 
             </div>
@@ -116,8 +117,9 @@
   
       <form method="post" class="mt-6 flex flex-col sm:flex-row gap-3">
 
-        <textarea name="message" rows="2" class="flex-1 p-3 rounded-xl resize-none text-black" placeholder="Type your reply..." required></textarea>
-        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl font-semibold">Send</button>
+        <textarea name="message" rows="2" class="flex-1 p-4 text-lg rounded-xl resize-none text-black" placeholder="Type your reply..." required></textarea>
+        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-7 py-3 rounded-xl font-semibold text-lg">Send</button>
+
       </form>
   
       <div class="mt-4 flex justify-between items-center">
