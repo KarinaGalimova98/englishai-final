@@ -90,32 +90,24 @@
   select, textarea {
   color: white !important;
 }
-.task-slider {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  padding: 1rem;
-}
-
-
 .task-card {
-  flex: 0 0 90%;
-  scroll-snap-align: center;
-  margin-bottom: 1rem;
+  flex: 0 0 calc((100% - 3rem) / 4);  /* 4 карточки + 3 промежутка по 1rem */
+  margin-right: 1rem;                 /* промежуток между ними */
+  border-radius: 1rem;
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(255,255,255,0.08);
+  transition: transform .3s ease;
 }
-
 .task-card:last-child {
   margin-right: 0;
 }
-@media (min-width: 641px) {
+@media (max-width: 640px) {
   .task-card {
-    flex: 0 0 calc((100% - 3rem) / 4);
+    flex: 0 0 90% !important;
+    margin: 0 auto 1rem;
   }
 }
-
 
 .slider-container {
     position: relative;
@@ -225,14 +217,16 @@
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
 
 </head>
-<body class="min-h-screen flex flex-row">
+<body class="min-h-screen w-full overflow-x-hidden">
+
   {% include 'sidebar.html' %}
-  <main class="flex-1 max-w-6xl mx-auto px-6 py-10 space-y-10">
+  <main class="flex-1 w-full px-4 sm:px-6 md:px-10 py-6 space-y-10">
+
 
   
 
     <div class="text-center text-white">
-      <h1 class="text-4xl md:text-5xl font-extrabold">Cambridge Exam<br><span class="text-purple-400">Task Generator</span></h1>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold">Cambridge Exam<br><span class="text-purple-400">Task Generator</span></h1>
       <p class="text-base text-white/70 mt-2">Создавай задания FCE / CAE / CPE </p>
     </div>
 
@@ -345,7 +339,8 @@
 
   </div>
 </div>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
         <div>
           <label for="level" class="block mb-2 text-white font-semibold">Уровень</label>
           <select id="level" name="level" class="w-full text-sm sm:text-base p-3 rounded-xl">
@@ -540,7 +535,8 @@
     <div id="result-block" class="glass p-6 text-white whitespace-pre-wrap leading-relaxed break-words text-base sm:text-sm">
       {{ result }}
       {% if images %}
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
         {% for img in images %}
         <img src="{{ img }}" alt="AI image" class="rounded-xl shadow-md w-full object-cover">
         {% endfor %}
