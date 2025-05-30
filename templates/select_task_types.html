@@ -135,9 +135,9 @@
       Назад
     </button>
 
-    <div class="max-w-4xl mx-auto space-y-6 px-2 sm:px-4 md:px-6">
+    <div class="w-full max-w-4xl mx-auto px-3 py-6">
 
-      
+
       
       <h1 class="text-4xl font-extrabold text-center text-white">Выбери уровень и тип задания</h1>
 
@@ -167,12 +167,13 @@
         </form>
       </div>
 
-      <div id="generatedTask" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6">
+      <div id="generatedTask" class="space-y-6">
 
+      <div class="card p-4 md:p-6 lg:p-8 bg-white bg-opacity-10 rounded-xl shadow-lg">
         <!-- Сюда вставятся карточки заданий -->
         {{ task_html | safe }}
       </div>
-
+    </div>
       <div class="text-center">
         <button onclick="checkInteractiveAnswers()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-full font-semibold transition">Проверить ответы</button>
       </div>

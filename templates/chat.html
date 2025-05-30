@@ -40,7 +40,8 @@
 </style>
   </style>
 </head>
-<div class="flex h-screen overflow-hidden text-white text-[20px]">
+<div class="flex h-screen overflow-hidden text-white text-base sm:text-lg md:text-xl">
+
   {% include 'sidebar.html' %}
  
 
@@ -91,11 +92,13 @@
     <div class="flex-1 flex flex-col h-full relative z-10">
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-white">🗨️ Practice your English with AI</h1>
   
-      <div id="chat-container" class="flex-1 overflow-y-auto space-y-4 px-2 sm:px-4 py-4 bg-white bg-opacity-10 rounded-3xl shadow-inner">
+      <div id="chat-container" class="flex-1 overflow-y-auto space-y-2 sm:space-y-3 md:space-y-4 px-2 sm:px-4 py-4 bg-white bg-opacity-10 rounded-3xl shadow-inner">
+
 
         {% for m in messages %}
           <div class="flex {% if m.sender == 'user' %}justify-end{% else %}justify-start{% endif %}">
-            <div class="max-w-full sm:max-w-xl md:max-w-2xl px-4 py-3 text-base sm:text-lg leading-relaxed rounded-3xl shadow-md
+            <div class="max-w-full sm:max-w-2xl lg:max-w-4xl px-4 py-3 text-base sm:text-lg leading-relaxed rounded-3xl shadow-md
+
               {% if m.sender == 'user' %}bg-indigo-500 text-white{% else %}bg-white bg-opacity-80 text-black{% endif %}">
               <strong class="font-bold">{{ m.sender.capitalize() }}:</strong> {{ m.text|safe }}
 
