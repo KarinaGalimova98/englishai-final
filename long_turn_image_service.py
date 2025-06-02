@@ -5,7 +5,7 @@ import base64
 import os
 import concurrent.futures
 
-class FusionBrainAPI31:
+class FusionBrainAPI:
     def __init__(self, api_key, secret_key):
         self.URL = "https://api-key.fusionbrain.ai/"
         self.headers = {
@@ -46,39 +46,34 @@ class FusionBrainAPI31:
 
     def get_image_base64(self, uuid, attempts=20, delay=2):
         for _ in range(attempts):
-            resp = requests.get(self.URL + "key/api/v1/pipeline/status/",headers=self.headers)
+            resp = requests.get(self.URL + "key/api/v1/pipeline/status/" + uuid, headers=self.headers)
             data = resp.json()
             if data['status'] == 'DONE':
-                return data['images'][0]
-            elif data['status'] == 'FAIL':
-                raise Exception("Image generation failed")
+                return data['result']['files'][0]  # base64 строка
             time.sleep(delay)
         raise Exception("Image generation timed out")
 
-
 def extract_image_descriptions_from(text):
+    """
+    Ищет в тексте Long Turn описания изображений (строки, начинающиеся на '-')
+    """
     lines = text.split('\n')
-    descriptions = [
-        line.strip('-•–— ').strip() 
-        for line in lines 
-        if line.strip().startswith(('-', '•', '–', '—'))
-    ]
-    return [desc for desc in descriptions if desc][:3]
+    return [line.strip('-•–— ').strip() for line in lines if line.strip().startswith(('-', '•', '–', '—'))][:3]
 
 def save_base64_image(base64_data, filename, folder="static/generated_images"):
     os.makedirs(folder, exist_ok=True)
     file_path = os.path.join(folder, filename)
     with open(file_path, "wb") as f:
         f.write(base64.b64decode(base64_data))
-    return "/" + file_path.replace("\\", "/")
+    return f"/{file_path.replace('\\', '/')}"
 
-def generate_one_image(desc, api, index):
+def generate_one_image(desc, api, pipeline_id, index):
     try:
         if not desc.strip():
             print(f"⚠ Пустое описание — пропускаем изображение {index+1}")
             return None
 
-        uuid = api.generate_image(desc)
+        uuid = api.generate_image(desc, pipeline_id)
         base64_img = api.get_image_base64(uuid)
         filename = f"image_{int(time.time())}_{index}.jpg"
         url = save_base64_image(base64_img, filename)
@@ -88,16 +83,19 @@ def generate_one_image(desc, api, index):
         return None
 
 def generate_images_from_descriptions(descriptions, api_key, api_secret):
+    """
+    Генерирует изображения по описаниям, сохраняет как файлы и возвращает URL-ы.
+    """
     if not descriptions:
         return []
 
-    api = FusionBrainAPI31(api_key, api_secret)
+    api = FusionBrainAPI(api_key, api_secret)
+    pipeline_id = api.get_pipeline()
 
     image_urls = []
-
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         futures = [
-            executor.submit(generate_one_image, desc, api, i)
+            executor.submit(generate_one_image, desc, api, pipeline_id, i)
             for i, desc in enumerate(descriptions[:5])
         ]
 
