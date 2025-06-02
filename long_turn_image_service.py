@@ -1,4 +1,4 @@
-
+import json
 import time
 import requests
 import base64
@@ -13,25 +13,36 @@ class FusionBrainAPI31:
             "X-Secret": f"Secret {secret_key}"
         }
 
-    def generate_image(self, prompt):
-        payload = {
+    def get_pipeline(self):
+        response = requests.get(self.URL + "key/api/v1/pipelines", headers=self.headers)
+        response.raise_for_status()
+        return response.json()[0]['id']
+
+    def generate_image(self, prompt, pipeline_id):
+        params = {
             "type": "GENERATE",
             "numImages": 1,
-            "width": 512,
-            "height": 512,
+            "width": 1024,
+            "height": 1024,
             "generateParams": {
                 "query": prompt
             }
         }
 
+        files = {
+            'pipeline_id': (None, pipeline_id),
+            'params': (None, json.dumps(params), 'application/json')
+        }
+
+        print(f"📤 Отправка в Kandinsky: {prompt}")
         response = requests.post(
-            self.URL + "key/api/v1/pipelines/run",
+            self.URL + "key/api/v1/pipeline/run",
             headers=self.headers,
-            json=payload
+            files=files
         )
+        print("📥 Ответ от Kandinsky:", response.status_code)
         response.raise_for_status()
-        uuid = response.json()["uuid"]
-        return uuid
+        return response.json()['uuid']
 
     def get_image_base64(self, uuid, attempts=20, delay=2):
         for _ in range(attempts):
