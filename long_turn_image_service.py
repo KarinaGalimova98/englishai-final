@@ -65,7 +65,8 @@ def save_base64_image(base64_data, filename, folder="static/generated_images"):
     file_path = os.path.join(folder, filename)
     with open(file_path, "wb") as f:
         f.write(base64.b64decode(base64_data))
-    return f"/{file_path.replace('\\', '/')}"
+    return "/" + file_path.replace("\\", "/")
+
 
 def generate_one_image(desc, api, pipeline_id, index):
     try:
