@@ -7,7 +7,7 @@ import concurrent.futures
 
 class FusionBrainAPI31:
     def __init__(self, api_key, secret_key):
-        self.URL = "https://api-key.fusionbrain.ai/"
+        self.URL = "https://api-key.fusionbrain.ai/api/v2/text2image/"
         self.headers = {
             "X-Key": f"Key {api_key}",
             "X-Secret": f"Secret {secret_key}"
@@ -17,15 +17,15 @@ class FusionBrainAPI31:
         payload = {
             "type": "GENERATE",
             "numImages": 1,
-            "width": 1024,
-            "height": 1024,
+            "width": 512,
+            "height": 512,
             "generateParams": {
                 "query": prompt
             }
         }
 
         response = requests.post(
-            self.URL + "key/api/v2/text2image/run",
+            self.URL + "run",
             headers=self.headers,
             json=payload
         )
@@ -35,7 +35,7 @@ class FusionBrainAPI31:
 
     def get_image_base64(self, uuid, attempts=20, delay=2):
         for _ in range(attempts):
-            resp = requests.get(self.URL + f"key/api/v2/text2image/status/{uuid}", headers=self.headers)
+            resp = requests.get(self.URL + f"status/{uuid}",headers=self.headers)
             data = resp.json()
             if data['status'] == 'DONE':
                 return data['images'][0]
