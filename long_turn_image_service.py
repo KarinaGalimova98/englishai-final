@@ -7,7 +7,7 @@ import concurrent.futures
 
 class FusionBrainAPI31:
     def __init__(self, api_key, secret_key):
-        self.URL = "https://api.fusionbrain.ai/api/v2/text2image/"
+        self.URL = "https://api-key.fusionbrain.ai/"
         self.headers = {
             "X-Key": f"Key {api_key}",
             "X-Secret": f"Secret {secret_key}"
@@ -25,7 +25,7 @@ class FusionBrainAPI31:
         }
 
         response = requests.post(
-            self.URL + "run",
+            self.URL + "key/api/v1/pipelines",
             headers=self.headers,
             json=payload
         )
