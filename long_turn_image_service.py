@@ -25,7 +25,7 @@ class FusionBrainAPI31:
         }
 
         response = requests.post(
-            self.URL + "key/api/v1/pipelines",
+            self.URL + "key/api/v1/pipelines/run",
             headers=self.headers,
             json=payload
         )
@@ -35,7 +35,7 @@ class FusionBrainAPI31:
 
     def get_image_base64(self, uuid, attempts=20, delay=2):
         for _ in range(attempts):
-            resp = requests.get(self.URL + f"status/{uuid}",headers=self.headers)
+            resp = requests.get(self.URL + "key/api/v1/pipeline/status/",headers=self.headers)
             data = resp.json()
             if data['status'] == 'DONE':
                 return data['images'][0]
