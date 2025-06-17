@@ -195,7 +195,7 @@
         "min_words": 700,
         "max_words": 800,
         "instruction_example": "Read the article below and answer the questions. For each question, choose the correct answer (A, B, C or D).",
-        "structure_description": "A text with multiple questions. Each question has four answer options.",
+        "structure_description": "A text with eight questions. Each question has four answer options.",
         "images": 0,
         "layout_notes": "The text is on the page; questions and answers appear below.",
         "visual_guidelines": "Questions and answers are neatly formatted below the text.",
