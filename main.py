@@ -9,7 +9,7 @@ from flask_login import LoginManager
 from auth import auth_blueprint
 from models import db, User
 from dashboard import dashboard_blueprint
-
+from flask_session import Session
 
 
 
@@ -18,7 +18,10 @@ app = Flask(__name__)
 app.secret_key = "very_secret_key_123"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SESSION_PERMANENT'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=12)
 
+Session(app)
 db.init_app(app)
 
 login_manager = LoginManager()
