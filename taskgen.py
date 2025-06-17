@@ -99,7 +99,7 @@ def generate_with_gemma(prompt: str, api_key: str) -> str:
     }
 
     data = {
-        "model": "qwen/qwen3-235b-a22b:free",
+        "model": "google/gemma-3-27b-it:free",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 3000,
         "temperature": 0.5
@@ -168,7 +168,7 @@ def find_format_info(exam, section, task_type, templates):
 def generate_task(exam, task_type,topic,section, model_choice="deepseek",prompt = None):
     query = f"{exam} {section} {task_type}"
     q_embed = embed_model.encode([query])
-    D, I = index.search(np.array(q_embed).astype("float32"), k=3)
+    D, I = index.search(np.array(q_embed).astype("float32"), k=2)
     examples = []
     image_examples = []
     
