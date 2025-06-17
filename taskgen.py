@@ -99,7 +99,7 @@ def generate_with_gemma(prompt: str, api_key: str) -> str:
     }
 
     data = {
-        "model": "google/gemini-2.0-flash-exp:free",
+        "model": "qwen/qwq-32b:free",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 3000,
         "temperature": 0.5
