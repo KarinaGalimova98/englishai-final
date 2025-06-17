@@ -229,12 +229,12 @@ def generate_task(exam, task_type,topic,section, model_choice="deepseek",prompt 
     
     if task_type.lower() == "long turn" and image_examples:
         prompt += "\n\nВот примеры описаний изображений из похожих заданий:\n"
-        for desc in image_examples[:3]:
+        for desc in image_examples[:5]:
             prompt += f"- {desc}\n"
         prompt += (
-            "\n\nТеперь сгенерируй новое задание Long Turn, "
-            "а после него — добавь описания изображений в таком же формате (начиная с тире). "
-            "Они будут использоваться для генерации картинок."
+            """\n\nNow generate a new Long Turn task,
+            and after that — add image descriptions in the same format (starting with a dash).
+            These descriptions will not be shown to the user — they are only for image generation."""
         )
             
     # Вызов модели по выбору
