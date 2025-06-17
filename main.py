@@ -25,14 +25,6 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.auth'
 login_manager.init_app(app)
 
-# app.register_blueprint(task_blueprint)
-# app.register_blueprint(chat_blueprint)
-# app.register_blueprint(interactive_blueprint)
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -50,4 +42,4 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=12)
 app.config['SESSION_PERMANENT'] = True
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True, threaded=True)
