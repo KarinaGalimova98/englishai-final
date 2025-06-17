@@ -18,8 +18,7 @@ app = Flask(__name__)
 app.secret_key = "very_secret_key_123"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SESSION_PERMANENT'] = True
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=12)
+app.config['SESSION_TYPE'] = 'filesystem'
 
 Session(app)
 db.init_app(app)
