@@ -101,7 +101,7 @@ def generate_with_gemma(prompt: str, api_key: str) -> str:
     data = {
         "model": "google/gemini-2.5-flash-preview-05-20",
         "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 4000,
+        "max_tokens": 3040,
         "temperature": 0.5
     }
 
